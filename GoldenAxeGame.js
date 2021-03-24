@@ -165,7 +165,6 @@ GoldenAxe.Game.prototype = {
 		this.buttonSoundOnGame = null;
 		this.buttonSoundOnGameShadow = null;
 		this.walkingSpeed = 2;
-		this.musicPlayer = null;
 		},
 
 	create: function ()
@@ -215,17 +214,7 @@ GoldenAxe.Game.prototype = {
 		this.buttonRestartShadow.tint = 0x000000;
 		this.buttonRestartShadow.alpha = 0.85;
 		this.buttonRestart = this.add.button(700, 8, "imageRestart", null, this, 2, 1, 0);
-		this.buttonRestart.onInputUp.add(function()
-			{
-			// REMOVING THE JOYSTICK
-			this.stick.destroy();
-
-			// REMOVING THE BUTTON A
-			this.buttonA.destroy();
-
-			// RESTARTING THE GAME
-			this.state.restart();
-			}, this);
+		this.buttonRestart.onInputUp.add(function(){this.restartGame();}, this);
 
 		// ADDING THE SOUND ON GAME ICON
 		this.buttonSoundOnGameShadow = game.add.sprite(660, 34, "imageSoundOn");
@@ -628,6 +617,41 @@ GoldenAxe.Game.prototype = {
 			// SHOWING ANIMATION STANDING TO THE LEFT
 			this.hero.animations.play("stand_left", 3, false);
 			}
+		},
+
+	restartGame: function()
+		{
+		// REMOVING THE JOYSTICK
+		this.stick.destroy();
+
+		// REMOVING THE BUTTON A
+		this.buttonA.destroy();
+
+		// CHECKING IF THE SOUND IS ENABLED
+		if (GAME_SOUND_ENABLED==true)
+			{
+			// CHECKING IF THE BACKGROUND MUSIC PLAYER IS CREATED
+			if(this.musicPlayer!=null)
+				{
+				// DESTROYING THE BACKGROUND MUSIC PLAYER
+				this.musicPlayer.destroy();
+				}
+
+			// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS BACKGROUND MUSIC
+			this.musicPlayer = this.add.audio("musicBackground");
+
+			// SETTING THE BACKGROUND MUSIC VOLUME
+			this.musicPlayer.volume = 0.3;
+
+			// SETTING THAT THE BACKGROUND MUSIC WILL BE LOOPING
+			this.musicPlayer.loop = true;
+
+			// PLAYING THE BACKGROUND MUSIC
+			this.musicPlayer.play();
+			}
+
+		// RESTARTING THE GAME
+		this.state.restart();
 		},
 
 	showToast: function(myText, mustFade)
