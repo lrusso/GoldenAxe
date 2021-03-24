@@ -204,12 +204,12 @@ GoldenAxe.Game.prototype = {
 		this.keySpace = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
 		// ADDING THE STICK FOR MOBILE DEVICES
-		this.stick = this.pad.addDPad(100, 375, 0, "dpad");
+		this.stick = this.pad.addDPad(100, 385, 0, "dpad");
 		this.stick.sprite.scale.set(0.8);
 		this.stick.sprite.tint = 0xA9A9A9;
 
 		// ADDING THE BUTTON A
-		this.buttonA = this.pad.addButton(680, 400, "dpad", "button1-up", "button1-down");
+		this.buttonA = this.pad.addButton(670, 400, "dpad", "button1-up", "button1-down");
 		this.buttonA.sprite.scale.set(0.9);
 		this.buttonA.sprite.tint = 0xA9A9A9;
 		this.buttonA.sprite.inputEnabled = true;
