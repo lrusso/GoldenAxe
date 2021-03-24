@@ -463,7 +463,7 @@ GoldenAxe.Game.prototype = {
 		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
 			{
 			// SHOWING ANIMATION WALKING TO THE LEFT
-			this.hero.animations.play("walk_left", 7, true);
+			this.hero.animations.play("walk_left", 6, true);
 
 			// SETTING THAT THE HERO IS NOT LOOKING TO THE RIGHT
 			this.hero.lookingRight = false;
@@ -483,7 +483,7 @@ GoldenAxe.Game.prototype = {
 		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
 			{
 			// SHOWING ANIMATION WALKING TO THE RIGHT
-			this.hero.animations.play("walk_right", 7, true);
+			this.hero.animations.play("walk_right", 6, true);
 
 			// SETTING THAT THE HERO IS LOOKING TO THE RIGHT
 			this.hero.lookingRight = true;
@@ -506,12 +506,12 @@ GoldenAxe.Game.prototype = {
 			if (this.hero.lookingRight==true)
 				{
 				// SHOWING ANIMATION WALKING TO THE RIGHT
-				this.hero.animations.play("walk_right", 7, true);
+				this.hero.animations.play("walk_right", 6, true);
 				}
 				else
 				{
 				// SHOWING ANIMATION WALKING TO THE LEFT
-				this.hero.animations.play("walk_left", 7, true);
+				this.hero.animations.play("walk_left", 6, true);
 				}
 
 			// CHECKING IF THE HERO DOES NOT HIT THE SCREEN TOP LIMIT
@@ -532,12 +532,12 @@ GoldenAxe.Game.prototype = {
 			if (this.hero.lookingRight==true)
 				{
 				// SHOWING ANIMATION WALKING TO THE RIGHT
-				this.hero.animations.play("walk_right", 7, true);
+				this.hero.animations.play("walk_right", 6, true);
 				}
 				else
 				{
 				// SHOWING ANIMATION WALKING TO THE LEFT
-				this.hero.animations.play("walk_left", 7, true);
+				this.hero.animations.play("walk_left", 6, true);
 				}
 
 			// CHECKING IF THE HERO DOES NOT HIT THE SCREEN BOTTOM LIMIT
