@@ -31,7 +31,7 @@ GoldenAxe.Preloader.prototype = {
 	init: function ()
 		{
 		// SETTING THE MAXPOINTERS VALUE
-		this.input.maxPointers = 1;
+		this.input.maxPointers = 2;
 
 		// SETTING THE ROUNDPIXELS PROPERTY TO FALSE (IMPORTANT, DO NOT MODIFY)
 		this.game.renderer.renderSession.roundPixels = false;
