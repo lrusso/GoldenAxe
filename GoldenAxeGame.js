@@ -240,28 +240,28 @@ GoldenAxe.Game.prototype = {
 	update: function ()
 		{
 		// CHECKING IF THE USER IS PRESSING THE RIGHT KEY
-		if(this.cursors.right.isDown==true || this.keyD.isDown || (this.stick.isDown==true && this.stick.direction === Phaser.RIGHT))
+		if(this.cursors.right.isDown==true || this.keyD.isDown)
 			{
 			// MOVING THE HERO TO THE RIGHT
 			this.heroMoveRight();
 			}
 
 		// CHECKING IF THE USER IS PRESSING THE LEFT KEY
-		else if(this.cursors.left.isDown==true || this.keyA.isDown || (this.stick.isDown==true && this.stick.direction === Phaser.LEFT))
+		else if(this.cursors.left.isDown==true || this.keyA.isDown)
 			{
 			// MOVING THE HERO TO THE LEFT
 			this.heroMoveLeft();
 			}
 
 		// CHECKING IF THE USER IS PRESSING THE UP KEY
-		if(this.cursors.up.isDown==true || this.keyW.isDown || (this.stick.isDown==true && this.stick.direction === Phaser.UP))
+		if(this.cursors.up.isDown==true || this.keyW.isDown)
 			{
 			// MOVING UP THE HERO
 			this.heroMoveUp();
 			}
 
 		// CHECKING IF THE USER IS PRESSING THE DOWN KEY
-		else if(this.cursors.down.isDown==true || this.keyS.isDown || (this.stick.isDown==true && this.stick.direction === Phaser.DOWN))
+		else if(this.cursors.down.isDown==true || this.keyS.isDown)
 			{
 			// MOVING DOWN THE HERO
 			this.heroMoveDown();
@@ -272,6 +272,46 @@ GoldenAxe.Game.prototype = {
 			{
 			// CALLING THE HERO ATTACK EVENT
 			this.heroAttack();
+			}
+
+		if (this.isMobileDevice==true)
+			{
+			if (this.stick.isDown && this.stick.octant==270)
+				{
+				this.heroMoveUp();
+				}
+			else if (this.stick.isDown && this.stick.octant==315)
+				{
+				this.heroMoveUp();
+				this.heroMoveRight();
+				}
+			else if (this.stick.isDown && this.stick.octant==225)
+				{
+				this.heroMoveUp();
+				this.heroMoveLeft();
+				}
+			else if (this.stick.isDown && this.stick.octant==180)
+				{
+				this.heroMoveLeft();
+				}
+			else if (this.stick.isDown && this.stick.octant==135)
+				{
+				this.heroMoveDown();
+				this.heroMoveLeft();
+				}
+			else if (this.stick.isDown && this.stick.octant==90)
+				{
+				this.heroMoveDown();
+				}
+			else if (this.stick.isDown && this.stick.octant==45)
+				{
+				this.heroMoveDown();
+				this.heroMoveRight();
+				}
+			else if (this.stick.isDown && (this.stick.octant==0 || this.stick.octant==360))
+				{
+				this.heroMoveRight();
+				}
 			}
 
 		// CHECKING IF THE USER IS NOT PRESSING ANY KEY
