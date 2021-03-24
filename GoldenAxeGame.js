@@ -111,7 +111,6 @@ GoldenAxe.Game = function (game)
 	this.heroAttackLeftHandler = null;
 	this.enemy = null;
 	this.enemyIntro = null;
-	this.enemyIntroMoving = null;
 	this.gate = null;
 	this.score = null;
 	this.highscore = null;
@@ -169,7 +168,6 @@ GoldenAxe.Game.prototype = {
 		this.heroAttackLeftHandler = null;
 		this.enemy = null;
 		this.enemyIntro = false;
-		this.enemyIntroMoving = false;
 		this.gate = null;
 		this.score = null;
 		this.highscore = null;
@@ -260,22 +258,12 @@ GoldenAxe.Game.prototype = {
 			{
 			// STARTING THE ENEMY FADING IN ANIMATION
 			game.add.tween(this.enemy).to({alpha: 1}, 200, Phaser.Easing.Linear.None, true);
-
-			// WAITING 200 MS
-			setTimeout(function()
-				{
-				// SETTING THAT THE ENEMY MUST BE MOVING BECAUSE OF THE INTRO SCENE
-				game.state.states["GoldenAxe.Game"].enemyIntroMoving = true;
-				}, 200);
 			}, this);
 		this.gateClosingHandler = this.gate.animations.add("closing", [4, 2, 1, 0]);
 		this.gateClosingHandler.onComplete.add(function()
 			{
 			// SETTING THAT THE ENEMY INTRO IT'S DONE
 			this.enemyIntro = false;
-
-			// SETTING THAT THE ENEMY MOVING BECAUSE OF THE INTRO SCENE IS NOT REQUIRED ANYMORE
-			this.enemyIntroMoving = false;
 			}, this);
 
 		// PLAYING THE OPENING GATE ANIMATION
@@ -488,7 +476,7 @@ GoldenAxe.Game.prototype = {
 	update: function ()
 		{
 		// CHECKING IF THE ENEMY SHOULD BE MOVING BECAUSE OF THE INTRO SCENE
-		if (this.enemyIntroMoving==true)
+		if (this.enemyIntro==true && this.enemy.alpha==1)
 			{
 			// SHOWING ANIMATION WALKING TO THE LEFT (USED TO MOVE DOWN)
 			this.enemy.animations.play("walk_left", 6, true);
@@ -514,7 +502,7 @@ GoldenAxe.Game.prototype = {
 			}
 
 		// CHECKING IF THE ENEMY INTRO IS DONE
-		else if (this.enemyIntro==false && this.enemyIntroMoving==false)
+		else if (this.enemyIntro==false)
 			{
 			// CHECKING IF THE USER IS PRESSING THE RIGHT KEY
 			if(this.cursors.right.isDown==true || this.keyD.isDown)
