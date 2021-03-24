@@ -209,7 +209,7 @@ GoldenAxe.Game.prototype = {
 		this.stick.sprite.tint = 0xA9A9A9;
 
 		// ADDING THE BUTTON A
-		this.buttonA = this.pad.addButton(650, 400, "dpad", "button1-up", "button1-down");
+		this.buttonA = this.pad.addButton(680, 400, "dpad", "button1-up", "button1-down");
 		this.buttonA.sprite.scale.set(0.9);
 		this.buttonA.sprite.tint = 0xA9A9A9;
 		this.buttonA.sprite.inputEnabled = true;
