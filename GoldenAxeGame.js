@@ -274,43 +274,63 @@ GoldenAxe.Game.prototype = {
 			this.heroAttack();
 			}
 
+		// CHECKING IF IT IS A MOBILE DEVICE
 		if (this.isMobileDevice==true)
 			{
-			if (this.stick.isDown && this.stick.octant==270)
+			// CHECKING IF THE USER IS PRESSING THE STICK
+			if (this.stick.isDown)
 				{
-				this.heroMoveUp();
-				}
-			else if (this.stick.isDown && this.stick.octant==315)
-				{
-				this.heroMoveUp();
-				this.heroMoveRight();
-				}
-			else if (this.stick.isDown && this.stick.octant==225)
-				{
-				this.heroMoveUp();
-				this.heroMoveLeft();
-				}
-			else if (this.stick.isDown && this.stick.octant==180)
-				{
-				this.heroMoveLeft();
-				}
-			else if (this.stick.isDown && this.stick.octant==135)
-				{
-				this.heroMoveDown();
-				this.heroMoveLeft();
-				}
-			else if (this.stick.isDown && this.stick.octant==90)
-				{
-				this.heroMoveDown();
-				}
-			else if (this.stick.isDown && this.stick.octant==45)
-				{
-				this.heroMoveDown();
-				this.heroMoveRight();
-				}
-			else if (this.stick.isDown && (this.stick.octant==0 || this.stick.octant==360))
-				{
-				this.heroMoveRight();
+				// CHECKING IF THE USER IS PRESSING THE TOP SIDE OF THE STICK
+				if (this.stick.octant==270)
+					{
+					this.heroMoveUp();
+					}
+
+				// CHECKING IF THE USER IS PRESSING THE TOP-RIGHT SIDE OF THE STICK
+				else if (this.stick.octant==315)
+					{
+					this.heroMoveUp();
+					this.heroMoveRight();
+					}
+
+				// CHECKING IF THE USER IS PRESSING THE TOP-LEFT SIDE OF THE STICK
+				else if (this.stick.octant==225)
+					{
+					this.heroMoveUp();
+					this.heroMoveLeft();
+					}
+
+				// CHECKING IF THE USER IS PRESSING THE LEFT SIDE OF THE STICK
+				else if (this.stick.octant==180)
+					{
+					this.heroMoveLeft();
+					}
+
+				// CHECKING IF THE USER IS PRESSING THE DOWN-LEFT SIDE OF THE STICK
+				else if (this.stick.octant==135)
+					{
+					this.heroMoveDown();
+					this.heroMoveLeft();
+					}
+
+				// CHECKING IF THE USER IS PRESSING THE DOWN SIDE OF THE STICK
+				else if (this.stick.octant==90)
+					{
+					this.heroMoveDown();
+					}
+
+				// CHECKING IF THE USER IS PRESSING THE DOWN-RIGHT SIDE OF THE STICK
+				else if (this.stick.octant==45)
+					{
+					this.heroMoveDown();
+					this.heroMoveRight();
+					}
+
+				// CHECKING IF THE USER IS PRESSING THE RIGHT SIDE OF THE STICK
+				else if (this.stick.octant==0 || this.stick.octant==360)
+					{
+					this.heroMoveRight();
+					}
 				}
 			}
 
