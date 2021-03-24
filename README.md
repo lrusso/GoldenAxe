@@ -10,4 +10,4 @@ https://lrusso.github.io/GoldenAxe/GoldenAxe.htm
 
 ## Disclaimer
 
-The Golden Axe resources (images, music, sounds) are provided for educational purposes ONLY. This demo is not affiliated with or endorsed by their respective copyright holders.
+The Golden Axe resources (images, music and sounds) are provided for educational purposes ONLY. This demo is not affiliated with or endorsed by their respective copyright holders.
