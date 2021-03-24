@@ -267,7 +267,7 @@ GoldenAxe.Game.prototype = {
 			},this);
 
 		// ADDING THE HERO SPRITE
-		this.hero = game.add.sprite(100, 270, "imageHero");
+		this.hero = game.add.sprite(170, 250, "imageHero");
 
 		// SETTING THE HERO SCALE
 		this.hero.scale.x = 2;
