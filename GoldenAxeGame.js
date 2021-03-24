@@ -206,7 +206,17 @@ GoldenAxe.Game.prototype = {
 		this.buttonRestartShadow.tint = 0x000000;
 		this.buttonRestartShadow.alpha = 0.85;
 		this.buttonRestart = this.add.button(700, 8, "imageRestart", null, this, 2, 1, 0);
-		this.buttonRestart.onInputUp.add(function(){this.state.restart();}, this);
+		this.buttonRestart.onInputUp.add(function()
+			{
+			// REMOVING THE JOYSTICK
+			this.stick.destroy();
+
+			// REMOVING THE BUTTON A
+			this.buttonA.destroy();
+
+			// RESTARTING THE GAME
+			this.state.restart();
+			}, this);
 
 		// ADDING THE SOUND ON GAME ICON
 		this.buttonSoundOnGameShadow = game.add.sprite(660, 34, "imageSoundOn");
