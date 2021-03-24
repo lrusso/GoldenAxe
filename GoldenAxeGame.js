@@ -229,6 +229,58 @@ GoldenAxe.Game.prototype = {
 		// ADDING THE HIGHSCORE LABEL
 		this.highscore = game.add.bitmapText(410, 11.5, "retro_font", "HIGHSCORE: 25", 13);
 
+		// ADDING THE GATE SPRITE
+		this.gate = game.add.sprite(532, 53, "imageGate");
+
+		// SETTING THE GATE SCALE
+		this.gate.scale.x = 2.4;
+		this.gate.scale.y = 2.1;
+
+		// ADDING THE GATE ANIMATIONS
+		this.gate.animations.add("closed", [0]);
+		this.gate.animations.add("opened", [4]);
+		this.gateOpeningHandler = this.gate.animations.add("opening", [0, 1, 2, 3]);
+		this.gateOpeningHandler.onStart.add(function()
+			{
+			// CHECKING IF THE ENEMY IS CREATED
+			if (this.enemy!=null)
+				{
+				// HIDING THE ENEMY
+				this.enemy.alpha = 0;
+
+				// MOVING THE ENEMY TO THE GATE
+				this.enemy.position.x = 525;
+				this.enemy.position.y = 78;
+				}
+
+			// SETTING THAT THE ENEMY INTRO IS HAPENNING
+			this.enemyIntro = true;
+			}, this);
+		this.gateOpeningHandler.onComplete.add(function()
+			{
+			// STARTING THE ENEMY FADING IN ANIMATION
+			game.add.tween(this.enemy).to({alpha: 1}, 200, Phaser.Easing.Linear.None, true);
+
+			// WAITING 200 MS
+			setTimeout(function()
+				{
+				// SETTING THAT THE ENEMY MUST BE MOVING BECAUSE OF THE INTRO SCENE
+				game.state.states["GoldenAxe.Game"].enemyIntroMoving = true;
+				}, 200);
+			}, this);
+		this.gateClosingHandler = this.gate.animations.add("closing", [4, 2, 1, 0]);
+		this.gateClosingHandler.onComplete.add(function()
+			{
+			// SETTING THAT THE ENEMY INTRO IT'S DONE
+			this.enemyIntro = false;
+
+			// SETTING THAT THE ENEMY MOVING BECAUSE OF THE INTRO SCENE IS NOT REQUIRED ANYMORE
+			this.enemyIntroMoving = false;
+			}, this);
+
+		// PLAYING THE OPENING GATE ANIMATION
+		this.gate.animations.play("opening", 2, false);
+
 		// ADDING THE RESTART BUTTON
 		this.buttonRestartShadow = game.add.sprite(726, 34, "imageRestart");
 		this.buttonRestartShadow.anchor.set(0.5);
@@ -308,48 +360,6 @@ GoldenAxe.Game.prototype = {
 			this.musicPlayer.play();
 			},this);
 
-		// ADDING THE GATE SPRITE
-		this.gate = game.add.sprite(532, 53, "imageGate");
-
-		// SETTING THE ENEMY SCALE
-		this.gate.scale.x = 2.4;
-		this.gate.scale.y = 2.1;
-
-		// ADDING THE ENEMY ANIMATIONS
-		this.gate.animations.add("closed", [0]);
-		this.gate.animations.add("opened", [4]);
-
-		this.gateOpeningHandler = this.gate.animations.add("opening", [0, 1, 2, 3]);
-		this.gateOpeningHandler.onStart.add(function()
-			{
-			if (this.enemy)
-				{
-				this.enemy.position.x = 525;
-				this.enemy.position.y = 78;
-				}
-			this.enemyIntro = true;
-			}, this);
-		this.gateOpeningHandler.onComplete.add(function()
-			{
-			// STARTING FADING OUT ANIMATION TO START THE TELEPORTING
-			game.add.tween(this.enemy).to({alpha: 1}, 200, Phaser.Easing.Linear.None, true);
-
-			// WAITING 200 MS
-			setTimeout(function()
-				{
-				game.state.states["GoldenAxe.Game"].enemyIntroMoving = true;
-				},200);
-
-			}, this);
-		this.gateClosingHandler = this.gate.animations.add("closing", [4, 2, 1, 0]);
-		this.gateClosingHandler.onComplete.add(function()
-			{
-			this.enemyIntro = false;
-			this.enemyIntroMoving = false;
-			}, this);
-
-		this.gate.animations.play("opening", 2, false);
-
 		// ADDING THE ENEMY SPRITE
 		this.enemy = game.add.sprite(525, 78, "imageOrc");
 
@@ -363,9 +373,10 @@ GoldenAxe.Game.prototype = {
 		this.enemy.animations.add("walk_right", [3, 4, 5]);
 		this.enemy.animations.add("walk_left", [0, 1, 2]);
 
-		// SETTING THAT THE HERO WILL STAND TO THE LEFT
+		// SETTING THAT THE ENEMY WILL STAND TO THE LEFT
 		this.enemy.animations.play("stand_left", 3, false);
 
+		// HIDING THE ENEMY
 		this.enemy.alpha = 0;
 
 		// ADDING THE HERO SPRITE
@@ -401,6 +412,7 @@ GoldenAxe.Game.prototype = {
 			}, this);
 		this.heroAttackRightHandler.onComplete.add(function()
 			{
+			// SETTING THAT THE HERO WILL STAND AFTER THE ATTACK MOVEMENT IT'S COMPLETED
 			this.heroStand();
 			}, this);
 		this.heroAttackLeftHandler = this.hero.animations.add("attack_left", [12, 13, 14, 15]);
@@ -419,6 +431,7 @@ GoldenAxe.Game.prototype = {
 			}, this);
 		this.heroAttackLeftHandler.onComplete.add(function()
 			{
+			// SETTING THAT THE HERO WILL STAND AFTER THE ATTACK MOVEMENT IT'S COMPLETED
 			this.heroStand();
 			}, this);
 
@@ -474,125 +487,136 @@ GoldenAxe.Game.prototype = {
 
 	update: function ()
 		{
+		// CHECKING IF THE ENEMY SHOULD BE MOVING BECAUSE OF THE INTRO SCENE
 		if (this.enemyIntroMoving==true)
 			{
+			// SHOWING ANIMATION WALKING TO THE LEFT (USED TO MOVE DOWN)
 			this.enemy.animations.play("walk_left", 6, true);
+
+			// CHECKING IF ENEMY IS NOT AT THE REQUIRED Y POSITION
 			if (this.enemy.position.y!=250)
 				{
+				// MOVING DOWN THE ENEMY
 				this.enemy.position.y = this.enemy.position.y + 1;
 				}
 				else
 				{
+				// SHOWING ANIMATION LOOKING TO THE LEFT
 				this.enemy.animations.play("stand_left", 6, false);
+
+				// CHECKING IF THE GATE IS NOT CLOSING
 				if (this.gate.animations.currentAnim.name!="closing")
 					{
+					// CLOSING THE GATE
 					this.gate.animations.play("closing", 6, false);
 					}
 				}
 			}
+
+		// CHECKING IF THE ENEMY INTRO IS DONE
 		else if (this.enemyIntro==false && this.enemyIntroMoving==false)
 			{
-		// CHECKING IF THE USER IS PRESSING THE RIGHT KEY
-		if(this.cursors.right.isDown==true || this.keyD.isDown)
-			{
-			// MOVING THE HERO TO THE RIGHT
-			this.heroMoveRight();
-			}
-
-		// CHECKING IF THE USER IS PRESSING THE LEFT KEY
-		else if(this.cursors.left.isDown==true || this.keyA.isDown)
-			{
-			// MOVING THE HERO TO THE LEFT
-			this.heroMoveLeft();
-			}
-
-		// CHECKING IF THE USER IS PRESSING THE UP KEY
-		if(this.cursors.up.isDown==true || this.keyW.isDown)
-			{
-			// MOVING UP THE HERO
-			this.heroMoveUp();
-			}
-
-		// CHECKING IF THE USER IS PRESSING THE DOWN KEY
-		else if(this.cursors.down.isDown==true || this.keyS.isDown)
-			{
-			// MOVING DOWN THE HERO
-			this.heroMoveDown();
-			}
-
-		// CHECKING IF THE USER IS PRESSING THE SPACE KEY
-		if(this.keySpace.isDown==true)
-			{
-			// CALLING THE HERO ATTACK EVENT
-			this.heroAttack();
-			}
-
-		// CHECKING IF IT IS A MOBILE DEVICE
-		if (this.isMobileDevice==true)
-			{
-			// CHECKING IF THE USER IS PRESSING THE STICK
-			if (this.stick.isDown)
+			// CHECKING IF THE USER IS PRESSING THE RIGHT KEY
+			if(this.cursors.right.isDown==true || this.keyD.isDown)
 				{
-				// CHECKING IF THE USER IS PRESSING THE TOP SIDE OF THE STICK
-				if (this.stick.octant==270)
-					{
-					this.heroMoveUp();
-					}
+				// MOVING THE HERO TO THE RIGHT
+				this.heroMoveRight();
+				}
 
-				// CHECKING IF THE USER IS PRESSING THE TOP-RIGHT SIDE OF THE STICK
-				else if (this.stick.octant==315)
-					{
-					this.heroMoveUp();
-					this.heroMoveRight();
-					}
+			// CHECKING IF THE USER IS PRESSING THE LEFT KEY
+			else if(this.cursors.left.isDown==true || this.keyA.isDown)
+				{
+				// MOVING THE HERO TO THE LEFT
+				this.heroMoveLeft();
+				}
 
-				// CHECKING IF THE USER IS PRESSING THE TOP-LEFT SIDE OF THE STICK
-				else if (this.stick.octant==225)
-					{
-					this.heroMoveUp();
-					this.heroMoveLeft();
-					}
+			// CHECKING IF THE USER IS PRESSING THE UP KEY
+			if(this.cursors.up.isDown==true || this.keyW.isDown)
+				{
+				// MOVING UP THE HERO
+				this.heroMoveUp();
+				}
 
-				// CHECKING IF THE USER IS PRESSING THE LEFT SIDE OF THE STICK
-				else if (this.stick.octant==180)
-					{
-					this.heroMoveLeft();
-					}
+			// CHECKING IF THE USER IS PRESSING THE DOWN KEY
+			else if(this.cursors.down.isDown==true || this.keyS.isDown)
+				{
+				// MOVING DOWN THE HERO
+				this.heroMoveDown();
+				}
 
-				// CHECKING IF THE USER IS PRESSING THE DOWN-LEFT SIDE OF THE STICK
-				else if (this.stick.octant==135)
-					{
-					this.heroMoveDown();
-					this.heroMoveLeft();
-					}
+			// CHECKING IF THE USER IS PRESSING THE SPACE KEY
+			if(this.keySpace.isDown==true)
+				{
+				// CALLING THE HERO ATTACK EVENT
+				this.heroAttack();
+				}
 
-				// CHECKING IF THE USER IS PRESSING THE DOWN SIDE OF THE STICK
-				else if (this.stick.octant==90)
+			// CHECKING IF IT IS A MOBILE DEVICE
+			if (this.isMobileDevice==true)
+				{
+				// CHECKING IF THE USER IS PRESSING THE STICK
+				if (this.stick.isDown)
 					{
-					this.heroMoveDown();
-					}
+					// CHECKING IF THE USER IS PRESSING THE TOP SIDE OF THE STICK
+					if (this.stick.octant==270)
+						{
+						this.heroMoveUp();
+						}
 
-				// CHECKING IF THE USER IS PRESSING THE DOWN-RIGHT SIDE OF THE STICK
-				else if (this.stick.octant==45)
-					{
-					this.heroMoveDown();
-					this.heroMoveRight();
-					}
+					// CHECKING IF THE USER IS PRESSING THE TOP-RIGHT SIDE OF THE STICK
+					else if (this.stick.octant==315)
+						{
+						this.heroMoveUp();
+						this.heroMoveRight();
+						}
 
-				// CHECKING IF THE USER IS PRESSING THE RIGHT SIDE OF THE STICK
-				else if (this.stick.octant==0 || this.stick.octant==360)
-					{
-					this.heroMoveRight();
+					// CHECKING IF THE USER IS PRESSING THE TOP-LEFT SIDE OF THE STICK
+					else if (this.stick.octant==225)
+						{
+						this.heroMoveUp();
+						this.heroMoveLeft();
+						}
+
+					// CHECKING IF THE USER IS PRESSING THE LEFT SIDE OF THE STICK
+					else if (this.stick.octant==180)
+						{
+						this.heroMoveLeft();
+						}
+
+					// CHECKING IF THE USER IS PRESSING THE DOWN-LEFT SIDE OF THE STICK
+					else if (this.stick.octant==135)
+						{
+						this.heroMoveDown();
+						this.heroMoveLeft();
+						}
+
+					// CHECKING IF THE USER IS PRESSING THE DOWN SIDE OF THE STICK
+					else if (this.stick.octant==90)
+						{
+						this.heroMoveDown();
+						}
+
+					// CHECKING IF THE USER IS PRESSING THE DOWN-RIGHT SIDE OF THE STICK
+					else if (this.stick.octant==45)
+						{
+						this.heroMoveDown();
+						this.heroMoveRight();
+						}
+
+					// CHECKING IF THE USER IS PRESSING THE RIGHT SIDE OF THE STICK
+					else if (this.stick.octant==0 || this.stick.octant==360)
+						{
+						this.heroMoveRight();
+						}
 					}
 				}
-			}
 
-		// CHECKING IF THE USER IS NOT PRESSING ANY KEY
-		if (this.cursors.up.isUp==true && this.cursors.down.isUp==true && this.cursors.left.isUp==true && this.cursors.right.isUp==true && this.keySpace.isUp && this.keyW.isUp==true && this.keyA.isUp==true && this.keyD.isUp==true && this.keyS.isUp==true && this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right" && this.stick.isUp==true)
-			{
-			// CALLING THE HERO STAND EVENT
-			this.heroStand();
-			}
+			// CHECKING IF THE USER IS NOT PRESSING ANY KEY
+			if (this.cursors.up.isUp==true && this.cursors.down.isUp==true && this.cursors.left.isUp==true && this.cursors.right.isUp==true && this.keySpace.isUp && this.keyW.isUp==true && this.keyA.isUp==true && this.keyD.isUp==true && this.keyS.isUp==true && this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right" && this.stick.isUp==true)
+				{
+				// CALLING THE HERO STAND EVENT
+				this.heroStand();
+				}
 			}
 		},
 
