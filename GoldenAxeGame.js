@@ -578,7 +578,7 @@ GoldenAxe.Game.prototype = {
 			var someMovement = false;
 
 			// CHECKING IF A RIGHT MOVEMENT MUST BE PERFORMED
-			if (moveRight==true && moveUp==false && moveDown==false && moveLeft==false)
+			if ((moveRight==true && moveUp==false && moveDown==false && moveLeft==false) || (this.stick.isDown==true && (this.stick.octant==0 || this.stick.octant==360)))
 				{
 				// MOVING THE HERO TO THE RIGHT
 				this.heroMoveRight();
@@ -588,7 +588,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// CHECKING IF A LEFT MOVEMENT MUST BE PERFORMED
-			if (moveLeft==true && moveUp==false && moveDown==false && moveRight==false)
+			if ((moveLeft==true && moveUp==false && moveDown==false && moveRight==false) || (this.stick.isDown==true && this.stick.octant==180))
 				{
 				// MOVING THE HERO TO THE LEFT
 				this.heroMoveLeft();
@@ -598,7 +598,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// CHECKING IF A UP MOVEMENT MUST BE PERFORMED
-			if (moveUp==true && moveLeft==false && moveRight==false && moveDown==false)
+			if ((moveUp==true && moveLeft==false && moveRight==false && moveDown==false) || (this.stick.isDown==true && this.stick.octant==270))
 				{
 				// MOVING THE HERO TO THE TOP
 				this.heroMoveUp();
@@ -608,7 +608,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// CHECKING IF A DOWN MOVEMENT MUST BE PERFORMED
-			if (moveDown==true && moveLeft==false && moveRight==false && moveUp==false)
+			if ((moveDown==true && moveLeft==false && moveRight==false && moveUp==false) || (this.stick.isDown==true && this.stick.octant==90))
 				{
 				// MOVING DOWN THE HERO
 				this.heroMoveDown();
@@ -618,7 +618,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// CHECKING IF A RIGHT-TOP MOVEMENT MUST BE PERFORMED
-			if (moveRight==true && moveUp==true && moveDown==false && moveLeft==false)
+			if ((moveRight==true && moveUp==true && moveDown==false && moveLeft==false) || (this.stick.isDown==true && this.stick.octant==315))
 				{
 				// MOVING THE HERO TO THE RIGHT-TOP
 				this.heroMoveRightTop();
@@ -628,7 +628,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// CHECKING IF A RIGHT-DOWN MOVEMENT MUST BE PERFORMED
-			if (moveRight==true && moveDown==true && moveUp==false && moveLeft==false)
+			if ((moveRight==true && moveDown==true && moveUp==false && moveLeft==false) || (this.stick.isDown==true && this.stick.octant==45))
 				{
 				// MOVING THE HERO TO THE RIGHT-DOWN
 				this.heroMoveRightDown();
@@ -638,7 +638,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// CHECKING IF A LEFT-TOP MOVEMENT MUST BE PERFORMED
-			if (moveLeft==true && moveUp==true && moveDown==false && moveRight==false)
+			if ((moveLeft==true && moveUp==true && moveDown==false && moveRight==false) || (this.stick.isDown==true && this.stick.octant==225))
 				{
 				// MOVING THE HERO TO THE LEFT-TOP
 				this.heroMoveLeftTop();
@@ -648,7 +648,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// CHECKING IF A LEFT-DOWN MOVEMENT MUST BE PERFORMED
-			if (moveLeft==true && moveDown==true && moveUp==false && moveRight==false)
+			if ((moveLeft==true && moveDown==true && moveUp==false && moveRight==false) || (this.stick.isDown==true && this.stick.octant==135))
 				{
 				// MOVING THE HERO TO THE LEFT-DOWN
 				this.heroMoveLeftDown();
@@ -665,94 +665,6 @@ GoldenAxe.Game.prototype = {
 
 				// SETTING THAT A MOVEMENT HAPPENED
 				someMovement = true;
-				}
-
-			// CHECKING IF IT IS A MOBILE DEVICE
-			if (this.isMobileDevice==true)
-				{
-				// CHECKING IF THE USER IS PRESSING THE STICK
-				if (this.stick.isDown)
-					{
-					// CHECKING IF THE USER IS PRESSING THE TOP SIDE OF THE STICK
-					if (this.stick.octant==270)
-						{
-						// MOVING UP THE HERO
-						this.heroMoveUp();
-
-						// SETTING THAT A MOVEMENT HAPPENED
-						someMovement = true;
-						}
-
-					// CHECKING IF THE USER IS PRESSING THE TOP-RIGHT SIDE OF THE STICK
-					else if (this.stick.octant==315)
-						{
-						// MOVING THE HERO TO THE RIGHT-TOP
-						this.heroMoveRightTop();
-
-						// SETTING THAT A MOVEMENT HAPPENED
-						someMovement = true;
-						}
-
-					// CHECKING IF THE USER IS PRESSING THE TOP-LEFT SIDE OF THE STICK
-					else if (this.stick.octant==225)
-						{
-						// MOVING THE HERO TO THE LEFT-TOP
-						this.heroMoveLeftTop();
-
-						// SETTING THAT A MOVEMENT HAPPENED
-						someMovement = true;
-						}
-
-					// CHECKING IF THE USER IS PRESSING THE LEFT SIDE OF THE STICK
-					else if (this.stick.octant==180)
-						{
-						// MOVING THE HERO TO THE LEFT
-						this.heroMoveLeft();
-
-						// SETTING THAT A MOVEMENT HAPPENED
-						someMovement = true;
-						}
-
-					// CHECKING IF THE USER IS PRESSING THE DOWN-LEFT SIDE OF THE STICK
-					else if (this.stick.octant==135)
-						{
-						// MOVING THE HERO TO THE LEFT-DOWN
-						this.heroMoveLeftDown();
-
-						// SETTING THAT A MOVEMENT HAPPENED
-						someMovement = true;
-						}
-
-					// CHECKING IF THE USER IS PRESSING THE DOWN SIDE OF THE STICK
-					else if (this.stick.octant==90)
-						{
-						// MOVING DOWN THE HERO
-						this.heroMoveDown();
-
-						// SETTING THAT A MOVEMENT HAPPENED
-						someMovement = true;
-						}
-
-					// CHECKING IF THE USER IS PRESSING THE DOWN-RIGHT SIDE OF THE STICK
-					else if (this.stick.octant==45)
-						{
-						// MOVING THE HERO TO THE RIGHT-DOWN
-						this.heroMoveRightDown();
-
-						// SETTING THAT A MOVEMENT HAPPENED
-						someMovement = true;
-						}
-
-					// CHECKING IF THE USER IS PRESSING THE RIGHT SIDE OF THE STICK
-					else if (this.stick.octant==0 || this.stick.octant==360)
-						{
-						// MOVING THE HERO TO THE RIGHT
-						this.heroMoveRight();
-
-						// SETTING THAT A MOVEMENT HAPPENED
-						someMovement = true;
-						}
-					}
 				}
 
 			// CHECKING IF THERE WASN'T A MOVEMENT AND THAT THE HERO IS NOT ATTACKING
