@@ -194,6 +194,9 @@ GoldenAxe.Game.prototype = {
 		// ADDING THE PAD PLUGIN
 		this.pad = this.game.plugins.add(Phaser.VirtualJoystick);
 
+		// STARTING THE PHYSICS SYSTEM
+		game.physics.startSystem(Phaser.Physics.ARCADE);
+
 		// SETTING THE BACKGROUND COLOR
 		this.stage.backgroundColor = "#000000";
 
@@ -215,11 +218,11 @@ GoldenAxe.Game.prototype = {
 		this.heroEnergyBar2 = game.add.graphics(0, 0);
 		this.heroEnergyBar2.lineStyle(2, 0x4040C0, 1);
 		this.heroEnergyBar2.beginFill(0x202080, 1);
-		this.heroEnergyBar2.drawRect(102, 8, 50, 21);
+		this.heroEnergyBar2.drawRect(101, 8, 50, 21);
 		this.heroEnergyBar3 = game.add.graphics(0, 0);
 		this.heroEnergyBar3.lineStyle(2, 0x4040C0, 1);
 		this.heroEnergyBar3.beginFill(0x202080, 1);
-		this.heroEnergyBar3.drawRect(162, 8, 50, 21);
+		this.heroEnergyBar3.drawRect(161, 8, 50, 21);
 
 		// ADDING THE SCORE LABEL
 		this.score = game.add.bitmapText(245, 11.5, "retro_font", "SCORE: 10", 13);
@@ -229,6 +232,18 @@ GoldenAxe.Game.prototype = {
 
 		// ADDING THE GATE SPRITE
 		this.gate = game.add.sprite(532, 53, "imageGate");
+
+		this.block1 = game.add.sprite(0,243, "");
+		this.block1.width = 757;
+		this.block1.height = 10;
+		game.physics.arcade.enable(this.block1);
+		this.block1.body.immovable = true;
+
+		this.block2 = game.add.sprite(340,253, "");
+		this.block2.width = 77;
+		this.block2.height = 20;
+		game.physics.arcade.enable(this.block2);
+		this.block2.body.immovable = true;
 
 		// SETTING THE GATE SCALE
 		this.gate.scale.x = 2.4;
@@ -367,6 +382,15 @@ GoldenAxe.Game.prototype = {
 		// HIDING THE ENEMY
 		this.enemy.alpha = 0;
 
+		// ENABLING THE ENEMY'S PHYSICS IN ORDER TO MOVE ARROUND THE MAP
+		game.physics.arcade.enable(this.enemy);
+
+		// ADJUSTING THE ENEMY'S COLLISION BODY SIZE
+		this.enemy.body.setSize(30, 20, 55, 124);
+
+		// SETTING THAT THE ENEMY CAN'T BE MOVED BY THE HERO
+		this.enemy.body.immovable = true;
+
 		// ADDING THE HERO SPRITE
 		this.hero = game.add.sprite(170, 250, "imageHero");
 
@@ -423,6 +447,15 @@ GoldenAxe.Game.prototype = {
 			this.heroStand();
 			}, this);
 
+		// ENABLING THE HERO'S PHYSICS IN ORDER TO MOVE ARROUND THE MAP
+		game.physics.arcade.enable(this.hero);
+
+		// ADJUSTING THE HERO'S COLLISION BODY SIZE
+		this.hero.body.setSize(30, 10, 55, 144);
+
+		// SETTING THAT THE HERO WILL COLLIDE WITH THE WORLD BOUNDS
+		this.hero.body.collideWorldBounds = true;
+
 		// SETTING THAT THE HERO IS LOOKING TO THE RIGHT
 		this.hero.lookingRight = true;
 
@@ -475,6 +508,30 @@ GoldenAxe.Game.prototype = {
 
 	update: function ()
 		{
+		// CLEARING THE HERO VELOCITY
+		this.hero.body.velocity.x = 0;
+		this.hero.body.velocity.y = 0;
+
+		// SETTING THAT THE HERO WILL COLLIDE WITH THE ENEMY
+		game.physics.arcade.collide(this.hero, this.enemy);
+		game.physics.arcade.collide(this.hero, this.block1);
+		game.physics.arcade.collide(this.hero, this.block2);
+
+		game.physics.arcade.collide(this.enemy, this.block1);
+		game.physics.arcade.collide(this.enemy, this.block2);
+
+		// CHECKING IF THE HERO IS CLOSER TO THE BOTTOM OF THE SCREEN THAN THE ENEMY
+		if (this.hero.position.y>=this.enemy.position.y)
+			{
+			// BRINGING THE HERO TO THE TOP
+			this.hero.bringToTop();
+			}
+			else
+			{
+			// BRINGING THE ENEMY TO THE TOP
+			this.enemy.bringToTop();
+			}
+
 		// CHECKING IF THE ENEMY SHOULD BE MOVING BECAUSE OF THE INTRO SCENE
 		if (this.enemyIntro==true && this.enemy.alpha==1)
 			{
@@ -504,32 +561,93 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE ENEMY INTRO IS DONE
 		else if (this.enemyIntro==false)
 			{
-			// CHECKING IF THE USER IS PRESSING THE RIGHT KEY
-			if(this.cursors.right.isDown==true || this.keyD.isDown)
+			// DETECTING THE KEYS
+			var moveUp = this.cursors.up.isDown || this.keyW.isDown;
+			var moveDown = this.cursors.down.isDown || this.keyS.isDown;
+			var moveLeft = this.cursors.left.isDown || this.keyA.isDown;
+			var moveRight = this.cursors.right.isDown || this.keyD.isDown;
+
+			// VARIABLE TO CHECK IF THERE WAS A MOVEMENT AFTER ALL THE VALIDATIONS
+			var someMovement = false;
+
+			// CHECKING IF A RIGHT MOVEMENT MUST BE PERFORMED
+			if (moveRight==true && moveUp==false && moveDown==false && moveLeft==false)
 				{
 				// MOVING THE HERO TO THE RIGHT
 				this.heroMoveRight();
+
+				// SETTING THAT A MOVEMENT HAPPENED
+				someMovement = true;
 				}
 
-			// CHECKING IF THE USER IS PRESSING THE LEFT KEY
-			else if(this.cursors.left.isDown==true || this.keyA.isDown)
+			// CHECKING IF A LEFT MOVEMENT MUST BE PERFORMED
+			if (moveLeft==true && moveUp==false && moveDown==false && moveRight==false)
 				{
 				// MOVING THE HERO TO THE LEFT
 				this.heroMoveLeft();
+
+				// SETTING THAT A MOVEMENT HAPPENED
+				someMovement = true;
 				}
 
-			// CHECKING IF THE USER IS PRESSING THE UP KEY
-			if(this.cursors.up.isDown==true || this.keyW.isDown)
+			// CHECKING IF A UP MOVEMENT MUST BE PERFORMED
+			if (moveUp==true && moveLeft==false && moveRight==false && moveDown==false)
 				{
-				// MOVING UP THE HERO
+				// MOVING THE HERO TO THE TOP
 				this.heroMoveUp();
+
+				// SETTING THAT A MOVEMENT HAPPENED
+				someMovement = true;
 				}
 
-			// CHECKING IF THE USER IS PRESSING THE DOWN KEY
-			else if(this.cursors.down.isDown==true || this.keyS.isDown)
+			// CHECKING IF A DOWN MOVEMENT MUST BE PERFORMED
+			if (moveDown==true && moveLeft==false && moveRight==false && moveUp==false)
 				{
 				// MOVING DOWN THE HERO
 				this.heroMoveDown();
+
+				// SETTING THAT A MOVEMENT HAPPENED
+				someMovement = true;
+				}
+
+			// CHECKING IF A RIGHT-TOP MOVEMENT MUST BE PERFORMED
+			if (moveRight==true && moveUp==true && moveDown==false && moveLeft==false)
+				{
+				// MOVING THE HERO TO THE RIGHT-TOP
+				this.heroMoveRightTop();
+
+				// SETTING THAT A MOVEMENT HAPPENED
+				someMovement = true;
+				}
+
+			// CHECKING IF A RIGHT-DOWN MOVEMENT MUST BE PERFORMED
+			if (moveRight==true && moveDown==true && moveUp==false && moveLeft==false)
+				{
+				// MOVING THE HERO TO THE RIGHT-DOWN
+				this.heroMoveRightDown();
+
+				// SETTING THAT A MOVEMENT HAPPENED
+				someMovement = true;
+				}
+
+			// CHECKING IF A LEFT-TOP MOVEMENT MUST BE PERFORMED
+			if (moveLeft==true && moveUp==true && moveDown==false && moveRight==false)
+				{
+				// MOVING THE HERO TO THE LEFT-TOP
+				this.heroMoveLeftTop();
+
+				// SETTING THAT A MOVEMENT HAPPENED
+				someMovement = true;
+				}
+
+			// CHECKING IF A LEFT-DOWN MOVEMENT MUST BE PERFORMED
+			if (moveLeft==true && moveDown==true && moveUp==false && moveRight==false)
+				{
+				// MOVING THE HERO TO THE LEFT-DOWN
+				this.heroMoveLeftDown();
+
+				// SETTING THAT A MOVEMENT HAPPENED
+				someMovement = true;
 				}
 
 			// CHECKING IF THE USER IS PRESSING THE SPACE KEY
@@ -537,6 +655,9 @@ GoldenAxe.Game.prototype = {
 				{
 				// CALLING THE HERO ATTACK EVENT
 				this.heroAttack();
+
+				// SETTING THAT A MOVEMENT HAPPENED
+				someMovement = true;
 				}
 
 			// CHECKING IF IT IS A MOBILE DEVICE
@@ -548,63 +669,110 @@ GoldenAxe.Game.prototype = {
 					// CHECKING IF THE USER IS PRESSING THE TOP SIDE OF THE STICK
 					if (this.stick.octant==270)
 						{
+						// MOVING UP THE HERO
 						this.heroMoveUp();
+
+						// SETTING THAT A MOVEMENT HAPPENED
+						someMovement = true;
 						}
 
 					// CHECKING IF THE USER IS PRESSING THE TOP-RIGHT SIDE OF THE STICK
 					else if (this.stick.octant==315)
 						{
-						this.heroMoveUp();
-						this.heroMoveRight();
+						// MOVING THE HERO TO THE RIGHT-TOP
+						this.heroMoveRightTop();
+
+						// SETTING THAT A MOVEMENT HAPPENED
+						someMovement = true;
 						}
 
 					// CHECKING IF THE USER IS PRESSING THE TOP-LEFT SIDE OF THE STICK
 					else if (this.stick.octant==225)
 						{
-						this.heroMoveUp();
-						this.heroMoveLeft();
+						// MOVING THE HERO TO THE LEFT-TOP
+						this.heroMoveLeftTop();
+
+						// SETTING THAT A MOVEMENT HAPPENED
+						someMovement = true;
 						}
 
 					// CHECKING IF THE USER IS PRESSING THE LEFT SIDE OF THE STICK
 					else if (this.stick.octant==180)
 						{
+						// MOVING THE HERO TO THE LEFT
 						this.heroMoveLeft();
+
+						// SETTING THAT A MOVEMENT HAPPENED
+						someMovement = true;
 						}
 
 					// CHECKING IF THE USER IS PRESSING THE DOWN-LEFT SIDE OF THE STICK
 					else if (this.stick.octant==135)
 						{
-						this.heroMoveDown();
-						this.heroMoveLeft();
+						// MOVING THE HERO TO THE LEFT-DOWN
+						this.heroMoveLeftDown();
+
+						// SETTING THAT A MOVEMENT HAPPENED
+						someMovement = true;
 						}
 
 					// CHECKING IF THE USER IS PRESSING THE DOWN SIDE OF THE STICK
 					else if (this.stick.octant==90)
 						{
+						// MOVING DOWN THE HERO
 						this.heroMoveDown();
+
+						// SETTING THAT A MOVEMENT HAPPENED
+						someMovement = true;
 						}
 
 					// CHECKING IF THE USER IS PRESSING THE DOWN-RIGHT SIDE OF THE STICK
 					else if (this.stick.octant==45)
 						{
-						this.heroMoveDown();
-						this.heroMoveRight();
+						// MOVING THE HERO TO THE RIGHT-DOWN
+						this.heroMoveRightDown();
+
+						// SETTING THAT A MOVEMENT HAPPENED
+						someMovement = true;
 						}
 
 					// CHECKING IF THE USER IS PRESSING THE RIGHT SIDE OF THE STICK
 					else if (this.stick.octant==0 || this.stick.octant==360)
 						{
+						// MOVING THE HERO TO THE RIGHT
 						this.heroMoveRight();
+
+						// SETTING THAT A MOVEMENT HAPPENED
+						someMovement = true;
 						}
 					}
 				}
 
-			// CHECKING IF THE USER IS NOT PRESSING ANY KEY
-			if (this.cursors.up.isUp==true && this.cursors.down.isUp==true && this.cursors.left.isUp==true && this.cursors.right.isUp==true && this.keySpace.isUp && this.keyW.isUp==true && this.keyA.isUp==true && this.keyD.isUp==true && this.keyS.isUp==true && this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right" && this.stick.isUp==true)
+			// CHECKING IF THERE WASN'T A MOVEMENT AND THAT THE HERO IS NOT ATTACKING
+			if (someMovement==false && this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
 				{
-				// CALLING THE HERO STAND EVENT
+				// SHOWING THE STAND ANIMATION
 				this.heroStand();
 				}
+			}
+		},
+
+	render: function ()
+		{
+		// CHECKING IF THE GAME IS RUNNING IN DEBUG MODE
+		if(GoldenAxe.showDebug==true)
+			{
+			// SHOWING THE HERO'S COLLISION BODY SIZE
+			game.debug.body(this.hero);
+
+			// SHOWING THE ENEMY'S COLLISION BODY SIZE
+			game.debug.body(this.enemy);
+
+			// SHOWING THE BLOCK 1 COLLISION BODY SIZE
+			game.debug.body(this.block1);
+
+			// SHOWING THE BLOCK 2 COLLISION BODY SIZE
+			game.debug.body(this.block2);
 			}
 		},
 
@@ -619,12 +787,40 @@ GoldenAxe.Game.prototype = {
 			// SETTING THAT THE HERO IS NOT LOOKING TO THE RIGHT
 			this.hero.lookingRight = false;
 
-			// CHECKING IF THE HERO DOES NOT HIT THE SCREEN LEFT LIMIT
-			if (this.hero.position.x>-35)
-				{
-				// MOVING THE HERO TO THE LEFT
-				this.hero.position.x = this.hero.position.x - this.walkingSpeed;
-				}
+			// MOVING THE HERO TO THE LEFT
+			game.physics.arcade.velocityFromAngle(180, 100, this.hero.body.velocity);
+			}
+		},
+
+	heroMoveLeftTop: function()
+		{
+		// CHECKING IF THE HERO IS NOT ATTACKING
+		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
+			{
+			// SHOWING ANIMATION WALKING TO THE RIGHT
+			this.hero.animations.play("walk_left", 6, true);
+
+			// SETTING THAT THE HERO IS LOOKING TO THE LEFT
+			this.hero.lookingRight = false;
+
+			// MOVING THE HERO TO THE LEFT-TOP
+			game.physics.arcade.velocityFromAngle(-135, 125, this.hero.body.velocity);
+			}
+		},
+
+	heroMoveLeftDown: function()
+		{
+		// CHECKING IF THE HERO IS NOT ATTACKING
+		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
+			{
+			// SHOWING ANIMATION WALKING TO THE RIGHT
+			this.hero.animations.play("walk_left", 6, true);
+
+			// SETTING THAT THE HERO IS LOOKING TO THE LEFT
+			this.hero.lookingRight = false;
+
+			// MOVING THE HERO TO THE LEFT-DOWN
+			game.physics.arcade.velocityFromAngle(135, 125, this.hero.body.velocity);
 			}
 		},
 
@@ -639,12 +835,40 @@ GoldenAxe.Game.prototype = {
 			// SETTING THAT THE HERO IS LOOKING TO THE RIGHT
 			this.hero.lookingRight = true;
 
-			// CHECKING IF THE HERO DOES NOT HIT THE SCREEN RIGHT LIMIT
-			if (this.hero.position.x<635)
-				{
-				// MOVING THE HERO TO THE RIGHT
-				this.hero.position.x = this.hero.position.x + this.walkingSpeed;
-				}
+			// MOVING THE HERO TO THE RIGHT
+			game.physics.arcade.velocityFromAngle(0, 100, this.hero.body.velocity);
+			}
+		},
+
+	heroMoveRightTop: function()
+		{
+		// CHECKING IF THE HERO IS NOT ATTACKING
+		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
+			{
+			// SHOWING ANIMATION WALKING TO THE RIGHT
+			this.hero.animations.play("walk_right", 6, true);
+
+			// SETTING THAT THE HERO IS LOOKING TO THE RIGHT
+			this.hero.lookingRight = true;
+
+			// MOVING THE HERO TO THE RIGHT-TOP
+			game.physics.arcade.velocityFromAngle(-45, 125, this.hero.body.velocity);
+			}
+		},
+
+	heroMoveRightDown: function()
+		{
+		// CHECKING IF THE HERO IS NOT ATTACKING
+		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
+			{
+			// SHOWING ANIMATION WALKING TO THE RIGHT
+			this.hero.animations.play("walk_right", 6, true);
+
+			// SETTING THAT THE HERO IS LOOKING TO THE RIGHT
+			this.hero.lookingRight = true;
+
+			// MOVING THE HERO TO THE RIGHT-DOWN
+			game.physics.arcade.velocityFromAngle(45, 125, this.hero.body.velocity);
 			}
 		},
 
@@ -665,12 +889,8 @@ GoldenAxe.Game.prototype = {
 				this.hero.animations.play("walk_left", 6, true);
 				}
 
-			// CHECKING IF THE HERO DOES NOT HIT THE SCREEN TOP LIMIT
-			if (this.hero.position.y>118)
-				{
-				// MOVING UP THE HERO
-				this.hero.position.y = this.hero.position.y - this.walkingSpeed;
-				}
+			// MOVING UP THE HERO
+			game.physics.arcade.velocityFromAngle(-90, 100, this.hero.body.velocity);
 			}
 		},
 
@@ -691,12 +911,8 @@ GoldenAxe.Game.prototype = {
 				this.hero.animations.play("walk_left", 6, true);
 				}
 
-			// CHECKING IF THE HERO DOES NOT HIT THE SCREEN BOTTOM LIMIT
-			if (this.hero.position.y<326)
-				{
-				// MOVING DOWN THE HERO
-				this.hero.position.y = this.hero.position.y + this.walkingSpeed;
-				}
+			// MOVING DOWN THE HERO
+			game.physics.arcade.velocityFromAngle(90, 100, this.hero.body.velocity);
 			}
 		},
 
