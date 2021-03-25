@@ -114,6 +114,8 @@ GoldenAxe.Game = function (game)
 	this.gate = null;
 	this.score = null;
 	this.highscore = null;
+	this.block1 = null;
+	this.block2 = null;
 	this.cursors = null;
 	this.keyA = null;
 	this.keyS = null;
@@ -171,6 +173,8 @@ GoldenAxe.Game.prototype = {
 		this.gate = null;
 		this.score = null;
 		this.highscore = null;
+		this.block1 = null;
+		this.block2 = null;
 		this.cursors = null;
 		this.keyA = null;
 		this.keyS = null;
@@ -233,12 +237,14 @@ GoldenAxe.Game.prototype = {
 		// ADDING THE GATE SPRITE
 		this.gate = game.add.sprite(532, 53, "imageGate");
 
+		// ADDING THE FIRST BLOCK (THE MIDDLE SCENE SEPARATOR)
 		this.block1 = game.add.sprite(0,243, "");
 		this.block1.width = 757;
 		this.block1.height = 10;
 		game.physics.arcade.enable(this.block1);
 		this.block1.body.immovable = true;
 
+		// ADDING THE SECOND BLOCK (THE COLUMN)
 		this.block2 = game.add.sprite(340,253, "");
 		this.block2.width = 77;
 		this.block2.height = 20;
@@ -386,7 +392,7 @@ GoldenAxe.Game.prototype = {
 		game.physics.arcade.enable(this.enemy);
 
 		// ADJUSTING THE ENEMY'S COLLISION BODY SIZE
-		this.enemy.body.setSize(30, 20, 55, 124);
+		this.enemy.body.setSize(30, 10, 55, 144);
 
 		// SETTING THAT THE ENEMY CAN'T BE MOVED BY THE HERO
 		this.enemy.body.immovable = true;
@@ -512,11 +518,12 @@ GoldenAxe.Game.prototype = {
 		this.hero.body.velocity.x = 0;
 		this.hero.body.velocity.y = 0;
 
-		// SETTING THAT THE HERO WILL COLLIDE WITH THE ENEMY
+		// SETTING THAT THE HERO WILL COLLIDE WITH THE ENEMY AND THE BLOCKS
 		game.physics.arcade.collide(this.hero, this.enemy);
 		game.physics.arcade.collide(this.hero, this.block1);
 		game.physics.arcade.collide(this.hero, this.block2);
 
+		// SETTING THAT THE ENEMY WILL COLLIDE WITH THE BLOCKS
 		game.physics.arcade.collide(this.enemy, this.block1);
 		game.physics.arcade.collide(this.enemy, this.block2);
 
