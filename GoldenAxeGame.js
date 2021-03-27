@@ -961,7 +961,7 @@ GoldenAxe.Game.prototype = {
 		else
 			{
 			// CHECKING IF THE HERO IS VERTICALLY FAR
-			if (distanceY>=30)
+			if (distanceY>=5)
 				{
 				// CHECKING IF THE HERO IS AT THE NORTH
 				if (this.hero.position.y<=this.enemy.position.y)
