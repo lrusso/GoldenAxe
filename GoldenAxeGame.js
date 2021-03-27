@@ -721,7 +721,7 @@ GoldenAxe.Game.prototype = {
 			this.hero.lookingRight = false;
 
 			// MOVING THE HERO TO THE LEFT
-			game.physics.arcade.velocityFromAngle(180, 100, this.hero.body.velocity);
+			game.physics.arcade.velocityFromAngle(180, 125, this.hero.body.velocity);
 			}
 		},
 
@@ -737,7 +737,7 @@ GoldenAxe.Game.prototype = {
 			this.hero.lookingRight = false;
 
 			// MOVING THE HERO TO THE LEFT-TOP
-			game.physics.arcade.velocityFromAngle(-135, 125, this.hero.body.velocity);
+			game.physics.arcade.velocityFromAngle(-135, 150, this.hero.body.velocity);
 			}
 		},
 
@@ -753,7 +753,7 @@ GoldenAxe.Game.prototype = {
 			this.hero.lookingRight = false;
 
 			// MOVING THE HERO TO THE LEFT-DOWN
-			game.physics.arcade.velocityFromAngle(135, 125, this.hero.body.velocity);
+			game.physics.arcade.velocityFromAngle(135, 150, this.hero.body.velocity);
 			}
 		},
 
@@ -769,7 +769,7 @@ GoldenAxe.Game.prototype = {
 			this.hero.lookingRight = true;
 
 			// MOVING THE HERO TO THE RIGHT
-			game.physics.arcade.velocityFromAngle(0, 100, this.hero.body.velocity);
+			game.physics.arcade.velocityFromAngle(0, 125, this.hero.body.velocity);
 			}
 		},
 
@@ -785,7 +785,7 @@ GoldenAxe.Game.prototype = {
 			this.hero.lookingRight = true;
 
 			// MOVING THE HERO TO THE RIGHT-TOP
-			game.physics.arcade.velocityFromAngle(-45, 125, this.hero.body.velocity);
+			game.physics.arcade.velocityFromAngle(-45, 150, this.hero.body.velocity);
 			}
 		},
 
@@ -801,7 +801,7 @@ GoldenAxe.Game.prototype = {
 			this.hero.lookingRight = true;
 
 			// MOVING THE HERO TO THE RIGHT-DOWN
-			game.physics.arcade.velocityFromAngle(45, 125, this.hero.body.velocity);
+			game.physics.arcade.velocityFromAngle(45, 150, this.hero.body.velocity);
 			}
 		},
 
@@ -823,7 +823,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// MAKING THE HERO TO MOVE TO THE NORTH
-			game.physics.arcade.velocityFromAngle(-90, 100, this.hero.body.velocity);
+			game.physics.arcade.velocityFromAngle(-90, 125, this.hero.body.velocity);
 			}
 		},
 
@@ -845,7 +845,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// MAKING THE HERO TO MOVE TO THE SOUTH
-			game.physics.arcade.velocityFromAngle(90, 100, this.hero.body.velocity);
+			game.physics.arcade.velocityFromAngle(90, 125, this.hero.body.velocity);
 			}
 		},
 
