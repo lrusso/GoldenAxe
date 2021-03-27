@@ -397,7 +397,7 @@ GoldenAxe.Game.prototype = {
 		// SETTING THAT THE ENEMY CAN'T BE MOVED BY THE HERO
 		this.enemy.body.immovable = true;
 
-		// SETTING THAT THE HERO IS LOOKING TO THE LEFT
+		// SETTING THAT THE ENEMY IS LOOKING TO THE LEFT
 		this.enemy.lookingRight = false;
 
 		// ADDING THE HERO SPRITE
@@ -677,6 +677,7 @@ GoldenAxe.Game.prototype = {
 				this.heroStand();
 				}
 
+			// HANDLING THE ENEMY MOVEMENTS
 			this.handleEnemyMovements();
 			}
 		},
