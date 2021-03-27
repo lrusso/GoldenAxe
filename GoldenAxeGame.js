@@ -902,51 +902,33 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE HERO IS WITHIN A SLASHING DISTANCE
 		if (distanceBetweenHeroAndEnemy<=70)
 			{
-			// CHECKING IS THE HERO IS VERTICALLY FARTHER
-			if (distanceX<=30)
+			// CHECKING IF THE HERO IS AT THE RIGHT
+			if (this.hero.position.x>=this.enemy.position.x)
 				{
-				// CHECKING IF THE HERO IS AT THE NORTH
-				if (this.hero.position.y<=this.enemy.position.y)
+				// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+				if (this.enemy.lookingRight==true)
 					{
-					// MAKING THE ENEMY TO LOOK TO THE NORTH
-					if (this.enemy.lookingRight==true)
-						{
-						this.enemy.animations.play("walk_right", 10, true);
-						}
-						else
-						{
-						this.enemy.animations.play("walk_left", 10, true);
-						}
+					// SHOWING ANIMATION WALKING TO THE RIGHT
+					this.enemy.animations.play("walk_right", 10, true);
 					}
 					else
 					{
-					// MAKING THE ENEMY TO LOOK TO THE SOUTH
-					if (this.enemy.lookingRight==true)
-						{
-						this.enemy.animations.play("walk_right", 10, true);
-						}
-						else
-						{
-						this.enemy.animations.play("walk_left", 10, true);
-						}
+					// SHOWING ANIMATION WALKING TO THE LEFT
+					this.enemy.animations.play("walk_left", 10, true);
 					}
 				}
-
-			// CHECKING IS THE HERO IS HORIZONTALLY FARTHER
-			if (distanceY<=30)
+				else
 				{
-				// CHECKING IF THE HERO IS AT THE LEFT
-				if (this.hero.position.x<=this.enemy.position.x)
+				// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+				if (this.enemy.lookingRight==true)
 					{
-					// MAKING THE ENEMY TO LOOK TO THE LEFT
-					this.enemy.animations.play("walk_left", 10, true);
-					this.enemy.lookingRight = false;
+					// SHOWING ANIMATION WALKING TO THE RIGHT
+					this.enemy.animations.play("walk_right", 10, true);
 					}
 					else
 					{
-					// MAKING THE ENEMY TO LOOK TO THE RIGHT
-					this.enemy.animations.play("walk_right", 10, true);
-					this.enemy.lookingRight = true;
+					// SHOWING ANIMATION WALKING TO THE LEFT
+					this.enemy.animations.play("walk_left", 10, true);
 					}
 				}
 
@@ -984,30 +966,38 @@ GoldenAxe.Game.prototype = {
 				// CHECKING IF THE HERO IS AT THE NORTH
 				if (this.hero.position.y<=this.enemy.position.y)
 					{
-					// MAKING THE ENEMY TO LOOK TO THE NORTH
+					// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
 					if (this.enemy.lookingRight==true)
 						{
+						// SHOWING ANIMATION WALKING TO THE RIGHT
 						this.enemy.animations.play("walk_right", 10, true);
 						}
 						else
 						{
+						// SHOWING ANIMATION WALKING TO THE LEFT
 						this.enemy.animations.play("walk_left", 10, true);
 						}
+
+					// MOVING THE ENEMY TO THE NORTH
 					game.physics.arcade.velocityFromAngle(-90, 100, this.enemy.body.velocity);
 					}
 
 				// CHECKING IF THE HERO IS AT THE SOUTH
 				else if (this.hero.position.y>this.enemy.position.y)
 					{
-					// MAKING THE ENEMY TO LOOK TO THE SOUTH
+					// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
 					if (this.enemy.lookingRight==true)
 						{
+						// SHOWING ANIMATION WALKING TO THE RIGHT
 						this.enemy.animations.play("walk_right", 10, true);
 						}
 						else
 						{
+						// SHOWING ANIMATION WALKING TO THE LEFT
 						this.enemy.animations.play("walk_left", 10, true);
 						}
+
+					// MOVING THE ENEMY TO THE SOUTH
 					game.physics.arcade.velocityFromAngle(90, 100, this.enemy.body.velocity);
 					}
 				}
@@ -1020,7 +1010,11 @@ GoldenAxe.Game.prototype = {
 					{
 					// MAKING THE ENEMY TO LOOK TO THE LEFT
 					this.enemy.animations.play("walk_left", 10, true);
+
+					// MOVING THE ENEMY TO THE LEFT
 					game.physics.arcade.velocityFromAngle(180, 100, this.enemy.body.velocity);
+
+					// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
 					this.enemy.lookingRight = false;
 					}
 
@@ -1029,7 +1023,11 @@ GoldenAxe.Game.prototype = {
 					{
 					// MAKING THE ENEMY TO LOOK TO THE RIGHT
 					this.enemy.animations.play("walk_right", 10, true);
+
+					// MOVING THE ENEMY TO THE RIGHT
 					game.physics.arcade.velocityFromAngle(0, 100, this.enemy.body.velocity);
+
+					// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
 					this.enemy.lookingRight = true;
 					}
 				}
