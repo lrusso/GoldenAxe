@@ -978,30 +978,8 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE ENEMY MUST BE MOVING CLOSER TO THE HERO
 		else
 			{
-			// CHECKING IF THE HERO IS HORIZONTALLY FAR
-			if (distanceX>=30)
-				{
-				// CHECKING IF THE HERO IS AT THE LEFT
-				if (this.hero.position.x<=this.enemy.position.x)
-					{
-					// MAKING THE ENEMY TO LOOK TO THE LEFT
-					this.enemy.animations.play("walk_left", 10, true);
-					game.physics.arcade.velocityFromAngle(180, 100, this.enemy.body.velocity);
-					this.enemy.lookingRight = false;
-					}
-
-				// CHECKING IF THE HERO IS AT THE RIGHT
-				else if (this.hero.position.x>this.enemy.position.x)
-					{
-					// MAKING THE ENEMY TO LOOK TO THE RIGHT
-					this.enemy.animations.play("walk_right", 10, true);
-					game.physics.arcade.velocityFromAngle(0, 100, this.enemy.body.velocity);
-					this.enemy.lookingRight = true;
-					}
-				}
-
 			// CHECKING IF THE HERO IS VERTICALLY FAR
-			else if (distanceY>=30)
+			if (distanceY>=30)
 				{
 				// CHECKING IF THE HERO IS AT THE NORTH
 				if (this.hero.position.y<=this.enemy.position.y)
@@ -1031,6 +1009,28 @@ GoldenAxe.Game.prototype = {
 						this.enemy.animations.play("walk_left", 10, true);
 						}
 					game.physics.arcade.velocityFromAngle(90, 100, this.enemy.body.velocity);
+					}
+				}
+
+			// CHECKING IF THE HERO IS HORIZONTALLY FAR
+			else if (distanceX>=30)
+				{
+				// CHECKING IF THE HERO IS AT THE LEFT
+				if (this.hero.position.x<=this.enemy.position.x)
+					{
+					// MAKING THE ENEMY TO LOOK TO THE LEFT
+					this.enemy.animations.play("walk_left", 10, true);
+					game.physics.arcade.velocityFromAngle(180, 100, this.enemy.body.velocity);
+					this.enemy.lookingRight = false;
+					}
+
+				// CHECKING IF THE HERO IS AT THE RIGHT
+				else if (this.hero.position.x>this.enemy.position.x)
+					{
+					// MAKING THE ENEMY TO LOOK TO THE RIGHT
+					this.enemy.animations.play("walk_right", 10, true);
+					game.physics.arcade.velocityFromAngle(0, 100, this.enemy.body.velocity);
+					this.enemy.lookingRight = true;
 					}
 				}
 			}
