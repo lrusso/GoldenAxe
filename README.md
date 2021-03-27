@@ -10,6 +10,11 @@ https://lrusso.github.io/GoldenAxe/GoldenAxe.htm
 
 ## Utilities used to create and fix the spritesheets:
 
+* https://lrusso.github.io/PhaserSpritesheetGenerator/PhaserSpritesheetGenerator.htm
+* https://lrusso.github.io/PhaserSpritesheetFixer/PhaserSpritesheetFixer.htm
+
+## Repositories of those utilities:
+
 * https://github.com/lrusso/PhaserSpritesheetGenerator
 * https://github.com/lrusso/PhaserSpritesheetFixer
 
