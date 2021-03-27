@@ -765,7 +765,7 @@ GoldenAxe.Game.prototype = {
 				someMovement = true;
 				}
 
-			// CHECKING IF THERE WASN'T A MOVEMENT AND THAT THE HERO IS NOT ATTACKING
+			// CHECKING IF THERE WASN'T A MOVEMENT AND THAT THE HERO IS NOT ATTACKING AND NOT SUFFERING
 			if (someMovement==false && this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right" && this.hero.animations.currentAnim.name!="suffer_left" && this.hero.animations.currentAnim.name!="suffer_right")
 				{
 				// SHOWING THE STAND ANIMATION
