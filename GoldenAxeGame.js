@@ -387,8 +387,64 @@ GoldenAxe.Game.prototype = {
 		this.enemy.animations.add("stand_left", [2]);
 		this.enemy.animations.add("walk_right", [3, 4, 5]);
 		this.enemy.animations.add("walk_left", [0, 1, 2]);
-		this.enemyAttackLeftHandler = this.enemy.animations.add("attack_left", [9, 10, 11]);
+
+		// ADDING THE ENEMY ATTACK ANIMATION AND EVENT
 		this.enemyAttackRightHandler = this.enemy.animations.add("attack_right", [6, 7, 8]);
+		this.enemyAttackRightHandler.onStart.add(function()
+			{
+			// CHECKING IF THE SOUND IS ENABLED
+			if (GAME_SOUND_ENABLED==true)
+				{
+				// PLAYING THE SLASH SOUND
+				this.audioPlayer = this.add.audio("soundSlash");
+				this.audioPlayer.volume = 0.5;
+				this.audioPlayer.play();
+				}
+
+			// TODO
+			}, this);
+		this.enemyAttackRightHandler.onComplete.add(function()
+			{
+			// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+			if (this.enemy.lookingRight==true)
+				{
+				// SHOWING THE STANDING RIGHT ANIMATION
+				this.enemy.animations.play("stand_right", 3, false);
+				}
+				else
+				{
+				// SHOWING THE STANDING LEFT ANIMATION
+				this.enemy.animations.play("stand_left", 3, false);
+				}
+			}, this);
+		this.enemyAttackLeftHandler = this.enemy.animations.add("attack_left", [9, 10, 11]);
+		this.enemyAttackLeftHandler.onStart.add(function()
+			{
+			// CHECKING IF THE SOUND IS ENABLED
+			if (GAME_SOUND_ENABLED==true)
+				{
+				// PLAYING THE SLASH SOUND
+				this.audioPlayer = this.add.audio("soundSlash");
+				this.audioPlayer.volume = 0.5;
+				this.audioPlayer.play();
+				}
+
+			// TODO
+			}, this);
+		this.enemyAttackLeftHandler.onComplete.add(function()
+			{
+			// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+			if (this.enemy.lookingRight==true)
+				{
+				// SHOWING THE STANDING RIGHT ANIMATION
+				this.enemy.animations.play("stand_right", 3, false);
+				}
+				else
+				{
+				// SHOWING THE STANDING LEFT ANIMATION
+				this.enemy.animations.play("stand_left", 3, false);
+				}
+			}, this);
 
 		// SETTING THAT THE ENEMY WILL STAND TO THE LEFT
 		this.enemy.animations.play("stand_left", 3, false);
@@ -1030,12 +1086,12 @@ GoldenAxe.Game.prototype = {
 					if (this.enemy.lookingRight==true)
 						{
 						// SHOWING THE ATTACKING RIGHT ANIMATION
-						this.enemy.animations.play("attack_right", 6, true);
+						this.enemy.animations.play("attack_right", 6, false);
 						}
 						else
 						{
 						// SHOWING THE ATTACKING LEFT ANIMATION
-						this.enemy.animations.play("attack_left", 6, true);
+						this.enemy.animations.play("attack_left", 6, false);
 						}
 					}
 				}
