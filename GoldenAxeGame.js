@@ -397,6 +397,9 @@ GoldenAxe.Game.prototype = {
 		// SETTING THAT THE ENEMY CAN'T BE MOVED BY THE HERO
 		this.enemy.body.immovable = true;
 
+		// SETTING THAT THE HERO IS LOOKING TO THE LEFT
+		this.enemy.lookingRight = false;
+
 		// ADDING THE HERO SPRITE
 		this.hero = game.add.sprite(170, 250, "imageHero");
 
@@ -673,6 +676,8 @@ GoldenAxe.Game.prototype = {
 				// SHOWING THE STAND ANIMATION
 				this.heroStand();
 				}
+
+			this.handleEnemyMovements();
 			}
 		},
 
@@ -882,6 +887,192 @@ GoldenAxe.Game.prototype = {
 			// SHOWING ANIMATION STANDING TO THE LEFT
 			this.hero.animations.play("stand_left", 3, false);
 			}
+		},
+
+	handleEnemyMovements: function()
+		{
+		// GETTING THE DISTANCE BETWEEN THE HERO AND THE ENEMY
+		var distanceBetweenHeroAndEnemy = this.getDistance(this.hero.body.position.x,this.hero.body.position.y,this.enemy.body.position.x,this.enemy.body.position.y);
+		var distanceX = this.enemy.position.x - this.hero.position.x;
+		var distanceY = this.enemy.position.y - this.hero.position.y;
+		if (distanceX<0){distanceX=distanceX * -1;}
+		if (distanceY<0){distanceY=distanceY * -1;}
+
+		// CHECKING IF THE HERO IS WITHIN A SLASHING DISTANCE
+		if (distanceBetweenHeroAndEnemy<=70)
+			{
+			// CHECKING IS THE HERO IS VERTICALLY FARTHER
+			if (distanceX<=30)
+				{
+				// CHECKING IF THE HERO IS AT THE NORTH
+				if (this.hero.position.y<=this.enemy.position.y)
+					{
+					// MAKING THE ENEMY TO LOOK TO THE NORTH
+					if (this.enemy.lookingRight==true)
+						{
+						this.enemy.animations.play("walk_right", 10, true);
+						}
+						else
+						{
+						this.enemy.animations.play("walk_left", 10, true);
+						}
+					}
+					else
+					{
+					// MAKING THE ENEMY TO LOOK TO THE SOUTH
+					if (this.enemy.lookingRight==true)
+						{
+						this.enemy.animations.play("walk_right", 10, true);
+						}
+						else
+						{
+						this.enemy.animations.play("walk_left", 10, true);
+						}
+					}
+				}
+
+			// CHECKING IS THE HERO IS HORIZONTALLY FARTHER
+			if (distanceY<=30)
+				{
+				// CHECKING IF THE HERO IS AT THE LEFT
+				if (this.hero.position.x<=this.enemy.position.x)
+					{
+					// MAKING THE ENEMY TO LOOK TO THE LEFT
+					this.enemy.animations.play("walk_left", 10, true);
+					this.enemy.lookingRight = false;
+					}
+					else
+					{
+					// MAKING THE ENEMY TO LOOK TO THE RIGHT
+					this.enemy.animations.play("walk_right", 10, true);
+					this.enemy.lookingRight = true;
+					}
+				}
+
+			// CHECKING IF THE ENEMY IS NEAR ENOUGH TO HERO
+			if (distanceX<=30 || distanceY<=30)
+				{
+				// STOPPING THE ENEMY ANIMATION
+				this.enemy.animations.stop(null, true);
+
+				// CLEARING THE ENEMY VELOCITY
+				this.enemy.body.velocity.x = 0;
+				this.enemy.body.velocity.y = 0;
+				}
+
+			// CHECKING IF THE HERO IS ALIVE
+			if (this.statsHealth>0)
+				{
+				/*
+				// CHECKING IF THE SLASH ANIMATION IS NOT PLAYING
+				if (this.enemySlashAnimation.isPlaying==false)
+					{
+					// PLAYING THE SLASH ANIMATION
+					this.enemySlashAnimation.play("slash_attack");
+					}
+				*/
+				}
+			}
+
+		// CHECKING IF THE ENEMY MUST BE MOVING CLOSER TO THE HERO
+		else
+			{
+			// CHECKING IF THE HERO IS HORIZONTALLY FAR
+			if (distanceX>=30)
+				{
+				// CHECKING IF THE HERO IS AT THE LEFT
+				if (this.hero.position.x<=this.enemy.position.x)
+					{
+					// MAKING THE ENEMY TO LOOK TO THE LEFT
+					this.enemy.animations.play("walk_left", 10, true);
+					game.physics.arcade.velocityFromAngle(180, 100, this.enemy.body.velocity);
+					this.enemy.lookingRight = false;
+					}
+
+				// CHECKING IF THE HERO IS AT THE RIGHT
+				else if (this.hero.position.x>this.enemy.position.x)
+					{
+					// MAKING THE ENEMY TO LOOK TO THE RIGHT
+					this.enemy.animations.play("walk_right", 10, true);
+					game.physics.arcade.velocityFromAngle(0, 100, this.enemy.body.velocity);
+					this.enemy.lookingRight = true;
+					}
+				}
+
+			// CHECKING IF THE HERO IS VERTICALLY FAR
+			else if (distanceY>=30)
+				{
+				// CHECKING IF THE HERO IS AT THE NORTH
+				if (this.hero.position.y<=this.enemy.position.y)
+					{
+					// MAKING THE ENEMY TO LOOK TO THE NORTH
+					if (this.enemy.lookingRight==true)
+						{
+						this.enemy.animations.play("walk_right", 10, true);
+						}
+						else
+						{
+						this.enemy.animations.play("walk_left", 10, true);
+						}
+					game.physics.arcade.velocityFromAngle(-90, 100, this.enemy.body.velocity);
+					}
+
+				// CHECKING IF THE HERO IS AT THE SOUTH
+				else if (this.hero.position.y>this.enemy.position.y)
+					{
+					// MAKING THE ENEMY TO LOOK TO THE SOUTH
+					if (this.enemy.lookingRight==true)
+						{
+						this.enemy.animations.play("walk_right", 10, true);
+						}
+						else
+						{
+						this.enemy.animations.play("walk_left", 10, true);
+						}
+					game.physics.arcade.velocityFromAngle(90, 100, this.enemy.body.velocity);
+					}
+				}
+			}
+
+		// CHECKING IF THERE IS AN OVERLAPPING BETWEEN THE HERO AND THE ENEMY
+		if (this.checkOverlapping(this.hero,this.enemy))
+			{
+			// STOPPING THE ENEMY ANIMATION
+			this.enemy.animations.stop(null, true);
+
+			// CLEARING THE ENEMY VELOCITY
+			this.enemy.body.velocity.x = 0;
+			this.enemy.body.velocity.y = 0;
+			}
+		},
+
+	getDistance: function(x1, y1, x2, y2)
+		{
+		var dx = x1 - x2;
+		var dy = y1 - y2;
+
+		return Math.sqrt(dx * dx + dy * dy);
+		},
+
+	checkOverlapping: function(spriteA, spriteB)
+		{
+		var x1 = spriteA.body.position.x;
+		var y1 = spriteA.body.position.y;
+		var h1 = spriteA.body.height;
+		var w1 = spriteA.body.width;
+		var b1 = y1 + h1;
+		var r1 = x1 + w1;
+		var x2 = spriteB.body.position.x;
+		var y2 = spriteB.body.position.y;
+		var h2 = spriteB.body.height;
+		var w2 = spriteB.body.width;
+		var b2 = y2 + h2;
+		var r2 = x2 + w2;
+		if (b1 <= y2 || y1 >= b2 || r1 <= x2 || x1 >= r2)
+			{
+			return false;
+			}
+		return true;
 		},
 
 	restartGame: function()
