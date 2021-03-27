@@ -901,39 +901,27 @@ GoldenAxe.Game.prototype = {
 		if (distanceX<0){distanceX=distanceX * -1;}
 		if (distanceY<0){distanceY=distanceY * -1;}
 
+		// CHECKING IF THE HERO IS AT THE RIGHT
+		if (this.hero.position.x>=this.enemy.position.x)
+			{
+			// SHOWING THE WALKING RIGHT ANIMATION
+			this.enemy.animations.play("walk_right", 6, true);
+
+			// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
+			this.enemy.lookingRight = true;
+			}
+			else
+			{
+			// SHOWING THE WALKING LEFT ANIMATION
+			this.enemy.animations.play("walk_left", 6, true);
+
+			// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
+			this.enemy.lookingRight = false;
+			}
+
 		// CHECKING IF THE HERO IS WITHIN A SLASHING DISTANCE
 		if (distanceBetweenHeroAndEnemy<=70)
 			{
-			// CHECKING IF THE HERO IS AT THE RIGHT
-			if (this.hero.position.x>=this.enemy.position.x)
-				{
-				// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-				if (this.enemy.lookingRight==true)
-					{
-					// SHOWING THE WALKING RIGHT ANIMATION
-					this.enemy.animations.play("walk_right", 6, true);
-					}
-					else
-					{
-					// SHOWING THE WALKING LEFT ANIMATION
-					this.enemy.animations.play("walk_left", 6, true);
-					}
-				}
-				else
-				{
-				// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-				if (this.enemy.lookingRight==true)
-					{
-					// SHOWING THE WALKING RIGHT ANIMATION
-					this.enemy.animations.play("walk_right", 6, true);
-					}
-					else
-					{
-					// SHOWING THE WALKING LEFT ANIMATION
-					this.enemy.animations.play("walk_left", 6, true);
-					}
-				}
-
 			// CHECKING IF THE ENEMY IS NEAR ENOUGH TO HERO
 			if (distanceX<=30 || distanceY<=30)
 				{
