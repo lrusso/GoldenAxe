@@ -545,7 +545,7 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE ENEMY SHOULD BE MOVING BECAUSE OF THE INTRO SCENE
 		if (this.enemyIntro==true && this.enemy.alpha==1)
 			{
-			// SHOWING ANIMATION WALKING TO THE LEFT (USED TO MOVE DOWN)
+			// SHOWING THE WALKING LEFT ANIMATION
 			this.enemy.animations.play("walk_left", 6, true);
 
 			// CHECKING IF ENEMY IS NOT AT THE REQUIRED Y POSITION
@@ -556,7 +556,7 @@ GoldenAxe.Game.prototype = {
 				}
 				else
 				{
-				// SHOWING ANIMATION LOOKING TO THE LEFT
+				// SHOWING THE STANDING LEFT ANIMATION
 				this.enemy.animations.play("stand_left", 6, false);
 
 				// CHECKING IF THE GATE IS NOT CLOSING
@@ -706,7 +706,7 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE HERO IS NOT ATTACKING
 		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
 			{
-			// SHOWING ANIMATION WALKING TO THE LEFT
+			// SHOWING THE WALKING LEFT ANIMATION
 			this.hero.animations.play("walk_left", 6, true);
 
 			// SETTING THAT THE HERO IS NOT LOOKING TO THE RIGHT
@@ -722,7 +722,7 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE HERO IS NOT ATTACKING
 		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
 			{
-			// SHOWING ANIMATION WALKING TO THE RIGHT
+			// SHOWING THE WALKING LEFT ANIMATION
 			this.hero.animations.play("walk_left", 6, true);
 
 			// SETTING THAT THE HERO IS LOOKING TO THE LEFT
@@ -738,7 +738,7 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE HERO IS NOT ATTACKING
 		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
 			{
-			// SHOWING ANIMATION WALKING TO THE RIGHT
+			// SHOWING THE WALKING LEFT ANIMATION
 			this.hero.animations.play("walk_left", 6, true);
 
 			// SETTING THAT THE HERO IS LOOKING TO THE LEFT
@@ -754,7 +754,7 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE HERO IS NOT ATTACKING
 		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
 			{
-			// SHOWING ANIMATION WALKING TO THE RIGHT
+			// SHOWING THE WALKING RIGHT ANIMATION
 			this.hero.animations.play("walk_right", 6, true);
 
 			// SETTING THAT THE HERO IS LOOKING TO THE RIGHT
@@ -770,7 +770,7 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE HERO IS NOT ATTACKING
 		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
 			{
-			// SHOWING ANIMATION WALKING TO THE RIGHT
+			// SHOWING THE WALKING RIGHT ANIMATION
 			this.hero.animations.play("walk_right", 6, true);
 
 			// SETTING THAT THE HERO IS LOOKING TO THE RIGHT
@@ -786,7 +786,7 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE HERO IS NOT ATTACKING
 		if (this.hero.animations.currentAnim.name!="attack_left" && this.hero.animations.currentAnim.name!="attack_right")
 			{
-			// SHOWING ANIMATION WALKING TO THE RIGHT
+			// SHOWING THE WALKING RIGHT ANIMATION
 			this.hero.animations.play("walk_right", 6, true);
 
 			// SETTING THAT THE HERO IS LOOKING TO THE RIGHT
@@ -805,16 +805,16 @@ GoldenAxe.Game.prototype = {
 			// CHECKING IF THE HERO IS LOOKING TO THE RIGHT
 			if (this.hero.lookingRight==true)
 				{
-				// SHOWING ANIMATION WALKING TO THE RIGHT
+				// SHOWING THE WALKING RIGHT ANIMATION
 				this.hero.animations.play("walk_right", 6, true);
 				}
 				else
 				{
-				// SHOWING ANIMATION WALKING TO THE LEFT
+				// SHOWING THE WALKING LEFT ANIMATION
 				this.hero.animations.play("walk_left", 6, true);
 				}
 
-			// MOVING UP THE HERO
+			// MAKING THE HERO TO MOVE TO THE NORTH
 			game.physics.arcade.velocityFromAngle(-90, 100, this.hero.body.velocity);
 			}
 		},
@@ -827,16 +827,16 @@ GoldenAxe.Game.prototype = {
 			// CHECKING IF THE HERO IS LOOKING TO THE RIGHT
 			if (this.hero.lookingRight==true)
 				{
-				// SHOWING ANIMATION WALKING TO THE RIGHT
+				// SHOWING THE WALKING RIGHT ANIMATION
 				this.hero.animations.play("walk_right", 6, true);
 				}
 				else
 				{
-				// SHOWING ANIMATION WALKING TO THE LEFT
+				// SHOWING THE WALKING LEFT ANIMATION
 				this.hero.animations.play("walk_left", 6, true);
 				}
 
-			// MOVING DOWN THE HERO
+			// MAKING THE HERO TO MOVE TO THE SOUTH
 			game.physics.arcade.velocityFromAngle(90, 100, this.hero.body.velocity);
 			}
 		},
@@ -849,12 +849,12 @@ GoldenAxe.Game.prototype = {
 			// CHECKING IF THE HERO IS LOOKING TO THE RIGHT
 			if (this.hero.lookingRight==true)
 				{
-				// SHOWING ANIMATION ATTACKING TO THE RIGHT
+				// SHOWING THE ATTACKING RIGHT ANIMATION
 				this.hero.animations.play("attack_right", 9, false);
 				}
 				else
 				{
-				// SHOWING ANIMATION ATTACKING TO THE LEFT
+				// SHOWING THE ATTACKING LEFT ANIMATION
 				this.hero.animations.play("attack_left", 9, false);
 				}
 			}
@@ -880,12 +880,12 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE HERO IS LOOKING TO THE RIGHT
 		if (this.hero.lookingRight==true)
 			{
-			// SHOWING ANIMATION STANDING TO THE RIGHT
+			// SHOWING THE STANDING RIGHT ANIMATION
 			this.hero.animations.play("stand_right", 3, false);
 			}
 			else
 			{
-			// SHOWING ANIMATION STANDING TO THE LEFT
+			// SHOWING THE STANDING LEFT ANIMATION
 			this.hero.animations.play("stand_left", 3, false);
 			}
 		},
@@ -908,12 +908,12 @@ GoldenAxe.Game.prototype = {
 				// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
 				if (this.enemy.lookingRight==true)
 					{
-					// SHOWING ANIMATION WALKING TO THE RIGHT
+					// SHOWING THE WALKING RIGHT ANIMATION
 					this.enemy.animations.play("walk_right", 10, true);
 					}
 					else
 					{
-					// SHOWING ANIMATION WALKING TO THE LEFT
+					// SHOWING THE WALKING LEFT ANIMATION
 					this.enemy.animations.play("walk_left", 10, true);
 					}
 				}
@@ -922,12 +922,12 @@ GoldenAxe.Game.prototype = {
 				// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
 				if (this.enemy.lookingRight==true)
 					{
-					// SHOWING ANIMATION WALKING TO THE RIGHT
+					// SHOWING THE WALKING RIGHT ANIMATION
 					this.enemy.animations.play("walk_right", 10, true);
 					}
 					else
 					{
-					// SHOWING ANIMATION WALKING TO THE LEFT
+					// SHOWING THE WALKING LEFT ANIMATION
 					this.enemy.animations.play("walk_left", 10, true);
 					}
 				}
@@ -969,16 +969,16 @@ GoldenAxe.Game.prototype = {
 					// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
 					if (this.enemy.lookingRight==true)
 						{
-						// SHOWING ANIMATION WALKING TO THE RIGHT
+						// SHOWING THE WALKING RIGHT ANIMATION
 						this.enemy.animations.play("walk_right", 10, true);
 						}
 						else
 						{
-						// SHOWING ANIMATION WALKING TO THE LEFT
+						// SHOWING THE WALKING LEFT ANIMATION
 						this.enemy.animations.play("walk_left", 10, true);
 						}
 
-					// MOVING THE ENEMY TO THE NORTH
+					// MAKING THE ENEMY TO MOVE TO THE NORTH
 					game.physics.arcade.velocityFromAngle(-90, 100, this.enemy.body.velocity);
 					}
 
@@ -988,16 +988,16 @@ GoldenAxe.Game.prototype = {
 					// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
 					if (this.enemy.lookingRight==true)
 						{
-						// SHOWING ANIMATION WALKING TO THE RIGHT
+						// SHOWING THE WALKING RIGHT ANIMATION
 						this.enemy.animations.play("walk_right", 10, true);
 						}
 						else
 						{
-						// SHOWING ANIMATION WALKING TO THE LEFT
+						// SHOWING THE WALKING LEFT ANIMATION
 						this.enemy.animations.play("walk_left", 10, true);
 						}
 
-					// MOVING THE ENEMY TO THE SOUTH
+					// MAKING THE ENEMY TO MOVE TO THE SOUTH
 					game.physics.arcade.velocityFromAngle(90, 100, this.enemy.body.velocity);
 					}
 				}
@@ -1008,10 +1008,10 @@ GoldenAxe.Game.prototype = {
 				// CHECKING IF THE HERO IS AT THE LEFT
 				if (this.hero.position.x<=this.enemy.position.x)
 					{
-					// MAKING THE ENEMY TO LOOK TO THE LEFT
+					// SHOWING THE WALKING LEFT ANIMATION
 					this.enemy.animations.play("walk_left", 10, true);
 
-					// MOVING THE ENEMY TO THE LEFT
+					// MAKING THE ENEMY TO MOVE TO THE LEFT
 					game.physics.arcade.velocityFromAngle(180, 100, this.enemy.body.velocity);
 
 					// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
@@ -1021,10 +1021,10 @@ GoldenAxe.Game.prototype = {
 				// CHECKING IF THE HERO IS AT THE RIGHT
 				else if (this.hero.position.x>this.enemy.position.x)
 					{
-					// MAKING THE ENEMY TO LOOK TO THE RIGHT
+					// SHOWING THE WALKING RIGHT ANIMATION
 					this.enemy.animations.play("walk_right", 10, true);
 
-					// MOVING THE ENEMY TO THE RIGHT
+					// MAKING THE ENEMY TO MOVE TO THE RIGHT
 					game.physics.arcade.velocityFromAngle(0, 100, this.enemy.body.velocity);
 
 					// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
