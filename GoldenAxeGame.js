@@ -909,12 +909,12 @@ GoldenAxe.Game.prototype = {
 				if (this.enemy.lookingRight==true)
 					{
 					// SHOWING THE WALKING RIGHT ANIMATION
-					this.enemy.animations.play("walk_right", 10, true);
+					this.enemy.animations.play("walk_right", 6, true);
 					}
 					else
 					{
 					// SHOWING THE WALKING LEFT ANIMATION
-					this.enemy.animations.play("walk_left", 10, true);
+					this.enemy.animations.play("walk_left", 6, true);
 					}
 				}
 				else
@@ -923,12 +923,12 @@ GoldenAxe.Game.prototype = {
 				if (this.enemy.lookingRight==true)
 					{
 					// SHOWING THE WALKING RIGHT ANIMATION
-					this.enemy.animations.play("walk_right", 10, true);
+					this.enemy.animations.play("walk_right", 6, true);
 					}
 					else
 					{
 					// SHOWING THE WALKING LEFT ANIMATION
-					this.enemy.animations.play("walk_left", 10, true);
+					this.enemy.animations.play("walk_left", 6, true);
 					}
 				}
 
@@ -970,12 +970,12 @@ GoldenAxe.Game.prototype = {
 					if (this.enemy.lookingRight==true)
 						{
 						// SHOWING THE WALKING RIGHT ANIMATION
-						this.enemy.animations.play("walk_right", 10, true);
+						this.enemy.animations.play("walk_right", 6, true);
 						}
 						else
 						{
 						// SHOWING THE WALKING LEFT ANIMATION
-						this.enemy.animations.play("walk_left", 10, true);
+						this.enemy.animations.play("walk_left", 6, true);
 						}
 
 					// MAKING THE ENEMY TO MOVE TO THE NORTH
@@ -989,12 +989,12 @@ GoldenAxe.Game.prototype = {
 					if (this.enemy.lookingRight==true)
 						{
 						// SHOWING THE WALKING RIGHT ANIMATION
-						this.enemy.animations.play("walk_right", 10, true);
+						this.enemy.animations.play("walk_right", 6, true);
 						}
 						else
 						{
 						// SHOWING THE WALKING LEFT ANIMATION
-						this.enemy.animations.play("walk_left", 10, true);
+						this.enemy.animations.play("walk_left", 6, true);
 						}
 
 					// MAKING THE ENEMY TO MOVE TO THE SOUTH
@@ -1009,7 +1009,7 @@ GoldenAxe.Game.prototype = {
 				if (this.hero.position.x<=this.enemy.position.x)
 					{
 					// SHOWING THE WALKING LEFT ANIMATION
-					this.enemy.animations.play("walk_left", 10, true);
+					this.enemy.animations.play("walk_left", 6, true);
 
 					// MAKING THE ENEMY TO MOVE TO THE LEFT
 					game.physics.arcade.velocityFromAngle(180, 100, this.enemy.body.velocity);
@@ -1022,7 +1022,7 @@ GoldenAxe.Game.prototype = {
 				else if (this.hero.position.x>this.enemy.position.x)
 					{
 					// SHOWING THE WALKING RIGHT ANIMATION
-					this.enemy.animations.play("walk_right", 10, true);
+					this.enemy.animations.play("walk_right", 6, true);
 
 					// MAKING THE ENEMY TO MOVE TO THE RIGHT
 					game.physics.arcade.velocityFromAngle(0, 100, this.enemy.body.velocity);
