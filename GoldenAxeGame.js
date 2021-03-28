@@ -1072,16 +1072,23 @@ GoldenAxe.Game.prototype = {
 					// CHECKING IF THE ENEMY IS NOT ATTACKING
 					if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
 						{
-						// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-						if (this.enemy.lookingRight==true)
+						// GETTING A RANDOM VALUE FOR ATTACKING
+						var mustAttackPercentage = this.getRandomInteger(0,1000);
+
+						// CHECKING IF THE ENEMY MUST ATTACK
+						if (mustAttackPercentage<40)
 							{
-							// SHOWING THE ATTACKING RIGHT ANIMATION
-							this.enemy.animations.play("attack_right", 6, false);
-							}
-							else
-							{
-							// SHOWING THE ATTACKING LEFT ANIMATION
-							this.enemy.animations.play("attack_left", 6, false);
+							// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+							if (this.enemy.lookingRight==true)
+								{
+								// SHOWING THE ATTACKING RIGHT ANIMATION
+								this.enemy.animations.play("attack_right", 6, false);
+								}
+								else
+								{
+								// SHOWING THE ATTACKING LEFT ANIMATION
+								this.enemy.animations.play("attack_left", 6, false);
+								}
 							}
 						}
 					}
@@ -1151,6 +1158,11 @@ GoldenAxe.Game.prototype = {
 			// SHOWING THE STANDING LEFT ANIMATION
 			this.enemy.animations.play("stand_left", 3, false);
 			}
+		},
+
+	getRandomInteger: function(min, max)
+		{
+		return Math.floor(Math.random() * (max - min + 1)) + min;
 		},
 
 	getDistance: function(x1, y1, x2, y2)
