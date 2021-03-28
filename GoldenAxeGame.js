@@ -452,8 +452,8 @@ GoldenAxe.Game.prototype = {
 		this.hero.animations.add("stand_left", [1]);
 		this.hero.animations.add("walk_right", [2, 3, 4, 3]);
 		this.hero.animations.add("walk_left", [5, 6, 7, 6]);
-		this.hero.animations.add("fall_right", [20, 21]);
-		this.hero.animations.add("fall_left", [22, 23]);
+		this.hero.animations.add("die_right", [20, 21]);
+		this.hero.animations.add("die_left", [22, 23]);
 		this.heroAttackRightHandler = this.hero.animations.add("attack_right", [8, 9, 10, 11]);
 		this.heroAttackRightHandler.onStart.add(function()
 			{
@@ -948,12 +948,12 @@ GoldenAxe.Game.prototype = {
 			if (this.hero.lookingRight==true)
 				{
 				// SHOWING THE DYING RIGHT ANIMATION
-				this.hero.animations.play("fall_right", 3, false);
+				this.hero.animations.play("die_right", 3, false);
 				}
 				else
 				{
 				// SHOWING THE DYING LEFT ANIMATION
-				this.hero.animations.play("fall_left", 3, false);
+				this.hero.animations.play("die_left", 3, false);
 				}
 
 			// CHECKING IF THE SOUND IS ENABLED
