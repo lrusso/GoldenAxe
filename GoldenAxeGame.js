@@ -961,7 +961,7 @@ GoldenAxe.Game.prototype = {
 				{
 				// PLAYING THE HERO'S DEATH SOUND
 				this.audioPlayer = this.add.audio("soundHeroDeath");
-				this.audioPlayer.volume = 0.5;
+				this.audioPlayer.volume = 0.8;
 				this.audioPlayer.play();
 				}
 
