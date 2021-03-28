@@ -571,7 +571,7 @@ GoldenAxe.Game.prototype = {
 		game.physics.arcade.collide(this.enemy, this.block1);
 		game.physics.arcade.collide(this.enemy, this.block2);
 
-		// CHECKING THE HERO'S HEALTH
+		// CHECKING THE HERO'S HEALTH AND HIDING THE ENERGY BARS ACCORDINGLY
 		if (this.heroHealth<=0){this.heroEnergyBar1.visible = false;}
 		else if (this.heroHealth<35){this.heroEnergyBar2.visible = false;}
 		else if (this.heroHealth<70){this.heroEnergyBar3.visible = false;}
