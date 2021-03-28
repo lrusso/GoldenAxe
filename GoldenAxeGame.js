@@ -394,78 +394,24 @@ GoldenAxe.Game.prototype = {
 		this.enemyAttackRightHandler = this.enemy.animations.add("attack_right", [6, 7, 8]);
 		this.enemyAttackRightHandler.onStart.add(function()
 			{
-			// CHECKING IF THE SOUND IS ENABLED
-			if (GAME_SOUND_ENABLED==true)
-				{
-				// PLAYING THE SLASH SOUND
-				this.audioPlayer = this.add.audio("soundSlash");
-				this.audioPlayer.volume = 0.5;
-				this.audioPlayer.play();
-				}
-
-			// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-			if (this.hero.lookingRight==true)
-				{
-				// SHOWING THE SUFFERING RIGHT ANIMATION
-				this.hero.animations.play("suffer_right", 6, false);
-				}
-				else
-				{
-				// SHOWING THE SUFFERING LEFT ANIMATION
-				this.hero.animations.play("suffer_left", 6, false);
-				}
+			// HANDLING THE ENEMY ATTACK
+			this.handleEnemyAttack();
 			}, this);
 		this.enemyAttackRightHandler.onComplete.add(function()
 			{
-			// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-			if (this.enemy.lookingRight==true)
-				{
-				// SHOWING THE STANDING RIGHT ANIMATION
-				this.enemy.animations.play("stand_right", 3, false);
-				}
-				else
-				{
-				// SHOWING THE STANDING LEFT ANIMATION
-				this.enemy.animations.play("stand_left", 3, false);
-				}
+			// SETTING THAT THE ENEMY WILL STAND AFTER THE ATTACK MOVEMENT IT'S COMPLETED
+			this.handleEnemyStand();
 			}, this);
 		this.enemyAttackLeftHandler = this.enemy.animations.add("attack_left", [9, 10, 11]);
 		this.enemyAttackLeftHandler.onStart.add(function()
 			{
-			// CHECKING IF THE SOUND IS ENABLED
-			if (GAME_SOUND_ENABLED==true)
-				{
-				// PLAYING THE SLASH SOUND
-				this.audioPlayer = this.add.audio("soundSlash");
-				this.audioPlayer.volume = 0.5;
-				this.audioPlayer.play();
-				}
-
-			// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-			if (this.hero.lookingRight==true)
-				{
-				// SHOWING THE SUFFERING RIGHT ANIMATION
-				this.hero.animations.play("suffer_right", 6, false);
-				}
-				else
-				{
-				// SHOWING THE SUFFERING LEFT ANIMATION
-				this.hero.animations.play("suffer_left", 6, false);
-				}
+			// HANDLING THE ENEMY ATTACK
+			this.handleEnemyAttack();
 			}, this);
 		this.enemyAttackLeftHandler.onComplete.add(function()
 			{
-			// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-			if (this.enemy.lookingRight==true)
-				{
-				// SHOWING THE STANDING RIGHT ANIMATION
-				this.enemy.animations.play("stand_right", 3, false);
-				}
-				else
-				{
-				// SHOWING THE STANDING LEFT ANIMATION
-				this.enemy.animations.play("stand_left", 3, false);
-				}
+			// SETTING THAT THE ENEMY WILL STAND AFTER THE ATTACK MOVEMENT IT'S COMPLETED
+			this.handleEnemyStand();
 			}, this);
 
 		// SETTING THAT THE ENEMY WILL STAND TO THE LEFT
@@ -624,6 +570,11 @@ GoldenAxe.Game.prototype = {
 		// SETTING THAT THE ENEMY WILL COLLIDE WITH THE BLOCKS
 		game.physics.arcade.collide(this.enemy, this.block1);
 		game.physics.arcade.collide(this.enemy, this.block2);
+
+		// CHECKING THE HERO'S HEALTH
+		if (this.heroHealth<=0){this.heroEnergyBar1.visible = false;}
+		else if (this.heroHealth<35){this.heroEnergyBar2.visible = false;}
+		else if (this.heroHealth<70){this.heroEnergyBar3.visible = false;}
 
 		// CHECKING IF THE HERO IS CLOSER TO THE BOTTOM OF THE SCREEN THAN THE ENEMY
 		if (this.hero.position.y>=this.enemy.position.y)
@@ -987,160 +938,218 @@ GoldenAxe.Game.prototype = {
 
 	handleEnemyMovements: function()
 		{
-		// GETTING THE DISTANCE BETWEEN THE HERO AND THE ENEMY
-		var distanceBetweenHeroAndEnemy = this.getDistance(this.hero.body.position.x,this.hero.body.position.y,this.enemy.body.position.x,this.enemy.body.position.y);
-		var distanceX = this.enemy.position.x - this.hero.position.x;
-		var distanceY = this.enemy.position.y - this.hero.position.y;
-		if (distanceX<0){distanceX=distanceX * -1;}
-		if (distanceY<0){distanceY=distanceY * -1;}
-
-		// CHECKING IF THE ENEMY IS NOT ATTACKING
-		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+		// CHECKING IF THE HERO IS DEAD
+		if (this.heroHealth<=0)
 			{
-			// CHECKING IF THE HERO IS AT THE RIGHT
-			if (this.hero.position.x>=this.enemy.position.x)
-				{
-				// SHOWING THE WALKING RIGHT ANIMATION
-				this.enemy.animations.play("walk_right", 6, true);
-
-				// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
-				this.enemy.lookingRight = true;
-				}
-				else
-				{
-				// SHOWING THE WALKING LEFT ANIMATION
-				this.enemy.animations.play("walk_left", 6, true);
-
-				// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
-				this.enemy.lookingRight = false;
-				}
+			// SHOWING THE STANDING ANIMATION
+			this.handleEnemyStand();
 			}
-
-		// CHECKING IF THE HERO IS WITHIN A SLASHING DISTANCE
-		if (distanceBetweenHeroAndEnemy<=70)
+			else
 			{
-			// CHECKING IF THE ENEMY IS NEAR ENOUGH TO HERO
-			if (distanceX<=30 || distanceY<=30)
+			// GETTING THE DISTANCE BETWEEN THE HERO AND THE ENEMY
+			var distanceBetweenHeroAndEnemy = this.getDistance(this.hero.body.position.x,this.hero.body.position.y,this.enemy.body.position.x,this.enemy.body.position.y);
+			var distanceX = this.enemy.position.x - this.hero.position.x;
+			var distanceY = this.enemy.position.y - this.hero.position.y;
+			if (distanceX<0){distanceX=distanceX * -1;}
+			if (distanceY<0){distanceY=distanceY * -1;}
+
+			// CHECKING IF THE ENEMY IS NOT ATTACKING
+			if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
 				{
-				// CLEARING THE ENEMY VELOCITY
-				this.enemy.body.velocity.x = 0;
-				this.enemy.body.velocity.y = 0;
-				}
-			}
-
-		// CHECKING IF THE ENEMY MUST BE MOVING CLOSER TO THE HERO
-		else
-			{
-			// CHECKING IF THE HERO IS VERTICALLY FAR
-			if (distanceY>=5)
-				{
-				// CHECKING IF THE HERO IS AT THE NORTH
-				if (this.hero.position.y<=this.enemy.position.y)
-					{
-					// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-					if (this.enemy.lookingRight==true)
-						{
-						// SHOWING THE WALKING RIGHT ANIMATION
-						this.enemy.animations.play("walk_right", 6, true);
-						}
-						else
-						{
-						// SHOWING THE WALKING LEFT ANIMATION
-						this.enemy.animations.play("walk_left", 6, true);
-						}
-
-					// MAKING THE ENEMY TO MOVE TO THE NORTH
-					game.physics.arcade.velocityFromAngle(-90, 100, this.enemy.body.velocity);
-					}
-
-				// CHECKING IF THE HERO IS AT THE SOUTH
-				else if (this.hero.position.y>this.enemy.position.y)
-					{
-					// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-					if (this.enemy.lookingRight==true)
-						{
-						// SHOWING THE WALKING RIGHT ANIMATION
-						this.enemy.animations.play("walk_right", 6, true);
-						}
-						else
-						{
-						// SHOWING THE WALKING LEFT ANIMATION
-						this.enemy.animations.play("walk_left", 6, true);
-						}
-
-					// MAKING THE ENEMY TO MOVE TO THE SOUTH
-					game.physics.arcade.velocityFromAngle(90, 100, this.enemy.body.velocity);
-					}
-				}
-
-			// CHECKING IF THE HERO IS HORIZONTALLY FAR
-			else if (distanceX>=30)
-				{
-				// CHECKING IF THE HERO IS AT THE LEFT
-				if (this.hero.position.x<=this.enemy.position.x)
-					{
-					// SHOWING THE WALKING LEFT ANIMATION
-					this.enemy.animations.play("walk_left", 6, true);
-
-					// MAKING THE ENEMY TO MOVE TO THE LEFT
-					game.physics.arcade.velocityFromAngle(180, 100, this.enemy.body.velocity);
-
-					// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
-					this.enemy.lookingRight = false;
-					}
-
 				// CHECKING IF THE HERO IS AT THE RIGHT
-				else if (this.hero.position.x>this.enemy.position.x)
+				if (this.hero.position.x>=this.enemy.position.x)
 					{
 					// SHOWING THE WALKING RIGHT ANIMATION
 					this.enemy.animations.play("walk_right", 6, true);
 
-					// MAKING THE ENEMY TO MOVE TO THE RIGHT
-					game.physics.arcade.velocityFromAngle(0, 100, this.enemy.body.velocity);
-
 					// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
 					this.enemy.lookingRight = true;
 					}
-				}
-			}
-
-		// CHECKING IF THE ENEMY IS CLOSER ENOUGH TO ATTACK
-		if (distanceX<=70 && distanceY<=5)
-			{
-			// CHECKING IF THE HERO IS ALIVE
-			if (this.heroHealth>0)
-				{
-				// CHECKING IF THE ENEMY IS NOT ATTACKING
-				if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+					else
 					{
-					// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-					if (this.enemy.lookingRight==true)
+					// SHOWING THE WALKING LEFT ANIMATION
+					this.enemy.animations.play("walk_left", 6, true);
+
+					// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
+					this.enemy.lookingRight = false;
+					}
+				}
+
+			// CHECKING IF THE HERO IS WITHIN A SLASHING DISTANCE
+			if (distanceBetweenHeroAndEnemy<=70)
+				{
+				// CHECKING IF THE ENEMY IS NEAR ENOUGH TO HERO
+				if (distanceX<=30 || distanceY<=30)
+					{
+					// CLEARING THE ENEMY VELOCITY
+					this.enemy.body.velocity.x = 0;
+					this.enemy.body.velocity.y = 0;
+					}
+				}
+
+			// CHECKING IF THE ENEMY MUST BE MOVING CLOSER TO THE HERO
+			else
+				{
+				// CHECKING IF THE HERO IS VERTICALLY FAR
+				if (distanceY>=5)
+					{
+					// CHECKING IF THE HERO IS AT THE NORTH
+					if (this.hero.position.y<=this.enemy.position.y)
 						{
-						// SHOWING THE ATTACKING RIGHT ANIMATION
-						this.enemy.animations.play("attack_right", 6, false);
+						// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+						if (this.enemy.lookingRight==true)
+							{
+							// SHOWING THE WALKING RIGHT ANIMATION
+							this.enemy.animations.play("walk_right", 6, true);
+							}
+							else
+							{
+							// SHOWING THE WALKING LEFT ANIMATION
+							this.enemy.animations.play("walk_left", 6, true);
+							}
+
+						// MAKING THE ENEMY TO MOVE TO THE NORTH
+						game.physics.arcade.velocityFromAngle(-90, 100, this.enemy.body.velocity);
 						}
-						else
+
+					// CHECKING IF THE HERO IS AT THE SOUTH
+					else if (this.hero.position.y>this.enemy.position.y)
 						{
-						// SHOWING THE ATTACKING LEFT ANIMATION
-						this.enemy.animations.play("attack_left", 6, false);
+						// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+						if (this.enemy.lookingRight==true)
+							{
+							// SHOWING THE WALKING RIGHT ANIMATION
+							this.enemy.animations.play("walk_right", 6, true);
+							}
+							else
+							{
+							// SHOWING THE WALKING LEFT ANIMATION
+							this.enemy.animations.play("walk_left", 6, true);
+							}
+
+						// MAKING THE ENEMY TO MOVE TO THE SOUTH
+						game.physics.arcade.velocityFromAngle(90, 100, this.enemy.body.velocity);
+						}
+					}
+
+				// CHECKING IF THE HERO IS HORIZONTALLY FAR
+				else if (distanceX>=30)
+					{
+					// CHECKING IF THE HERO IS AT THE LEFT
+					if (this.hero.position.x<=this.enemy.position.x)
+						{
+						// SHOWING THE WALKING LEFT ANIMATION
+						this.enemy.animations.play("walk_left", 6, true);
+
+						// MAKING THE ENEMY TO MOVE TO THE LEFT
+						game.physics.arcade.velocityFromAngle(180, 100, this.enemy.body.velocity);
+
+						// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
+						this.enemy.lookingRight = false;
+						}
+
+					// CHECKING IF THE HERO IS AT THE RIGHT
+					else if (this.hero.position.x>this.enemy.position.x)
+						{
+						// SHOWING THE WALKING RIGHT ANIMATION
+						this.enemy.animations.play("walk_right", 6, true);
+
+						// MAKING THE ENEMY TO MOVE TO THE RIGHT
+						game.physics.arcade.velocityFromAngle(0, 100, this.enemy.body.velocity);
+
+						// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
+						this.enemy.lookingRight = true;
 						}
 					}
 				}
+
+			// CHECKING IF THE ENEMY IS CLOSER ENOUGH TO ATTACK
+			if (distanceX<=70 && distanceY<=5)
+				{
+				// CHECKING IF THE HERO IS ALIVE
+				if (this.heroHealth>0)
+					{
+					// CHECKING IF THE ENEMY IS NOT ATTACKING
+					if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+						{
+						// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+						if (this.enemy.lookingRight==true)
+							{
+							// SHOWING THE ATTACKING RIGHT ANIMATION
+							this.enemy.animations.play("attack_right", 6, false);
+							}
+							else
+							{
+							// SHOWING THE ATTACKING LEFT ANIMATION
+							this.enemy.animations.play("attack_left", 6, false);
+							}
+						}
+					}
+				}
+
+			// CHECKING IF THE ENEMY IS NOT ATTACKING
+			if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+				{
+				// CHECKING IF THERE IS AN OVERLAPPING BETWEEN THE HERO AND THE ENEMY
+				if (this.checkOverlapping(this.hero,this.enemy)==true)
+					{
+					// STOPPING THE ENEMY ANIMATION
+					this.enemy.animations.stop(null, true);
+
+					// CLEARING THE ENEMY VELOCITY
+					this.enemy.body.velocity.x = 0;
+					this.enemy.body.velocity.y = 0;
+					}
+				}
+			}
+		},
+
+	handleEnemyAttack: function()
+		{
+		// CHECKING IF THE SOUND IS ENABLED
+		if (GAME_SOUND_ENABLED==true)
+			{
+			// PLAYING THE SLASH SOUND
+			this.audioPlayer = this.add.audio("soundSlash");
+			this.audioPlayer.volume = 0.5;
+			this.audioPlayer.play();
 			}
 
-		// CHECKING IF THE ENEMY IS NOT ATTACKING
-		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
-			{
-			// CHECKING IF THERE IS AN OVERLAPPING BETWEEN THE HERO AND THE ENEMY
-			if (this.checkOverlapping(this.hero,this.enemy)==true)
-				{
-				// STOPPING THE ENEMY ANIMATION
-				this.enemy.animations.stop(null, true);
+		// GETTING THE DISTANCE BETWEEN THE HERO AND THE ENEMY
+		var distanceBetweenHeroAndEnemy = this.getDistance(this.hero.body.position.x,this.hero.body.position.y,this.enemy.body.position.x,this.enemy.body.position.y);
 
-				// CLEARING THE ENEMY VELOCITY
-				this.enemy.body.velocity.x = 0;
-				this.enemy.body.velocity.y = 0;
+		// CHECKING IF THE HERO IS WITHIN A SLASHING DISTANCE
+		if (distanceBetweenHeroAndEnemy<=70)
+			{
+			// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+			if (this.hero.lookingRight==true)
+				{
+				// SHOWING THE SUFFERING RIGHT ANIMATION
+				this.hero.animations.play("suffer_right", 6, false);
 				}
+				else
+				{
+				// SHOWING THE SUFFERING LEFT ANIMATION
+				this.hero.animations.play("suffer_left", 6, false);
+				}
+
+			// UPDATING THE HERO'S HEALTH VALUE
+			this.heroHealth = this.heroHealth - 5;
+			}
+		},
+
+	handleEnemyStand: function()
+		{
+		// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+		if (this.enemy.lookingRight==true)
+			{
+			// SHOWING THE STANDING RIGHT ANIMATION
+			this.enemy.animations.play("stand_right", 3, false);
+			}
+			else
+			{
+			// SHOWING THE STANDING LEFT ANIMATION
+			this.enemy.animations.play("stand_left", 3, false);
 			}
 		},
 
