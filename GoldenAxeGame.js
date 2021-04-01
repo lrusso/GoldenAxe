@@ -1378,7 +1378,7 @@ GoldenAxe.Game.prototype = {
 	};
 
 // CREATING THE GAME INSTANCE
-var config = {width: 757, height: 490, renderer: Phaser.WEBGL, parent: "content", disableVisibilityChange: false};
+var config = {width: 757, height: 490, renderer: Phaser.WEBGL, parent: "content", disableVisibilityChange: true};
 var game = new Phaser.Game(config);
 
 // CREATING THE STATES
