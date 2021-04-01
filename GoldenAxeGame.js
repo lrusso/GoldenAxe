@@ -112,7 +112,7 @@ GoldenAxe.Preloader.prototype = {
 
 	create: function()
 		{
-		this.state.start("GoldenAxe.Game");
+		this.state.start("GoldenAxe.Splash");
 		}
 	};
 
