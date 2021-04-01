@@ -1023,7 +1023,7 @@ GoldenAxe.Game.prototype = {
 			this.handleEnemyStand();
 
 			// SHOWING THE GAME OVER MESSAGE
-			this.showToast(STRING_GAMEOVER, false);
+			this.showToast(STRING_GAMEOVER);
 			}
 		},
 
@@ -1312,7 +1312,7 @@ GoldenAxe.Game.prototype = {
 		this.state.restart();
 		},
 
-	showToast: function(myText, mustFade)
+	showToast: function(myText)
 		{
 		// CREATING THE TOAST SHADOW
 		this.toastShadow = game.add.graphics();
@@ -1325,18 +1325,6 @@ GoldenAxe.Game.prototype = {
 
 		// DRAWING THE TOAST SHADOW
 		this.toastShadow.drawRoundedRect(756 / 2 - this.toastText._width / 2 - 11, 423, this.toastText._width + 23, 46, 10);
-
-		// CHECKING IF THE TOAST MUST FADE OUT
-		if (mustFade==true)
-			{
-			// SETTING THAT IN 3 SECONDS THE TOAST MUST FADE OUT
-			setTimeout(function()
-				{
-				// FADING OUT THE TOAST SHADOW AND TEXT
-				game.add.tween(game.state.states["GoldenAxe.Game"].toastShadow).to({alpha: 0}, 500, Phaser.Easing.Linear.None, true);
-				game.add.tween(game.state.states["GoldenAxe.Game"].toastText).to({alpha: 0}, 500, Phaser.Easing.Linear.None, true);
-				}, 3000);
-			}
 		}
 	};
 
