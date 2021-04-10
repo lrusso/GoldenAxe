@@ -290,6 +290,8 @@ GoldenAxe.Game.prototype = {
 		this.walkingSpeed = 2;
 		this.gameOver = false;
 		this.splashWaitingTimeDone = false;
+
+		this.isMobileDevice = null;
 		},
 
 	create: function()
