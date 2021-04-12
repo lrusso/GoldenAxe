@@ -617,6 +617,8 @@ GoldenAxe.Game.prototype = {
 		this.stick = this.pad.addDPad(100, 385, 0, "dpad");
 		this.stick.sprite.scale.set(0.8);
 		this.stick.sprite.tint = 0xA9A9A9;
+		this.stick.sprite.inputEnabled = true;
+		this.stick.sprite.events.onInputDown.add(function(){this.update();},this);
 
 		// ADDING THE SWORD NORMAL BUTTON
 		this.buttonSwordNormal = game.add.sprite(604, 333, "imageButtonNormal");
@@ -644,7 +646,7 @@ GoldenAxe.Game.prototype = {
 		this.buttonSwordHandler.drawRect(621, 350, 100, 100, 10);
 		this.buttonSwordHandler.inputEnabled = true;
 		this.buttonSwordHandler.fixedToCamera = true;
-		this.buttonSwordHandler.events.onInputDown.add(function(){this.keySpace.isDown=true;this.buttonSwordNormal.visible=false;this.buttonSwordPressed.visible=true;},this);
+		this.buttonSwordHandler.events.onInputDown.add(function(){this.keySpace.isDown=true;this.buttonSwordNormal.visible=false;this.buttonSwordPressed.visible=true;this.update();},this);
 		this.buttonSwordHandler.events.onInputUp.add(function(){this.keySpace.isDown=false;this.buttonSwordNormal.visible=true;this.buttonSwordPressed.visible=false;},this);
 
 		// CHECKING IF IT IS NOT A MOBILE DEVICE
