@@ -619,12 +619,15 @@ GoldenAxe.Game.prototype = {
 		this.stick.sprite.tint = 0xA9A9A9;
 		this.stick.sprite.inputEnabled = true;
 		this.stick.sprite.events.onInputDown.add(function(){this.update();},this);
+		this.stick.enabled = false;
+		this.stick.visible = false;
 
 		// ADDING THE SWORD NORMAL BUTTON
 		this.buttonSwordNormal = game.add.sprite(604, 333, "imageButtonNormal");
 		this.buttonSwordNormal.fixedToCamera = true;
 		this.buttonSwordNormal.tint = 0xAFAFAF;
 		this.buttonSwordNormal.scale.set(0.9);
+		this.buttonSwordNormal.visible = false;
 
 		// ADDING THE SWORD PRESSED BUTTON
 		this.buttonSwordPressed = game.add.sprite(604, 333, "imageButtonPressed");
@@ -639,6 +642,7 @@ GoldenAxe.Game.prototype = {
 		this.buttonSwordIcon.alpha = 0.7;
 		this.buttonSwordIcon.tint = 0xA9A9A9;
 		this.buttonSwordIcon.fixedToCamera = true;
+		this.buttonSwordIcon.visible = false;
 
 		// ADDING THE SWORD BUTTON HANDLER
 		this.buttonSwordHandler = game.add.graphics();
@@ -648,18 +652,22 @@ GoldenAxe.Game.prototype = {
 		this.buttonSwordHandler.fixedToCamera = true;
 		this.buttonSwordHandler.events.onInputDown.add(function(){this.keySpace.isDown=true;this.buttonSwordNormal.visible=false;this.buttonSwordPressed.visible=true;this.update();},this);
 		this.buttonSwordHandler.events.onInputUp.add(function(){this.keySpace.isDown=false;this.buttonSwordNormal.visible=true;this.buttonSwordPressed.visible=false;},this);
+		this.buttonSwordHandler.visible = false;
 
-		// CHECKING IF IT IS NOT A MOBILE DEVICE
-		if (this.isMobileDevice==false)
+		// CHECKING IF IT IS A MOBILE DEVICE
+		if (this.isMobileDevice==true)
 			{
-			// HIDING THE STICK FOR MOBILE DEVICES
-			this.stick.visible = false;
+			// SHOWING THE STICK FOR MOBILE DEVICES
+			this.stick.visible = true;
 
-			// HIDING THE ATTACK BUTTON FOR MOBILE DEVICES
-			this.buttonSwordNormal.visible = false;
-			this.buttonSwordPressed.visible = false;
-			this.buttonSwordIcon.visible = false;
-			this.buttonSwordHandler.visible = false;
+			// ENABLING THE STICK FOR MOBILE DEVICES
+			this.stick.enabled = true;
+
+			// SHOWING THE ATTACK BUTTON FOR MOBILE DEVICES
+			this.buttonSwordNormal.visible = true;
+			this.buttonSwordPressed.visible = true;
+			this.buttonSwordIcon.visible = true;
+			this.buttonSwordHandler.visible = true;
 			}
 
 		// WAITING 500 MS
