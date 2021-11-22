@@ -203,6 +203,7 @@ GoldenAxe.Game = function (game)
 	this.highscore = null;
 	this.block1 = null;
 	this.block2 = null;
+	this.block3 = null;
 	this.cursors = null;
 	this.keyA = null;
 	this.keyS = null;
@@ -272,6 +273,7 @@ GoldenAxe.Game.prototype = {
 		this.highscore = null;
 		this.block1 = null;
 		this.block2 = null;
+		this.block3 = null;
 		this.cursors = null;
 		this.keyA = null;
 		this.keyS = null;
@@ -354,6 +356,13 @@ GoldenAxe.Game.prototype = {
 		this.block2.height = 20;
 		game.physics.arcade.enable(this.block2);
 		this.block2.body.immovable = true;
+
+		// ADDING THE THIRD BLOCK (THE BOTTOM LIMIT)
+		this.block3 = game.add.sprite(0,483, "");
+		this.block3.width = 760;
+		this.block3.height = 10;
+		game.physics.arcade.enable(this.block3);
+		this.block3.body.immovable = true;
 
 		// SETTING THE GATE SCALE
 		this.gate.scale.x = 2.4;
@@ -516,9 +525,6 @@ GoldenAxe.Game.prototype = {
 
 		// ADJUSTING THE ENEMY'S COLLISION BODY SIZE
 		this.enemy.body.setSize(30, 10, 55, 144);
-
-		// SETTING THAT THE ENEMY CAN'T BE MOVED BY THE HERO
-		this.enemy.body.immovable = true;
 
 		// SETTING THAT THE ENEMY IS LOOKING TO THE LEFT
 		this.enemy.lookingRight = false;
@@ -691,13 +697,14 @@ GoldenAxe.Game.prototype = {
 			this.hero.body.velocity.y = 0;
 
 			// SETTING THAT THE HERO WILL COLLIDE WITH THE ENEMY AND THE BLOCKS
-			game.physics.arcade.collide(this.hero, this.enemy);
 			game.physics.arcade.collide(this.hero, this.block1);
 			game.physics.arcade.collide(this.hero, this.block2);
+			game.physics.arcade.collide(this.hero, this.block3);
 
 			// SETTING THAT THE ENEMY WILL COLLIDE WITH THE BLOCKS
 			game.physics.arcade.collide(this.enemy, this.block1);
 			game.physics.arcade.collide(this.enemy, this.block2);
+			game.physics.arcade.collide(this.enemy, this.block3);
 
 			// CHECKING THE HERO'S HEALTH AND HIDING THE ENERGY BARS ACCORDINGLY
 			if (this.heroHealth<=0){this.heroEnergyBar1.visible = false;}
@@ -880,6 +887,9 @@ GoldenAxe.Game.prototype = {
 
 			// SHOWING THE BLOCK 2 COLLISION BODY SIZE
 			game.debug.body(this.block2);
+
+			// SHOWING THE BLOCK 3 COLLISION BODY SIZE
+			game.debug.body(this.block3);
 			}
 		},
 
@@ -1143,7 +1153,7 @@ GoldenAxe.Game.prototype = {
 					}
 
 				// MAKING THE ENEMY TO MOVE TO THE NORTH
-				game.physics.arcade.velocityFromAngle(-90, 100, this.enemy.body.velocity);
+				game.physics.arcade.velocityFromAngle(-90, 70, this.enemy.body.velocity);
 				}
 
 			// CHECKING IF THE HERO IS AT THE SOUTH
@@ -1162,7 +1172,7 @@ GoldenAxe.Game.prototype = {
 					}
 
 				// MAKING THE ENEMY TO MOVE TO THE SOUTH
-				game.physics.arcade.velocityFromAngle(90, 100, this.enemy.body.velocity);
+				game.physics.arcade.velocityFromAngle(90, 70, this.enemy.body.velocity);
 				}
 			}
 
@@ -1176,7 +1186,7 @@ GoldenAxe.Game.prototype = {
 				this.enemy.animations.play("walk_left", 6, true);
 
 				// MAKING THE ENEMY TO MOVE TO THE LEFT
-				game.physics.arcade.velocityFromAngle(180, 100, this.enemy.body.velocity);
+				game.physics.arcade.velocityFromAngle(180, 70, this.enemy.body.velocity);
 
 				// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
 				this.enemy.lookingRight = false;
@@ -1189,7 +1199,7 @@ GoldenAxe.Game.prototype = {
 				this.enemy.animations.play("walk_right", 6, true);
 
 				// MAKING THE ENEMY TO MOVE TO THE RIGHT
-				game.physics.arcade.velocityFromAngle(0, 100, this.enemy.body.velocity);
+				game.physics.arcade.velocityFromAngle(0, 70, this.enemy.body.velocity);
 
 				// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
 				this.enemy.lookingRight = true;
@@ -1211,28 +1221,16 @@ GoldenAxe.Game.prototype = {
 				// CHECKING IF THE ENEMY IS NOT ATTACKING
 				if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
 					{
-					// GETTING A RANDOM VALUE FOR ATTACKING
-					var mustAttackPercentage = this.getRandomInteger(0,1000);
-
-					// CHECKING IF THE ENEMY MUST ATTACK
-					if (mustAttackPercentage<40)
+					// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+					if (this.enemy.lookingRight==true)
 						{
-						// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-						if (this.enemy.lookingRight==true)
-							{
-							// SHOWING THE ATTACKING RIGHT ANIMATION
-							this.enemy.animations.play("attack_right", 6, false);
-							}
-							else
-							{
-							// SHOWING THE ATTACKING LEFT ANIMATION
-							this.enemy.animations.play("attack_left", 6, false);
-							}
+						// SHOWING THE ATTACKING RIGHT ANIMATION
+						this.enemy.animations.play("attack_right", 6, false);
 						}
 						else
 						{
-						// SETTING THAT THE ENEMY WILL STAND AFTER THE HERO IS DEAD
-						this.handleEnemyStand();
+						// SHOWING THE ATTACKING LEFT ANIMATION
+						this.enemy.animations.play("attack_left", 6, false);
 						}
 					}
 				}
@@ -1265,26 +1263,16 @@ GoldenAxe.Game.prototype = {
 			this.audioPlayer.play();
 			}
 
-		// GETTING THE DISTANCE BETWEEN THE HERO AND THE ENEMY
-		var distanceBetweenHeroAndEnemy = this.getDistance(this.hero.body.position.x,this.hero.body.position.y,this.enemy.body.position.x,this.enemy.body.position.y);
-
-		// CHECKING IF THE HERO IS WITHIN A SLASHING DISTANCE
-		if (distanceBetweenHeroAndEnemy<=70)
+		// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+		if (this.hero.lookingRight==true)
 			{
-			// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-			if (this.hero.lookingRight==true)
-				{
-				// SHOWING THE SUFFERING RIGHT ANIMATION
-				this.hero.animations.play("suffer_right", 6, false);
-				}
-				else
-				{
-				// SHOWING THE SUFFERING LEFT ANIMATION
-				this.hero.animations.play("suffer_left", 6, false);
-				}
-
-			// UPDATING THE HERO'S HEALTH VALUE
-			this.heroHealth = this.heroHealth - 5;
+			// SHOWING THE SUFFERING RIGHT ANIMATION
+			this.hero.animations.play("suffer_right", 6, false);
+			}
+			else
+			{
+			// SHOWING THE SUFFERING LEFT ANIMATION
+			this.hero.animations.play("suffer_left", 6, false);
 			}
 		},
 
@@ -1301,11 +1289,6 @@ GoldenAxe.Game.prototype = {
 			// SHOWING THE STANDING LEFT ANIMATION
 			this.enemy.animations.play("stand_left", 3, false);
 			}
-		},
-
-	getRandomInteger: function(min, max)
-		{
-		return Math.floor(Math.random() * (max - min + 1)) + min;
 		},
 
 	getDistance: function(x1, y1, x2, y2)
