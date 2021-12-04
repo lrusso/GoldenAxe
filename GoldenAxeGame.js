@@ -700,7 +700,7 @@ GoldenAxe.Game.prototype = {
 
 	update: function()
 		{
-		// PREVENTING ANY LOGIC OF THE GAME IS OVER
+		// PREVENTING ANY LOGIC IF THE GAME IS OVER
 		if (this.gameOver==true){return}
 
 		// CHECKING IF THE SPLASH WAITING TIME IS DONE
