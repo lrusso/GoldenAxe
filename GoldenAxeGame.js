@@ -1260,6 +1260,9 @@ GoldenAxe.Game.prototype = {
 			this.audioPlayer.play();
 			}
 
+		// LOWERING THE HERO'S HEALTH
+		this.heroHealth = this.heroHealth - 5;
+
 		// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
 		if (this.hero.lookingRight==true)
 			{
