@@ -1096,8 +1096,12 @@ GoldenAxe.Game.prototype = {
 			// SHOWING THE ENEMY STANDING ANIMATION
 			this.handleEnemyStand();
 
-			// SHOWING THE GAME OVER MESSAGE
-			this.showToast(STRING_GAMEOVER);
+			// WAITING 400 MS
+			game.time.events.add(400, function()
+				{
+				// SHOWING THE GAME OVER MESSAGE
+				game.state.states["GoldenAxe.Game"].showToast(STRING_GAMEOVER);
+				});
 			}
 		},
 
