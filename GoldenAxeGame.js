@@ -222,17 +222,13 @@ GoldenAxe.Game = function (game)
 	this.buttonSoundOnGame = null;
 	this.buttonSoundOnGameShadow = null;
 	this.walkingSpeed = null;
-
-	this.toastText = null;
-	this.toastShadow = null;
-
 	this.gameOver = null;
 	this.splashWaitingTimeDone = null;
-
+	this.isMobileDevice = null;
 	this.audioPlayer = null;
 	this.musicPlayer = null;
-
-	this.isMobileDevice = null;
+	this.toastText = null;
+	this.toastShadow = null;
 
 	// SCALING THE CANVAS SIZE FOR THE GAME
 	function resizeF()
@@ -294,7 +290,6 @@ GoldenAxe.Game.prototype = {
 		this.walkingSpeed = 2;
 		this.gameOver = false;
 		this.splashWaitingTimeDone = false;
-
 		this.isMobileDevice = null;
 		},
 
