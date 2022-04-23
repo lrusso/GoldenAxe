@@ -1312,7 +1312,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = false;
 
 			// MOVING THE ENEMY TO THE LEFT
-			game.physics.arcade.velocityFromAngle(180, 100, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(180, 70, this.enemy.body.velocity);
 			}
 		},
 
@@ -1328,7 +1328,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = false;
 
 			// MOVING THE ENEMY TO THE LEFT-TOP
-			game.physics.arcade.velocityFromAngle(-135, 125, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(-135, 95, this.enemy.body.velocity);
 			}
 		},
 
@@ -1344,7 +1344,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = false;
 
 			// MOVING THE ENEMY TO THE LEFT-DOWN
-			game.physics.arcade.velocityFromAngle(135, 125, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(135, 95, this.enemy.body.velocity);
 			}
 		},
 
@@ -1360,7 +1360,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = true;
 
 			// MOVING THE ENEMY TO THE RIGHT
-			game.physics.arcade.velocityFromAngle(0, 100, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(0, 70, this.enemy.body.velocity);
 			}
 		},
 
@@ -1376,7 +1376,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = true;
 
 			// MOVING THE ENEMY TO THE RIGHT-TOP
-			game.physics.arcade.velocityFromAngle(-45, 125, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(-45, 95, this.enemy.body.velocity);
 			}
 		},
 
@@ -1392,7 +1392,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = true;
 
 			// MOVING THE ENEMY TO THE RIGHT-DOWN
-			game.physics.arcade.velocityFromAngle(45, 125, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(45, 95, this.enemy.body.velocity);
 			}
 		},
 
@@ -1414,7 +1414,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// MAKING THE ENEMY TO MOVE TO THE NORTH
-			game.physics.arcade.velocityFromAngle(-90, 100, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(-90, 70, this.enemy.body.velocity);
 			}
 		},
 
@@ -1436,7 +1436,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// MAKING THE ENEMY TO MOVE TO THE SOUTH
-			game.physics.arcade.velocityFromAngle(90, 100, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(90, 70, this.enemy.body.velocity);
 			}
 		},
 
