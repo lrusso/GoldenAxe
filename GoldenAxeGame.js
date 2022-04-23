@@ -334,10 +334,10 @@ GoldenAxe.Game.prototype = {
 		this.heroEnergyBar3.drawRect(161, 8, 50, 21);
 
 		// ADDING THE SCORE LABEL
-		this.score = game.add.bitmapText(245, 11.5, "retro_font", "SCORE: 10", 13);
+		this.score = game.add.bitmapText(250, 11.5, "retro_font", "SCORE:10", 13);
 
 		// ADDING THE HIGHSCORE LABEL
-		this.highscore = game.add.bitmapText(410, 11.5, "retro_font", "HIGHSCORE: 25", 13);
+		this.highscore = game.add.bitmapText(420, 11.5, "retro_font", "HIGHSCORE:25", 13);
 
 		// ADDING THE GATE SPRITE
 		this.gate = game.add.sprite(532, 53, "imageGate");
@@ -1134,28 +1134,6 @@ GoldenAxe.Game.prototype = {
 		if (distanceX<0){distanceX=distanceX * -1;}
 		if (distanceY<0){distanceY=distanceY * -1;}
 
-		// CHECKING IF THE ENEMY IS NOT ATTACKING
-		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
-			{
-			// CHECKING IF THE HERO IS AT THE RIGHT
-			if (this.hero.position.x>=this.enemy.position.x)
-				{
-				// SHOWING THE WALKING RIGHT ANIMATION
-				this.enemy.animations.play("walk_right", 6, true);
-
-				// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
-				this.enemy.lookingRight = true;
-				}
-				else
-				{
-				// SHOWING THE WALKING LEFT ANIMATION
-				this.enemy.animations.play("walk_left", 6, true);
-
-				// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
-				this.enemy.lookingRight = false;
-				}
-			}
-
 		// CHECKING IF THE HERO IS VERTICALLY FAR
 		if (distanceY>=5)
 			{
@@ -1232,6 +1210,28 @@ GoldenAxe.Game.prototype = {
 			// CLEARING THE ENEMY VELOCITY
 			this.enemy.body.velocity.x = 0;
 			this.enemy.body.velocity.y = 0;
+			}
+
+		// CHECKING IF THE ENEMY IS NOT ATTACKING
+		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+			{
+			// CHECKING IF THE HERO IS AT THE RIGHT
+			if (this.hero.position.x>=this.enemy.position.x)
+				{
+				// SHOWING THE WALKING RIGHT ANIMATION
+				this.enemy.animations.play("walk_right", 6, true);
+
+				// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
+				this.enemy.lookingRight = true;
+				}
+				else
+				{
+				// SHOWING THE WALKING LEFT ANIMATION
+				this.enemy.animations.play("walk_left", 6, true);
+
+				// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
+				this.enemy.lookingRight = false;
+				}
 			}
 
 		// CHECKING IF THE ENEMY IS CLOSER ENOUGH TO ATTACK
@@ -1347,6 +1347,12 @@ GoldenAxe.Game.prototype = {
 
 	restartGame: function()
 		{
+		// STOPPING THE HERO ANIMATION (IF ANY)
+		this.hero.animations.stop();
+
+		// STOPPING THE ENEMY ANIMATION (IF ANY)
+		this.enemy.animations.stop();
+
 		// REMOVING THE JOYSTICK
 		this.stick.destroy();
 
