@@ -1513,12 +1513,6 @@ GoldenAxe.Game.prototype = {
 
 	restartGame: function()
 		{
-		// STOPPING THE HERO ANIMATION (IF ANY)
-		this.hero.animations.stop();
-
-		// STOPPING THE ENEMY ANIMATION (IF ANY)
-		this.enemy.animations.stop();
-
 		// REMOVING THE JOYSTICK
 		this.stick.destroy();
 
