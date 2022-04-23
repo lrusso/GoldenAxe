@@ -843,6 +843,22 @@ GoldenAxe.Game.prototype = {
 			this.buttonSwordHandler.visible = true;
 			}
 
+		// CHECKING IF THE SOUND IS ENABLED
+		if (GAME_SOUND_ENABLED==true)
+			{
+			// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS BACKGROUND MUSIC
+			this.musicPlayer = this.add.audio("musicBackground");
+
+			// SETTING THE BACKGROUND MUSIC VOLUME
+			this.musicPlayer.volume = 0.3;
+
+			// SETTING THAT THE BACKGROUND MUSIC WILL BE LOOPING
+			this.musicPlayer.loop = true;
+
+			// PLAYING THE BACKGROUND MUSIC
+			this.musicPlayer.play();
+			}
+
 		// WAITING 500 MS
 		game.time.events.add(500, function()
 			{
@@ -1681,18 +1697,6 @@ GoldenAxe.Game.prototype = {
 				// DESTROYING THE BACKGROUND MUSIC PLAYER
 				this.musicPlayer.destroy();
 				}
-
-			// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS BACKGROUND MUSIC
-			this.musicPlayer = this.add.audio("musicBackground");
-
-			// SETTING THE BACKGROUND MUSIC VOLUME
-			this.musicPlayer.volume = 0.3;
-
-			// SETTING THAT THE BACKGROUND MUSIC WILL BE LOOPING
-			this.musicPlayer.loop = true;
-
-			// PLAYING THE BACKGROUND MUSIC
-			this.musicPlayer.play();
 
 			// CHECKING IF THE AUDIO PLAYER IS CREATED
 			if(this.audioPlayer!=null)
