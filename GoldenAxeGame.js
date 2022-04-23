@@ -185,8 +185,8 @@ GoldenAxe.Splash.prototype = {
 GoldenAxe.Game = function (game)
 	{
 	this.pad = null;
-	this.imageGameBackground = null;
-	this.imageGameHeroFace = null;
+	this.imageBackground = null;
+	this.imageHeroFace = null;
 	this.hero = null;
 	this.heroHealth = null;
 	this.heroEnergyBar1 = null;
@@ -252,8 +252,8 @@ GoldenAxe.Game.prototype = {
 	init: function()
 		{
 		this.pad = null;
-		this.imageGameBackground = null;
-		this.imageGameHeroFace = null;
+		this.imageBackground = null;
+		this.imageHeroFace = null;
 		this.hero = null;
 		this.heroHealth = 100;
 		this.heroEnergyBar1 = null;
@@ -310,14 +310,14 @@ GoldenAxe.Game.prototype = {
 		this.stage.backgroundColor = "#000000";
 
 		// ADDING THE BACKGROUND IMAGE
-		this.imageGameBackground = this.add.sprite(0, 36, "imageGameBackground");
-		this.imageGameBackground.width = 757;
-		this.imageGameBackground.height = 470;
+		this.imageBackground = this.add.sprite(0, 36, "imageGameBackground");
+		this.imageBackground.width = 757;
+		this.imageBackground.height = 470;
 
 		// ADDING THE HERO'S FACE IMAGE
-		this.imageGameHeroFace = this.add.sprite(3, 2, "imageGameHeroFace");
-		this.imageGameHeroFace.width = 32;
-		this.imageGameHeroFace.height = 32;
+		this.imageHeroFace = this.add.sprite(3, 2, "imageGameHeroFace");
+		this.imageHeroFace.width = 32;
+		this.imageHeroFace.height = 32;
 
 		// ADDING THE HERO'S ENERGY
 		this.heroEnergyBar1 = game.add.graphics(0, 0);
