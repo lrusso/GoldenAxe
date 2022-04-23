@@ -1134,75 +1134,101 @@ GoldenAxe.Game.prototype = {
 		if (distanceX<0){distanceX=distanceX * -1;}
 		if (distanceY<0){distanceY=distanceY * -1;}
 
-		// CHECKING IF THE HERO IS VERTICALLY FAR
-		if (distanceY>=5)
+		// CHECKING IF THE ENEMY MUST MOVE
+		if (distanceX>=75 || distanceY>=5)
 			{
-			// CHECKING IF THE HERO IS AT THE NORTH
-			if (this.hero.position.y<=this.enemy.position.y)
+			// CREATING VARIABLE TO CHECK THE ENEMY POSSIBLE MOVEMENTS
+			var moveUp = false;
+			var moveDown = false;
+			var moveLeft = false;
+			var moveRight = false;
+
+			// CHECKING IF THE ENEMY MUST MOVE HORIZONTALLY
+			if (distanceX>=75)
 				{
-				// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-				if (this.enemy.lookingRight==true)
+				// CHECKING IF THE ENEMY MUST MOVE TO THE LEFT
+				if (this.hero.position.x<=this.enemy.position.x)
 					{
-					// SHOWING THE WALKING RIGHT ANIMATION
-					this.enemy.animations.play("walk_right", 6, true);
+					// SETTING THAT THE ENEMY MUST MOVE TO THE LEFT
+					moveLeft = true;
 					}
 					else
 					{
-					// SHOWING THE WALKING LEFT ANIMATION
-					this.enemy.animations.play("walk_left", 6, true);
+					// SETTING THAT THE ENEMY MUST MOVE TO THE RIGHT
+					moveRight = true;
 					}
-
-				// MAKING THE ENEMY TO MOVE TO THE NORTH
-				game.physics.arcade.velocityFromAngle(-90, 70, this.enemy.body.velocity);
 				}
 
-			// CHECKING IF THE HERO IS AT THE SOUTH
-			else if (this.hero.position.y>this.enemy.position.y)
+			// CHECKING IF THE ENEMY MUST MOVE VERTICALLY
+			if (distanceY>=5)
 				{
-				// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-				if (this.enemy.lookingRight==true)
+				// CHECKING IF THE ENEMY MUST MOVE UP
+				if (this.hero.position.y<=this.enemy.position.y)
 					{
-					// SHOWING THE WALKING RIGHT ANIMATION
-					this.enemy.animations.play("walk_right", 6, true);
+					// SETTING THAT THE ENEMY MUST MOVE UP
+					moveUp = true;
 					}
 					else
 					{
-					// SHOWING THE WALKING LEFT ANIMATION
-					this.enemy.animations.play("walk_left", 6, true);
+					// SETTING THAT THE ENEMY MUST MOVE DOWN
+					moveDown = true;
 					}
-
-				// MAKING THE ENEMY TO MOVE TO THE SOUTH
-				game.physics.arcade.velocityFromAngle(90, 70, this.enemy.body.velocity);
-				}
-			}
-
-		// CHECKING IF THE HERO IS HORIZONTALLY FAR
-		else if (distanceX>=75)
-			{
-			// CHECKING IF THE HERO IS AT THE LEFT
-			if (this.hero.position.x<=this.enemy.position.x)
-				{
-				// SHOWING THE WALKING LEFT ANIMATION
-				this.enemy.animations.play("walk_left", 6, true);
-
-				// MAKING THE ENEMY TO MOVE TO THE LEFT
-				game.physics.arcade.velocityFromAngle(180, 70, this.enemy.body.velocity);
-
-				// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
-				this.enemy.lookingRight = false;
 				}
 
-			// CHECKING IF THE HERO IS AT THE RIGHT
-			else if (this.hero.position.x>this.enemy.position.x)
+			// CHECKING IF A RIGHT-TOP MOVEMENT MUST BE PERFORMED
+			if ((moveRight==true && moveUp==true && moveDown==false && moveLeft==false) || (this.stick.isDown==true && this.stick.octant==315))
 				{
-				// SHOWING THE WALKING RIGHT ANIMATION
-				this.enemy.animations.play("walk_right", 6, true);
+				// MOVING THE ENEMY TO THE RIGHT-TOP
+				this.enemyMoveRightTop();
+				}
 
-				// MAKING THE ENEMY TO MOVE TO THE RIGHT
-				game.physics.arcade.velocityFromAngle(0, 70, this.enemy.body.velocity);
+			// CHECKING IF A RIGHT-DOWN MOVEMENT MUST BE PERFORMED
+			else if ((moveRight==true && moveDown==true && moveUp==false && moveLeft==false) || (this.stick.isDown==true && this.stick.octant==45))
+				{
+				// MOVING THE ENEMY TO THE RIGHT-DOWN
+				this.enemyMoveRightDown();
+				}
 
-				// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
-				this.enemy.lookingRight = true;
+			// CHECKING IF A LEFT-TOP MOVEMENT MUST BE PERFORMED
+			else if ((moveLeft==true && moveUp==true && moveDown==false && moveRight==false) || (this.stick.isDown==true && this.stick.octant==225))
+				{
+				// MOVING THE ENEMY TO THE LEFT-TOP
+				this.enemyMoveLeftTop();
+				}
+
+			// CHECKING IF A LEFT-DOWN MOVEMENT MUST BE PERFORMED
+			else if ((moveLeft==true && moveDown==true && moveUp==false && moveRight==false) || (this.stick.isDown==true && this.stick.octant==135))
+				{
+				// MOVING THE ENEMY TO THE LEFT-DOWN
+				this.enemyMoveLeftDown();
+				}
+
+			// CHECKING IF A RIGHT MOVEMENT MUST BE PERFORMED
+			else if ((moveRight==true && moveUp==false && moveDown==false && moveLeft==false) || (this.stick.isDown==true && (this.stick.octant==0 || this.stick.octant==360)))
+				{
+				// MOVING THE ENEMY TO THE RIGHT
+				this.enemyMoveRight();
+				}
+
+			// CHECKING IF A LEFT MOVEMENT MUST BE PERFORMED
+			else if ((moveLeft==true && moveUp==false && moveDown==false && moveRight==false) || (this.stick.isDown==true && this.stick.octant==180))
+				{
+				// MOVING THE ENEMY TO THE LEFT
+				this.enemyMoveLeft();
+				}
+
+			// CHECKING IF A UP MOVEMENT MUST BE PERFORMED
+			else if ((moveUp==true && moveLeft==false && moveRight==false && moveDown==false) || (this.stick.isDown==true && this.stick.octant==270))
+				{
+				// MOVING THE ENEMY TO THE TOP
+				this.enemyMoveUp();
+				}
+
+			// CHECKING IF A DOWN MOVEMENT MUST BE PERFORMED
+			else if ((moveDown==true && moveLeft==false && moveRight==false && moveUp==false) || (this.stick.isDown==true && this.stick.octant==90))
+				{
+				// MOVING DOWN THE ENEMY
+				this.enemyMoveDown();
 				}
 			}
 		else
@@ -1271,6 +1297,146 @@ GoldenAxe.Game.prototype = {
 				this.enemy.body.velocity.x = 0;
 				this.enemy.body.velocity.y = 0;
 				}
+			}
+		},
+
+	enemyMoveLeft: function()
+		{
+		// CHECKING IF THE ENEMY IS NOT ATTACKING
+		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+			{
+			// SHOWING THE WALKING LEFT ANIMATION
+			this.enemy.animations.play("walk_left", 6, true);
+
+			// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
+			this.enemy.lookingRight = false;
+
+			// MOVING THE ENEMY TO THE LEFT
+			game.physics.arcade.velocityFromAngle(180, 100, this.enemy.body.velocity);
+			}
+		},
+
+	enemyMoveLeftTop: function()
+		{
+		// CHECKING IF THE ENEMY IS NOT ATTACKING
+		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+			{
+			// SHOWING THE WALKING LEFT ANIMATION
+			this.enemy.animations.play("walk_left", 6, true);
+
+			// SETTING THAT THE ENEMY IS LOOKING TO THE LEFT
+			this.enemy.lookingRight = false;
+
+			// MOVING THE ENEMY TO THE LEFT-TOP
+			game.physics.arcade.velocityFromAngle(-135, 125, this.enemy.body.velocity);
+			}
+		},
+
+	enemyMoveLeftDown: function()
+		{
+		// CHECKING IF THE ENEMY IS NOT ATTACKING
+		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+			{
+			// SHOWING THE WALKING LEFT ANIMATION
+			this.enemy.animations.play("walk_left", 6, true);
+
+			// SETTING THAT THE ENEMY IS LOOKING TO THE LEFT
+			this.enemy.lookingRight = false;
+
+			// MOVING THE ENEMY TO THE LEFT-DOWN
+			game.physics.arcade.velocityFromAngle(135, 125, this.enemy.body.velocity);
+			}
+		},
+
+	enemyMoveRight: function()
+		{
+		// CHECKING IF THE ENEMY IS NOT ATTACKING
+		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+			{
+			// SHOWING THE WALKING RIGHT ANIMATION
+			this.enemy.animations.play("walk_right", 6, true);
+
+			// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
+			this.enemy.lookingRight = true;
+
+			// MOVING THE ENEMY TO THE RIGHT
+			game.physics.arcade.velocityFromAngle(0, 100, this.enemy.body.velocity);
+			}
+		},
+
+	enemyMoveRightTop: function()
+		{
+		// CHECKING IF THE ENEMY IS NOT ATTACKING
+		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+			{
+			// SHOWING THE WALKING RIGHT ANIMATION
+			this.enemy.animations.play("walk_right", 6, true);
+
+			// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
+			this.enemy.lookingRight = true;
+
+			// MOVING THE ENEMY TO THE RIGHT-TOP
+			game.physics.arcade.velocityFromAngle(-45, 125, this.enemy.body.velocity);
+			}
+		},
+
+	enemyMoveRightDown: function()
+		{
+		// CHECKING IF THE ENEMY IS NOT ATTACKING
+		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+			{
+			// SHOWING THE WALKING RIGHT ANIMATION
+			this.enemy.animations.play("walk_right", 6, true);
+
+			// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
+			this.enemy.lookingRight = true;
+
+			// MOVING THE ENEMY TO THE RIGHT-DOWN
+			game.physics.arcade.velocityFromAngle(45, 125, this.enemy.body.velocity);
+			}
+		},
+
+	enemyMoveUp: function()
+		{
+		// CHECKING IF THE ENEMY IS NOT ATTACKING
+		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+			{
+			// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+			if (this.enemy.lookingRight==true)
+				{
+				// SHOWING THE WALKING RIGHT ANIMATION
+				this.enemy.animations.play("walk_right", 6, true);
+				}
+				else
+				{
+				// SHOWING THE WALKING LEFT ANIMATION
+				this.enemy.animations.play("walk_left", 6, true);
+				}
+
+			// MAKING THE ENEMY TO MOVE TO THE NORTH
+			game.physics.arcade.velocityFromAngle(-90, 100, this.enemy.body.velocity);
+			}
+		},
+
+	enemyMoveDown: function()
+		{
+		// CHECKING IF THE ENEMY IS NOT ATTACKING
+		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+			{
+			// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+			if (this.enemy.lookingRight==true)
+				{
+				// SHOWING THE WALKING RIGHT ANIMATION
+				this.enemy.animations.play("walk_right", 6, true);
+				}
+				else
+				{
+				// SHOWING THE WALKING LEFT ANIMATION
+				this.enemy.animations.play("walk_left", 6, true);
+				}
+
+			// MAKING THE ENEMY TO MOVE TO THE SOUTH
+			game.physics.arcade.velocityFromAngle(90, 100, this.enemy.body.velocity);
 			}
 		},
 
