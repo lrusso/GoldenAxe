@@ -1381,7 +1381,7 @@ GoldenAxe.Game.prototype = {
 			game.time.events.add(400, function()
 				{
 				// SHOWING THE GAME OVER MESSAGE
-				game.state.states["GoldenAxe.Game"].showToast("Game Over. Try again.");
+				game.state.states["GoldenAxe.Game"].showToast("Game over. Try again.");
 				});
 			}
 		},
