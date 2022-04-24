@@ -1033,6 +1033,9 @@ GoldenAxe.Game.prototype = {
 			// CHECKING IF THE ENEMY INTRO IS DONE
 			else if (this.enemyIntro==false)
 				{
+				// PREVENTING THE HERO TO MOVE IF HE'S SUFFERING
+				if(this.hero.animations.currentAnim.name=="suffer_left" || this.hero.animations.currentAnim.name=="suffer_right"){return}
+
 				// DETECTING THE KEYS
 				var moveUp = this.cursors.up.isDown || this.keyW.isDown;
 				var moveDown = this.cursors.down.isDown || this.keyS.isDown;
