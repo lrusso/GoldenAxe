@@ -474,6 +474,7 @@ GoldenAxe.Game = function (game)
 	this.musicPlayer = null;
 	this.toastText = null;
 	this.toastShadow = null;
+	this.canEnemyAttack = null;
 
 	// SCALING THE CANVAS SIZE FOR THE GAME
 	function resizeF()
@@ -537,6 +538,7 @@ GoldenAxe.Game.prototype = {
 		this.gameOver = false;
 		this.splashWaitingTimeDone = false;
 		this.isMobileDevice = null;
+		this.canEnemyAttack = false;
 		},
 
 	create: function()
@@ -946,6 +948,22 @@ GoldenAxe.Game.prototype = {
 			// PLAYING THE BACKGROUND MUSIC
 			this.musicPlayer.play();
 			}
+
+		// SETTING A 400 MS INTERVAL TO SET IF THE ENEMY CAN ATTACK
+		game.time.events.loop(400, function()
+			{
+			// ONLY ALLOWING THE ENEMY TO ATTACK THE 40% OF THE TIME
+			if (Math.floor((Math.random() * 10) + 1) > 6)
+				{
+				// SETTING THAT THE ENEMY CAN ATTACK
+				this.canEnemyAttack = true;
+				}
+				else
+				{
+				// SETTING THAT THE ENEMY CANNOT ATTACK
+				this.canEnemyAttack = false;
+				}
+			}, this);
 
 		// WAITING 500 MS
 		game.time.events.add(500, function()
@@ -1507,16 +1525,34 @@ GoldenAxe.Game.prototype = {
 			// CHECKING IF THE HERO IS AT THE RIGHT
 			if (this.hero.position.x>=this.enemy.position.x)
 				{
-				// SHOWING THE WALKING RIGHT ANIMATION
-				this.enemy.animations.play("walk_right", 6, true);
+				// CHECKING IF THE ENEMY IS NOT MOVING
+				if (this.enemy.body.velocity.x==0)
+					{
+					// SHOWING THE STANDING RIGHT ANIMATION
+					this.enemy.animations.play("stand_right", 6, true);
+					}
+					else
+					{
+					// SHOWING THE WALKING RIGHT ANIMATION
+					this.enemy.animations.play("walk_right", 6, true);
+					}
 
 				// SETTING THAT THE ENEMY IS LOOKING TO THE RIGHT
 				this.enemy.lookingRight = true;
 				}
 				else
 				{
-				// SHOWING THE WALKING LEFT ANIMATION
-				this.enemy.animations.play("walk_left", 6, true);
+				// CHECKING IF THE ENEMY IS NOT MOVING
+				if (this.enemy.body.velocity.x==0)
+					{
+					// SHOWING THE STANDING LEFT ANIMATION
+					this.enemy.animations.play("stand_left", 6, true);
+					}
+					else
+					{
+					// SHOWING THE WALKING LEFT ANIMATION
+					this.enemy.animations.play("walk_left", 6, true);
+					}
 
 				// SETTING THAT THE ENEMY IS NOT LOOKING TO THE RIGHT
 				this.enemy.lookingRight = false;
@@ -1529,19 +1565,26 @@ GoldenAxe.Game.prototype = {
 			// CHECKING IF THE HERO IS ALIVE
 			if (this.heroHealth>0)
 				{
-				// CHECKING IF THE ENEMY IS NOT ATTACKING
-				if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
+				// CHECKING IF THERE IS A 70% CHANCE OF ATTACK
+				if (this.canEnemyAttack==true)
 					{
-					// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
-					if (this.enemy.lookingRight==true)
+					// SETTING THAT THE ENEMY CANNOT ATTACK TWICE IN A ROW
+					this.canEnemyAttack = false;
+
+					// CHECKING IF THE ENEMY IS NOT ATTACKING
+					if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
 						{
-						// SHOWING THE ATTACKING RIGHT ANIMATION
-						this.enemy.animations.play("attack_right", 6, false);
-						}
-						else
-						{
-						// SHOWING THE ATTACKING LEFT ANIMATION
-						this.enemy.animations.play("attack_left", 6, false);
+						// CHECKING IF THE ENEMY IS LOOKING TO THE RIGHT
+						if (this.enemy.lookingRight==true)
+							{
+							// SHOWING THE ATTACKING RIGHT ANIMATION
+							this.enemy.animations.play("attack_right", 6, false);
+							}
+							else
+							{
+							// SHOWING THE ATTACKING LEFT ANIMATION
+							this.enemy.animations.play("attack_left", 6, false);
+							}
 						}
 					}
 				}
