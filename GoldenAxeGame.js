@@ -1586,21 +1586,6 @@ GoldenAxe.Game.prototype = {
 					}
 				}
 			}
-
-		// CHECKING IF THE ENEMY IS NOT ATTACKING
-		if (this.enemy.animations.currentAnim.name!="attack_left" && this.enemy.animations.currentAnim.name!="attack_right")
-			{
-			// CHECKING IF THERE IS AN OVERLAPPING BETWEEN THE HERO AND THE ENEMY
-			if (this.checkOverlapping(this.hero,this.enemy)==true)
-				{
-				// STOPPING THE ENEMY ANIMATION
-				this.enemy.animations.stop(null, true);
-
-				// CLEARING THE ENEMY VELOCITY
-				this.enemy.body.velocity.x = 0;
-				this.enemy.body.velocity.y = 0;
-				}
-			}
 		},
 
 	enemyMoveLeft: function()
@@ -1791,27 +1776,6 @@ GoldenAxe.Game.prototype = {
 		var dy = y1 - y2;
 
 		return Math.sqrt(dx * dx + dy * dy);
-		},
-
-	checkOverlapping: function(spriteA, spriteB)
-		{
-		var x1 = spriteA.body.position.x;
-		var y1 = spriteA.body.position.y;
-		var h1 = spriteA.body.height;
-		var w1 = spriteA.body.width;
-		var b1 = y1 + h1;
-		var r1 = x1 + w1;
-		var x2 = spriteB.body.position.x;
-		var y2 = spriteB.body.position.y;
-		var h2 = spriteB.body.height;
-		var w2 = spriteB.body.width;
-		var b2 = y2 + h2;
-		var r2 = x2 + w2;
-		if (b1 <= y2 || y1 >= b2 || r1 <= x2 || x1 >= r2)
-			{
-			return false;
-			}
-		return true;
 		},
 
 	restartGame: function()
