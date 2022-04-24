@@ -1391,9 +1391,6 @@ GoldenAxe.Game.prototype = {
 				this.audioPlayer.play();
 				}
 
-			// SHOWING THE ENEMY STANDING ANIMATION
-			this.enemyStand();
-
 			// CHANGING THE ELEMENT THAT WILL BE ON THE TOP
 			// IN ORDER TO PREVENT THE HERO OR ENEMY TO OVERLAP THE GAME OVER MESSAGE
 			this.block1.bringToTop();
