@@ -1436,56 +1436,56 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// CHECKING IF A RIGHT-TOP MOVEMENT MUST BE PERFORMED
-			if ((moveRight==true && moveUp==true && moveDown==false && moveLeft==false) || (this.stick.isDown==true && this.stick.octant==315))
+			if (moveRight==true && moveUp==true && moveDown==false && moveLeft==false)
 				{
 				// MOVING THE ENEMY TO THE RIGHT-TOP
 				this.enemyMoveRightTop();
 				}
 
 			// CHECKING IF A RIGHT-DOWN MOVEMENT MUST BE PERFORMED
-			else if ((moveRight==true && moveDown==true && moveUp==false && moveLeft==false) || (this.stick.isDown==true && this.stick.octant==45))
+			else if (moveRight==true && moveDown==true && moveUp==false && moveLeft==false)
 				{
 				// MOVING THE ENEMY TO THE RIGHT-DOWN
 				this.enemyMoveRightDown();
 				}
 
 			// CHECKING IF A LEFT-TOP MOVEMENT MUST BE PERFORMED
-			else if ((moveLeft==true && moveUp==true && moveDown==false && moveRight==false) || (this.stick.isDown==true && this.stick.octant==225))
+			else if (moveLeft==true && moveUp==true && moveDown==false && moveRight==false)
 				{
 				// MOVING THE ENEMY TO THE LEFT-TOP
 				this.enemyMoveLeftTop();
 				}
 
 			// CHECKING IF A LEFT-DOWN MOVEMENT MUST BE PERFORMED
-			else if ((moveLeft==true && moveDown==true && moveUp==false && moveRight==false) || (this.stick.isDown==true && this.stick.octant==135))
+			else if (moveLeft==true && moveDown==true && moveUp==false && moveRight==false)
 				{
 				// MOVING THE ENEMY TO THE LEFT-DOWN
 				this.enemyMoveLeftDown();
 				}
 
 			// CHECKING IF A RIGHT MOVEMENT MUST BE PERFORMED
-			else if ((moveRight==true && moveUp==false && moveDown==false && moveLeft==false) || (this.stick.isDown==true && (this.stick.octant==0 || this.stick.octant==360)))
+			else if (moveRight==true && moveUp==false && moveDown==false && moveLeft==false)
 				{
 				// MOVING THE ENEMY TO THE RIGHT
 				this.enemyMoveRight();
 				}
 
 			// CHECKING IF A LEFT MOVEMENT MUST BE PERFORMED
-			else if ((moveLeft==true && moveUp==false && moveDown==false && moveRight==false) || (this.stick.isDown==true && this.stick.octant==180))
+			else if (moveLeft==true && moveUp==false && moveDown==false && moveRight==false)
 				{
 				// MOVING THE ENEMY TO THE LEFT
 				this.enemyMoveLeft();
 				}
 
 			// CHECKING IF A UP MOVEMENT MUST BE PERFORMED
-			else if ((moveUp==true && moveLeft==false && moveRight==false && moveDown==false) || (this.stick.isDown==true && this.stick.octant==270))
+			else if (moveUp==true && moveLeft==false && moveRight==false && moveDown==false)
 				{
 				// MOVING THE ENEMY TO THE TOP
 				this.enemyMoveUp();
 				}
 
 			// CHECKING IF A DOWN MOVEMENT MUST BE PERFORMED
-			else if ((moveDown==true && moveLeft==false && moveRight==false && moveUp==false) || (this.stick.isDown==true && this.stick.octant==90))
+			else if (moveDown==true && moveLeft==false && moveRight==false && moveUp==false)
 				{
 				// MOVING DOWN THE ENEMY
 				this.enemyMoveDown();
