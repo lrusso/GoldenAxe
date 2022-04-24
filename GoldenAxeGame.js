@@ -1565,7 +1565,7 @@ GoldenAxe.Game.prototype = {
 			// CHECKING IF THE HERO IS ALIVE
 			if (this.heroHealth>0)
 				{
-				// CHECKING IF THERE IS A 70% CHANCE OF ATTACK
+				// CHECKING IF THE ENEMY CAN ATTACK
 				if (this.canEnemyAttack==true)
 					{
 					// SETTING THAT THE ENEMY CANNOT ATTACK TWICE IN A ROW
