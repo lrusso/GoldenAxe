@@ -922,6 +922,10 @@ GoldenAxe.Game.prototype = {
 		this.buttonSwordHandler.events.onInputUp.add(function(){this.keySpace.isDown=false;this.buttonSwordNormal.visible=true;this.buttonSwordPressed.visible=false;},this);
 		this.buttonSwordHandler.visible = false;
 
+		// CHECKING THE HERO'S HEALTH AND HIDING THE ENERGY BARS ACCORDINGLY
+		if (this.heroHealth<35){this.heroEnergyBar2.visible = false;this.heroEnergyBar3.visible = false;}
+		else if (this.heroHealth<70){this.heroEnergyBar3.visible = false;}
+
 		// CHECKING IF IT IS A MOBILE DEVICE
 		if (this.isMobileDevice==true)
 			{
