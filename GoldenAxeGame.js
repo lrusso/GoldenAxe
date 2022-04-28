@@ -15,7 +15,6 @@ function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||naviga
 
 var GAME_SOUND_ENABLED = false;
 var GAME_SCORE = 0;
-var GAME_HISCORE = 25;
 var GAME_HERO_HEALTH = 100;
 
 var GoldenAxe = {showDebug: false};
@@ -512,7 +511,7 @@ GoldenAxe.Game.prototype = {
 		this.heroSufferRightHandler = null;
 		this.heroSufferLeftHandler = null;
 		this.enemy = null;
-		this.enemyHealth = 100;
+		this.enemyHealth = 30;
 		this.enemyIntro = false;
 		this.enemyAttackRightHandler = null;
 		this.enemyAttackLeftHandler = null;
@@ -586,7 +585,7 @@ GoldenAxe.Game.prototype = {
 		this.score = game.add.bitmapText(250, 11.5, "retro_font", "SCORE:" + GAME_SCORE, 13);
 
 		// ADDING THE HIGHSCORE LABEL
-		this.highscore = game.add.bitmapText(420, 11.5, "retro_font", "HIGHSCORE:" + GAME_HISCORE, 13);
+		this.highscore = game.add.bitmapText(420, 11.5, "retro_font", "HIGHSCORE:" + this.getHighscore(), 13);
 
 		// ADDING THE GATE SPRITE
 		this.gate = game.add.sprite(532, 53, "imageGameGate");
@@ -1877,6 +1876,13 @@ GoldenAxe.Game.prototype = {
 				// UPDATING THE GAME SCORE
 				GAME_SCORE = GAME_SCORE + 1;
 
+				// CHECKING IF THE USER HIT THE RECORD
+				if (GAME_SCORE > game.state.states["GoldenAxe.Game"].getHighscore())
+					{
+					// SETTING THE NEW HIGHSCORE
+					game.state.states["GoldenAxe.Game"].setHighscore(GAME_SCORE);
+					}
+
 				// GOING TO THE NEXT LEVEL
 				game.state.states["GoldenAxe.Game"].restartGame(false);
 				});
@@ -1924,6 +1930,52 @@ GoldenAxe.Game.prototype = {
 
 		// RESTARTING THE GAME
 		this.state.restart();
+		},
+
+	getHighscore: function()
+		{
+		try
+			{
+			var name = "highscoregoldenaxe";
+			var nameEQ = name + "=";
+			var ca = document.cookie.split(";");
+
+			for(var i=0;i < ca.length;i++)
+				{
+				var c = ca[i];
+				while (c.charAt(0)==" ")
+					{
+					c = c.substring(1,c.length);
+					}
+				if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+				}
+			}
+		catch(err)
+			{
+			}
+
+		return "0";
+		},
+
+	setHighscore: function(newHighscore)
+		{
+		try
+			{
+			var name = "highscoregoldenaxe";
+			var value = newHighscore;
+			var days = 999;
+			var expires = "";
+			if (days)
+				{
+				var date = new Date();
+				date.setTime(date.getTime() + (days*24*60*60*1000));
+				expires = "; expires=" + date.toUTCString();
+				}
+			document.cookie = name + "=" + (value || "")  + expires + "; Secure; path=/";
+			}
+			catch(err)
+			{
+			}
 		},
 
 	showToast: function(myText)
