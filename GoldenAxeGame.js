@@ -670,6 +670,9 @@ GoldenAxe.Game.prototype = {
 			// SETTING THAT THE SOUND IS DISABLED
 			GAME_SOUND_ENABLED = false;
 
+			// SAVING THE SOUND PREFERENCE
+			game.state.states["GoldenAxe.Menu"].setBooleanSetting("GAME_SOUND_ENABLED", false);
+
 			// SHOWING THE SOUND OFF GAME ICON
 			this.buttonSoundOffGame.visible = true;
 			this.buttonSoundOffGameShadow.visible = true;
@@ -700,6 +703,9 @@ GoldenAxe.Game.prototype = {
 			{
 			// SETTING THAT THE SOUND IS ENABLED
 			GAME_SOUND_ENABLED = true;
+
+			// SAVING THE SOUND PREFERENCE
+			game.state.states["GoldenAxe.Menu"].setBooleanSetting("GAME_SOUND_ENABLED", true);
 
 			// SHOWING THE SOUND ON GAME ICON
 			this.buttonSoundOnGame.visible = true;
