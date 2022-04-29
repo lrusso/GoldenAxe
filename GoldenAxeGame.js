@@ -20,6 +20,7 @@ var GAME_HERO_HEALTH = null;
 var GAME_ENEMY = null;
 var GAME_ENEMY_SPEED = null;
 var GAME_ENEMY_HEALTH = null;
+var GAME_ENEMY_ATTACK_PERCENTAGE = null;
 
 var GoldenAxe = {showDebug: false};
 
@@ -435,6 +436,7 @@ GoldenAxe.Menu.prototype = {
 		GAME_ENEMY = "imageGameOrc";
 		GAME_ENEMY_SPEED = 70;
 		GAME_ENEMY_HEALTH = 30;
+		GAME_ENEMY_ATTACK_PERCENTAGE = 40;
 
 		// LAUNCHING THE GAME
 		game.state.start("GoldenAxe.Game", Phaser.Plugin.StateTransition.Out.SlideLeft);
@@ -979,8 +981,8 @@ GoldenAxe.Game.prototype = {
 		// SETTING A 400 MS INTERVAL TO SET IF THE ENEMY CAN ATTACK
 		game.time.events.loop(400, function()
 			{
-			// ONLY ALLOWING THE ENEMY TO ATTACK THE 40% OF THE TIME
-			if (Math.floor((Math.random() * 10) + 1) > 6)
+			// ONLY ALLOWING THE ENEMY TO ATTACK THE 'GAME_ENEMY_ATTACK_PERCENTAGE' OF THE TIME
+			if (Math.floor((Math.random() * 10) + 1) > 10 - (GAME_ENEMY_ATTACK_PERCENTAGE/10))
 				{
 				// SETTING THAT THE ENEMY CAN ATTACK
 				this.canEnemyAttack = true;
@@ -1927,6 +1929,7 @@ GoldenAxe.Game.prototype = {
 			GAME_ENEMY = "imageGameOrc";
 			GAME_ENEMY_SPEED = 70;
 			GAME_ENEMY_HEALTH = 30;
+			GAME_ENEMY_ATTACK_PERCENTAGE = 40;
 			}
 		else
 			{
@@ -1937,6 +1940,7 @@ GoldenAxe.Game.prototype = {
 				GAME_ENEMY = "imageGameSkeleton";
 				GAME_ENEMY_SPEED = 90;
 				GAME_ENEMY_HEALTH = 60;
+				GAME_ENEMY_ATTACK_PERCENTAGE = 50;
 				}
 
 			// CHECKING IF THE SKELETON WAS THE CURRENT ENEMY
@@ -1946,6 +1950,7 @@ GoldenAxe.Game.prototype = {
 				GAME_ENEMY = "imageGameOrc";
 				GAME_ENEMY_SPEED = 70;
 				GAME_ENEMY_HEALTH = 30;
+				GAME_ENEMY_ATTACK_PERCENTAGE = 40;
 				}
 			}
 
