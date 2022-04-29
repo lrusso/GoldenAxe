@@ -17,6 +17,7 @@ var GAME_SOUND_ENABLED = false;
 var GAME_SCORE = null;
 var GAME_HERO_HEALTH = null;
 var GAME_ENEMY = null;
+var GAME_ENEMY_SPEED = null;
 var GAME_ENEMY_HEALTH = null;
 
 var GoldenAxe = {showDebug: false};
@@ -431,6 +432,7 @@ GoldenAxe.Menu.prototype = {
 		GAME_SCORE = 0;
 		GAME_HERO_HEALTH = 100;
 		GAME_ENEMY = "imageGameOrc";
+		GAME_ENEMY_SPEED = 70;
 		GAME_ENEMY_HEALTH = 30;
 
 		// LAUNCHING THE GAME
@@ -1666,7 +1668,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = false;
 
 			// MOVING THE ENEMY TO THE LEFT
-			game.physics.arcade.velocityFromAngle(180, 70, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(180, GAME_ENEMY_SPEED, this.enemy.body.velocity);
 			}
 		},
 
@@ -1682,7 +1684,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = false;
 
 			// MOVING THE ENEMY TO THE LEFT-TOP
-			game.physics.arcade.velocityFromAngle(-135, 95, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(-135, GAME_ENEMY_SPEED + 25, this.enemy.body.velocity);
 			}
 		},
 
@@ -1698,7 +1700,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = false;
 
 			// MOVING THE ENEMY TO THE LEFT-DOWN
-			game.physics.arcade.velocityFromAngle(135, 95, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(135, GAME_ENEMY_SPEED + 25, this.enemy.body.velocity);
 			}
 		},
 
@@ -1714,7 +1716,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = true;
 
 			// MOVING THE ENEMY TO THE RIGHT
-			game.physics.arcade.velocityFromAngle(0, 70, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(0, GAME_ENEMY_SPEED, this.enemy.body.velocity);
 			}
 		},
 
@@ -1730,7 +1732,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = true;
 
 			// MOVING THE ENEMY TO THE RIGHT-TOP
-			game.physics.arcade.velocityFromAngle(-45, 95, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(-45, GAME_ENEMY_SPEED + 25, this.enemy.body.velocity);
 			}
 		},
 
@@ -1746,7 +1748,7 @@ GoldenAxe.Game.prototype = {
 			this.enemy.lookingRight = true;
 
 			// MOVING THE ENEMY TO THE RIGHT-DOWN
-			game.physics.arcade.velocityFromAngle(45, 95, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(45, GAME_ENEMY_SPEED + 25, this.enemy.body.velocity);
 			}
 		},
 
@@ -1768,7 +1770,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// MAKING THE ENEMY TO MOVE TO THE NORTH
-			game.physics.arcade.velocityFromAngle(-90, 70, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(-90, GAME_ENEMY_SPEED, this.enemy.body.velocity);
 			}
 		},
 
@@ -1790,7 +1792,7 @@ GoldenAxe.Game.prototype = {
 				}
 
 			// MAKING THE ENEMY TO MOVE TO THE SOUTH
-			game.physics.arcade.velocityFromAngle(90, 70, this.enemy.body.velocity);
+			game.physics.arcade.velocityFromAngle(90, GAME_ENEMY_SPEED, this.enemy.body.velocity);
 			}
 		},
 
@@ -1922,6 +1924,7 @@ GoldenAxe.Game.prototype = {
 			GAME_SCORE = 0;
 			GAME_HERO_HEALTH = 100;
 			GAME_ENEMY = "imageGameOrc";
+			GAME_ENEMY_SPEED = 70;
 			GAME_ENEMY_HEALTH = 30;
 			}
 		else
@@ -1931,6 +1934,7 @@ GoldenAxe.Game.prototype = {
 				{
 				// SETTING THAT THE SKELETON WILL BE THE NEXT ENEMY
 				GAME_ENEMY = "imageGameSkeleton";
+				GAME_ENEMY_SPEED = 90;
 				GAME_ENEMY_HEALTH = 60;
 				}
 
@@ -1939,6 +1943,7 @@ GoldenAxe.Game.prototype = {
 				{
 				// SETTING THAT THE ORC WILL BE THE NEXT ENEMY
 				GAME_ENEMY = "imageGameOrc";
+				GAME_ENEMY_SPEED = 70;
 				GAME_ENEMY_HEALTH = 30;
 				}
 			}
