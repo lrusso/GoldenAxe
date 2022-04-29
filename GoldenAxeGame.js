@@ -435,7 +435,7 @@ GoldenAxe.Menu.prototype = {
 			if (this.musicPlayer!=null)
 				{
 				// PAUSING THE MENU MUSIC
-				game.state.states["GoldenAxe.Menu"].musicPlayer.pause();
+				this.musicPlayer.pause();
 				}
 			}
 			else
@@ -734,7 +734,7 @@ GoldenAxe.Game.prototype = {
 			// CHECKING IF THE MUSIC PLAYER IS CREATED
 			if (game.state.states["GoldenAxe.Menu"].musicPlayer!=null)
 				{
-				// PAUSING THE BACKGROUND MUSIC
+				// PAUSING THE MENU MUSIC
 				game.state.states["GoldenAxe.Menu"].musicPlayer.pause();
 				}
 			},this);
@@ -768,17 +768,17 @@ GoldenAxe.Game.prototype = {
 			// CHECKING IF THE MUSIC PLAYER IS NOT CREATED
 			if (game.state.states["GoldenAxe.Menu"].musicPlayer==null)
 				{
-				// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS BACKGROUND MUSIC
+				// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS GAME MUSIC
 				game.state.states["GoldenAxe.Menu"].musicPlayer = this.add.audio("musicGame");
 
-				// SETTING THE BACKGROUND MUSIC VOLUME
+				// SETTING THE GAME MUSIC VOLUME
 				game.state.states["GoldenAxe.Menu"].musicPlayer.volume = 0.2;
 
-				// SETTING THAT THE BACKGROUND MUSIC WILL BE LOOPING
+				// SETTING THAT THE GAME MUSIC WILL BE LOOPING
 				game.state.states["GoldenAxe.Menu"].musicPlayer.loop = true;
 				}
 
-			// PLAYING THE BACKGROUND MUSIC
+			// PLAYING THE GAME MUSIC
 			game.state.states["GoldenAxe.Menu"].musicPlayer.play();
 			},this);
 
@@ -1000,21 +1000,23 @@ GoldenAxe.Game.prototype = {
 		// CHECKING IF THE SOUND IS ENABLED ONLY WHEN THE GAME STARTS
 		if (GAME_SOUND_ENABLED==true && GAME_SCORE==0)
 			{
+			// CHECKING IF THE MUSIC PLAYER IS CREATED
 			if (game.state.states["GoldenAxe.Menu"].musicPlayer!=null)
 				{
+				// PAUSING THE GAME MUSIC
 				game.state.states["GoldenAxe.Menu"].musicPlayer.pause();
 				}
 
-			// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS BACKGROUND MUSIC
+			// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS GAME MUSIC
 			game.state.states["GoldenAxe.Menu"].musicPlayer = this.add.audio("musicGame");
 
-			// SETTING THE BACKGROUND MUSIC VOLUME
+			// SETTING THE GAME MUSIC VOLUME
 			game.state.states["GoldenAxe.Menu"].musicPlayer.volume = 0.2;
 
-			// SETTING THAT THE BACKGROUND MUSIC WILL BE LOOPING
+			// SETTING THAT THE GAME MUSIC WILL BE LOOPING
 			game.state.states["GoldenAxe.Menu"].musicPlayer.loop = true;
 
-			// PLAYING THE BACKGROUND MUSIC
+			// PLAYING THE GAME MUSIC
 			game.state.states["GoldenAxe.Menu"].musicPlayer.play();
 			}
 
