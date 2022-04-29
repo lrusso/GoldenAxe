@@ -1046,6 +1046,16 @@ GoldenAxe.Game.prototype = {
 			game.state.states["GoldenAxe.Menu"].musicPlayer.play();
 			}
 
+		// CHECKING IF THE USER IS ON ANOTHER LEVEL
+		if (GAME_SCORE>0)
+			{
+			// HIDING THE HERO
+			this.hero.alpha = 0;
+
+			// FADING IN THE HERO
+			game.add.tween(this.hero).to({alpha: 1}, 500, Phaser.Easing.Linear.None, true);
+			}
+
 		// SETTING A 400 MS INTERVAL TO SET IF THE ENEMY CAN ATTACK
 		game.time.events.loop(400, function()
 			{
@@ -1958,6 +1968,16 @@ GoldenAxe.Game.prototype = {
 			// CHANGING THE ELEMENT THAT WILL BE ON THE TOP
 			// IN ORDER TO PREVENT THE HERO OR ENEMY TO OVERLAP THE GAME OVER MESSAGE
 			this.block1.bringToTop();
+
+			// WAITING 2500 MS
+			game.time.events.add(2500, function()
+				{
+				// FADING OUT THE HERO
+				game.add.tween(game.state.states["GoldenAxe.Game"].hero).to({alpha: 0}, 500, Phaser.Easing.Linear.None, true);
+
+				// FADING OUT THE ENEMY
+				game.add.tween(game.state.states["GoldenAxe.Game"].enemy).to({alpha: 0}, 500, Phaser.Easing.Linear.None, true);
+				});
 
 			// WAITING 3000 MS
 			game.time.events.add(3000, function()
