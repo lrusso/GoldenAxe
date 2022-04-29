@@ -1046,7 +1046,7 @@ GoldenAxe.Game.prototype = {
 			game.state.states["GoldenAxe.Menu"].musicPlayer.play();
 			}
 
-		// CHECKING IF THE USER IS ON ANOTHER LEVEL
+		// CHECKING IF THE USER HAS WON AT LEAST ONE BATTLE
 		if (GAME_SCORE>0)
 			{
 			// HIDING THE HERO
