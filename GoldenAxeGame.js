@@ -14,10 +14,10 @@ function isWebGLAvailable(){if(window.WebGLRenderingContext){for(var e=document.
 function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
 
 var GAME_SOUND_ENABLED = false;
-var GAME_SCORE = 0;
-var GAME_ENEMY = "imageGameOrc";
-var GAME_HERO_HEALTH = 100;
-var GAME_ENEMY_HEALTH = 30;
+var GAME_SCORE = null;
+var GAME_HERO_HEALTH = null;
+var GAME_ENEMY = null;
+var GAME_ENEMY_HEALTH = null;
 
 var GoldenAxe = {showDebug: false};
 
@@ -427,6 +427,12 @@ GoldenAxe.Menu.prototype = {
 
 	playGame: function()
 		{
+		// RESETTING ALL THE GAME VALUES
+		GAME_SCORE = 0;
+		GAME_HERO_HEALTH = 100;
+		GAME_ENEMY = "imageGameOrc";
+		GAME_ENEMY_HEALTH = 30;
+
 		// LAUNCHING THE GAME
 		game.state.start("GoldenAxe.Game", Phaser.Plugin.StateTransition.Out.SlideLeft);
 		}
@@ -1914,8 +1920,9 @@ GoldenAxe.Game.prototype = {
 			{
 			// RESETTING ALL THE GAME VALUES
 			GAME_SCORE = 0;
-			GAME_ENEMY = "imageGameOrc";
 			GAME_HERO_HEALTH = 100;
+			GAME_ENEMY = "imageGameOrc";
+			GAME_ENEMY_HEALTH = 30;
 			}
 		else
 			{
