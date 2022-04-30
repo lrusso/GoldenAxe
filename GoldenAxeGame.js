@@ -13,6 +13,63 @@ function isWebGLAvailable(){if(window.WebGLRenderingContext){for(var e=document.
 // isMobileDevice.js
 function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
 
+// GETTING THE USER LANGUAGE
+var userLanguage = window.navigator.userLanguage || window.navigator.language;
+
+var STRING_DISCLAIMER1 = "";
+var STRING_DISCLAIMER2 = "";
+var STRING_DISCLAIMER3 = "";
+var STRING_DISCLAIMER4 = "";
+var STRING_DISCLAIMER5 = "";
+var STRING_DISCLAIMER6 = "";
+var STRING_DISCLAIMER7 = "";
+var STRING_DISCLAIMER8_DESKTOP = "";
+var STRING_DISCLAIMER8_MOBILE = "";
+var STRING_SUBTITLE = "";
+var STRING_SCORE = "";
+var STRING_SCORE_X = "";
+var STRING_HIGHSCORE = "";
+var STIRNG_HIGHSCORE_X = "";
+var STRING_GAMEOVER = "";
+
+// CHECKING THE USER LANGUAGE
+if (userLanguage.substring(0,2)=="es")
+	{
+	STRING_DISCLAIMER1 = "DESCARGO DE RESPONSABILIDAD";
+	STRING_DISCLAIMER2 = "Los recursos de Golden Axe";
+	STRING_DISCLAIMER3 = "(im" + String.fromCharCode(225) + "genes, fuentes, m" + String.fromCharCode(250) + "sica y sonidos)";
+	STRING_DISCLAIMER4 = "se proporcionan UNICAMENTE con fines";
+	STRING_DISCLAIMER5 = "educativos. Esta demostraci" + String.fromCharCode(243) + "n no est" + String.fromCharCode(225);
+	STRING_DISCLAIMER6 = "afiliada ni respaldada por sus respectivos";
+	STRING_DISCLAIMER7 = "titulares de derechos de autor.";
+	STRING_DISCLAIMER8_DESKTOP = "Haga click para continuar";
+	STRING_DISCLAIMER8_MOBILE = "Presione para continuar";
+	STRING_SUBTITLE = "EL DUELO";
+	STRING_SCORE = "PUNTAJE:";
+	STRING_SCORE_X = 265;
+	STRING_HIGHSCORE = "RECORD:";
+	STRING_HIGHSCORE_X = 455;
+	STRING_GAMEOVER = "Juego perdido. Int" + String.fromCharCode(233) + "ntalo de nuevo.";
+	}
+	else
+	{
+	STRING_DISCLAIMER1 = "DISCLAIMER";
+	STRING_DISCLAIMER2 = "The Golden Axe resources";
+	STRING_DISCLAIMER3 = "(images, fonts, music and sounds)";
+	STRING_DISCLAIMER4 = "are provided for educational purposes ONLY.";
+	STRING_DISCLAIMER5 = "This demo is not affiliated with";
+	STRING_DISCLAIMER6 = "or endorsed by their respective";
+	STRING_DISCLAIMER7 = "copyright holders.";
+	STRING_DISCLAIMER8_DESKTOP = "Click to continue";
+	STRING_DISCLAIMER8_MOBILE = "Tap to continue";
+	STRING_SUBTITLE = "THE DUEL";
+	STRING_SCORE = "SCORE:";
+	STRING_SCORE_X = 250;
+	STRING_HIGHSCORE = "HIGHSCORE:";
+	STRING_HIGHSCORE_X = 420;
+	STRING_GAMEOVER = "Game over. Try again.";
+	}
+
 var GAME_SOUND_ENABLED = false;
 var GAME_SCORE = null;
 var GAME_HERO_SPEED = 100;
@@ -222,38 +279,38 @@ GoldenAxe.Disclaimer.prototype = {
 		this.stage.backgroundColor = "#000000";
 
 		// ADDING THE DISCLAIMER LINE 1
-		this.line1 = game.add.bitmapText(0, this.marginY + 20, "ArialBlackWhite", "DISCLAIMER", 20);
+		this.line1 = game.add.bitmapText(0, this.marginY + 20, "ArialBlackWhite", STRING_DISCLAIMER1, 20);
 		this.line1.height = 25;
 		this.line1.tint = 0xFF0000;
 		this.line1.position.x = game.width / 2 - this.line1.width / 2;
 
 		// ADDING THE DISCLAIMER LINE 2
-		this.line2 = game.add.bitmapText(0, this.marginY + 90, "ArialBlackWhite", "The Golden Axe resources", 20);
+		this.line2 = game.add.bitmapText(0, this.marginY + 90, "ArialBlackWhite", STRING_DISCLAIMER2, 20);
 		this.line2.height = 25;
 		this.line2.position.x = game.width / 2 - this.line2.width / 2;
 
 		// ADDING THE DISCLAIMER LINE 3
-		this.line3 = game.add.bitmapText(0, this.marginY + 130, "ArialBlackWhite", "(images, fonts, music and sounds)", 20);
+		this.line3 = game.add.bitmapText(0, this.marginY + 130, "ArialBlackWhite", STRING_DISCLAIMER3, 20);
 		this.line3.height = 25;
 		this.line3.position.x = game.width / 2 - this.line3.width / 2;
 
 		// ADDING THE DISCLAIMER LINE 4
-		this.line4 = game.add.bitmapText(0, this.marginY + 170, "ArialBlackWhite", "are provided for educational purposes ONLY.", 20);
+		this.line4 = game.add.bitmapText(0, this.marginY + 170, "ArialBlackWhite", STRING_DISCLAIMER4, 20);
 		this.line4.height = 25;
 		this.line4.position.x = game.width / 2 - this.line4.width / 2;
 
 		// ADDING THE DISCLAIMER LINE 5
-		this.line5 = game.add.bitmapText(0, this.marginY + 210, "ArialBlackWhite", "This demo is not affiliated with", 20);
+		this.line5 = game.add.bitmapText(0, this.marginY + 210, "ArialBlackWhite", STRING_DISCLAIMER5, 20);
 		this.line5.height = 25;
 		this.line5.position.x = game.width / 2 - this.line5.width / 2;
 
 		// ADDING THE DISCLAIMER LINE 6
-		this.line6 = game.add.bitmapText(0, this.marginY + 250, "ArialBlackWhite", "or endorsed by their respective", 20);
+		this.line6 = game.add.bitmapText(0, this.marginY + 250, "ArialBlackWhite", STRING_DISCLAIMER6, 20);
 		this.line6.height = 25;
 		this.line6.position.x = game.width / 2 - this.line6.width / 2;
 
 		// ADDING THE DISCLAIMER LINE 7
-		this.line7 = game.add.bitmapText(0, this.marginY + 290, "ArialBlackWhite", "copyright holders.", 20);
+		this.line7 = game.add.bitmapText(0, this.marginY + 290, "ArialBlackWhite", STRING_DISCLAIMER7, 20);
 		this.line7.height = 25;
 		this.line7.position.x = game.width / 2 - this.line7.width / 2;
 
@@ -261,7 +318,7 @@ GoldenAxe.Disclaimer.prototype = {
 		if (isMobileDevice()==true)
 			{
 			// ADDING THE DISCLAIMER LINE 8 FOR MOBILE DEVICES
-			this.line8 = game.add.bitmapText(0, this.marginY + 360, "ArialBlackWhite", "Tap to continue", 20);
+			this.line8 = game.add.bitmapText(0, this.marginY + 360, "ArialBlackWhite", STRING_DISCLAIMER8_MOBILE, 20);
 			this.line8.height = 25;
 			this.line8.tint = 0x228B22;
 			this.line8.position.x = game.width / 2 - this.line8.width / 2;
@@ -269,7 +326,7 @@ GoldenAxe.Disclaimer.prototype = {
 			else
 			{
 			// ADDING THE DISCLAIMER LINE 8 FOR DESKTOP DEVICES
-			this.line8 = game.add.bitmapText(0, this.marginY + 360, "ArialBlackWhite", "Click to continue", 20);
+			this.line8 = game.add.bitmapText(0, this.marginY + 360, "ArialBlackWhite", STRING_DISCLAIMER8_DESKTOP, 20);
 			this.line8.height = 25;
 			this.line8.tint = 0x228B22;
 			this.line8.position.x = game.width / 2 - this.line8.width / 2;
@@ -309,12 +366,12 @@ GoldenAxe.Menu.prototype = {
 		this.menuBackground = game.add.sprite(0, 0, "imageMenuBackground");
 
 		// ADDING THE GAME SUBTITLE SHADOW
-		this.menuSubtitleShadow = game.add.bitmapText(0, 337, "retro_font", "THE DUEL", 18);
+		this.menuSubtitleShadow = game.add.bitmapText(0, 337, "retro_font", STRING_SUBTITLE, 18);
 		this.menuSubtitleShadow.position.x = game.width / 2 - this.menuSubtitleShadow.width / 2 + 2;
 		this.menuSubtitleShadow.tint = 0x000000;
 
 		// ADDING THE GAME SUBTITLE
-		this.menuSubtitle = game.add.bitmapText(0, 335, "retro_font", "THE DUEL", 18);
+		this.menuSubtitle = game.add.bitmapText(0, 335, "retro_font", STRING_SUBTITLE, 18);
 		this.menuSubtitle.position.x = game.width / 2 - this.menuSubtitle.width / 2;
 
 		// ADDING THE PLAY BUTTON
@@ -636,10 +693,10 @@ GoldenAxe.Game.prototype = {
 		this.heroEnergyBar3.drawRect(161, 8, 50, 21);
 
 		// ADDING THE SCORE LABEL
-		this.score = game.add.bitmapText(250, 11.5, "retro_font", "SCORE:" + GAME_SCORE, 13);
+		this.score = game.add.bitmapText(STRING_SCORE_X, 11.5, "retro_font", STRING_SCORE + GAME_SCORE, 13);
 
 		// ADDING THE HIGHSCORE LABEL
-		this.highscore = game.add.bitmapText(420, 11.5, "retro_font", "HIGHSCORE:" + this.getHighscore(), 13);
+		this.highscore = game.add.bitmapText(STRING_HIGHSCORE_X, 11.5, "retro_font", STRING_HIGHSCORE + this.getHighscore(), 13);
 
 		// ADDING THE GATE SPRITE
 		this.gate = game.add.sprite(532, 53, "imageGameGate");
@@ -1546,7 +1603,7 @@ GoldenAxe.Game.prototype = {
 			game.time.events.add(400, function()
 				{
 				// SHOWING THE GAME OVER MESSAGE
-				game.state.states["GoldenAxe.Game"].showToast("Game over. Try again.");
+				game.state.states["GoldenAxe.Game"].showToast(STRING_GAMEOVER);
 				});
 			}
 		},
