@@ -892,10 +892,13 @@ GoldenAxe.Game.prototype = {
 			this.buttonSoundOnGameShadow.visible = false;
 
 			// CHECKING IF THE MUSIC PLAYER IS CREATED
-			if (game.state.states["GoldenAxe.Menu"].musicPlayer!=null)
+			if (MUSIC_PLAYER!=null)
 				{
 				// PAUSING THE MUSIC PLAYER
-				game.state.states["GoldenAxe.Menu"].musicPlayer.pause();
+				MUSIC_PLAYER.pause();
+
+				// DESTROYING THE MUSIC PLAYER
+				MUSIC_PLAYER.destroy();
 				}
 			},this);
 
@@ -925,21 +928,27 @@ GoldenAxe.Game.prototype = {
 			this.buttonSoundOffGame.visible = false;
 			this.buttonSoundOffGameShadow.visible = false;
 
-			// CHECKING IF THE MUSIC PLAYER IS NOT CREATED
-			if (game.state.states["GoldenAxe.Menu"].musicPlayer==null)
+			// CHECKING IF THE MUSIC PLAYER IS CREATED
+			if (MUSIC_PLAYER!=null)
 				{
-				// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS GAME MUSIC
-				game.state.states["GoldenAxe.Menu"].musicPlayer = this.add.audio("musicGame");
+				// PAUSING THE MUSIC PLAYER
+				MUSIC_PLAYER.pause();
 
-				// SETTING THE GAME MUSIC VOLUME
-				game.state.states["GoldenAxe.Menu"].musicPlayer.volume = 0.2;
-
-				// SETTING THAT THE GAME MUSIC WILL BE LOOPING
-				game.state.states["GoldenAxe.Menu"].musicPlayer.loop = true;
+				// DESTROYING THE MUSIC PLAYER
+				MUSIC_PLAYER.destroy();
 				}
 
+			// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS GAME MUSIC
+			MUSIC_PLAYER = this.add.audio("musicGame");
+
+			// SETTING THE GAME MUSIC VOLUME
+			MUSIC_PLAYER.volume = 0.2;
+
+			// SETTING THAT THE GAME MUSIC WILL BE LOOPING
+			MUSIC_PLAYER.loop = true;
+
 			// PLAYING THE GAME MUSIC
-			game.state.states["GoldenAxe.Menu"].musicPlayer.play();
+			MUSIC_PLAYER.play();
 			},this);
 
 		// ADDING THE ENEMY SPRITE
@@ -1157,23 +1166,26 @@ GoldenAxe.Game.prototype = {
 		if (GAME_SOUND_ENABLED==true && GAME_SCORE==0)
 			{
 			// CHECKING IF THE MUSIC PLAYER IS CREATED
-			if (game.state.states["GoldenAxe.Menu"].musicPlayer!=null)
+			if (MUSIC_PLAYER!=null)
 				{
-				// PAUSING THE GAME MUSIC
-				game.state.states["GoldenAxe.Menu"].musicPlayer.pause();
+				// PAUSING THE MUSIC PLAYER
+				MUSIC_PLAYER.pause();
+
+				// DESTROYING THE MUSIC PLAYER
+				MUSIC_PLAYER.destroy();
 				}
 
 			// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS GAME MUSIC
-			game.state.states["GoldenAxe.Menu"].musicPlayer = this.add.audio("musicGame");
+			MUSIC_PLAYER = this.add.audio("musicGame");
 
 			// SETTING THE GAME MUSIC VOLUME
-			game.state.states["GoldenAxe.Menu"].musicPlayer.volume = 0.2;
+			MUSIC_PLAYER.volume = 0.2;
 
 			// SETTING THAT THE GAME MUSIC WILL BE LOOPING
-			game.state.states["GoldenAxe.Menu"].musicPlayer.loop = true;
+			MUSIC_PLAYER.loop = true;
 
 			// PLAYING THE GAME MUSIC
-			game.state.states["GoldenAxe.Menu"].musicPlayer.play();
+			MUSIC_PLAYER.play();
 			}
 
 		// CHECKING IF THE USER HAS WON AT LEAST ONE BATTLE
