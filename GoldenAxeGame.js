@@ -459,13 +459,13 @@ GoldenAxe.Menu.prototype = {
 			this.menuSoundButton.loadTexture("imageMenuButton");
 			this.menuSoundButtonIcon.loadTexture("imageMenuSoundOn");
 
-			// CHECKING IF THE BACKGROUND MUSIC PLAYER IS CREATED
+			// CHECKING IF THE MUSIC PLAYER IS CREATED
 			if(MUSIC_PLAYER!=null)
 				{
-				// PAUSING THE BACKGROUND MUSIC PLAYER
+				// PAUSING THE MUSIC PLAYER
 				MUSIC_PLAYER.pause();
 
-				// DESTROYING THE BACKGROUND MUSIC PLAYER
+				// DESTROYING THE MUSIC PLAYER
 				MUSIC_PLAYER.destroy();
 				}
 
@@ -557,10 +557,10 @@ GoldenAxe.Menu.prototype = {
 			// CHECKING IF THE MUSIC PLAYER IS CREATED
 			if (MUSIC_PLAYER!=null)
 				{
-				// PAUSING THE MENU MUSIC
+				// PAUSING THE MUSIC PLAYER
 				MUSIC_PLAYER.pause();
 
-				// DESTROYING THE MENU MUSIC PLAYER
+				// DESTROYING THE MUSIC PLAYER
 				MUSIC_PLAYER.destroy();
 				}
 			}
@@ -600,13 +600,13 @@ GoldenAxe.Menu.prototype = {
 		GAME_ENEMY_HEALTH = 30;
 		GAME_ENEMY_ATTACK_PERCENTAGE = 40;
 
-		// CHECKING IF THE BACKGROUND MUSIC PLAYER IS CREATED
+		// CHECKING IF THE MUSIC PLAYER IS CREATED
 		if(MUSIC_PLAYER!=null)
 			{
-			// PAUSING THE BACKGROUND MUSIC PLAYER
+			// PAUSING THE MUSIC PLAYER
 			MUSIC_PLAYER.pause();
 
-			// DESTROYING THE BACKGROUND MUSIC PLAYER
+			// DESTROYING THE MUSIC PLAYER
 			MUSIC_PLAYER.destroy();
 			}
 
@@ -894,7 +894,7 @@ GoldenAxe.Game.prototype = {
 			// CHECKING IF THE MUSIC PLAYER IS CREATED
 			if (game.state.states["GoldenAxe.Menu"].musicPlayer!=null)
 				{
-				// PAUSING THE MENU MUSIC
+				// PAUSING THE MUSIC PLAYER
 				game.state.states["GoldenAxe.Menu"].musicPlayer.pause();
 				}
 			},this);
